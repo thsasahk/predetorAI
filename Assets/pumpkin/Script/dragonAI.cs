@@ -5,10 +5,6 @@ using UnityEngine;
 public class dragonAI : MonoBehaviour
 {
     /// <summary>
-    /// GameDirecterオブジェクト
-    /// </summary>
-    [SerializeField] private GameObject gameDirecter;
-    /// <summary>
     /// GameDirecterオブジェクトのスクリプト
     /// </summary>
     private GameDirector gdController;
@@ -27,7 +23,7 @@ public class dragonAI : MonoBehaviour
     /// <summary>
     /// playerオブジェクトの現在位置
     /// </summary>
-    private Vector2 pPosition;
+    public Vector2 pPosition;
     /// <summary>
     /// 自身の現在位置
     /// </summary>
@@ -36,14 +32,13 @@ public class dragonAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gdController = gameDirecter.GetComponent<GameDirector>();//GameDirecterオブジェクトのスクリプトを取得
+
     }
 
     // Update is called once per frame
     void Update()
     {
         dPosition = gameObject.transform.position;//自身の現在位置をdPositionに記録
-        pPosition = gdController.pPosition;//playerオブジェクトの現在位置をGameDirecterから取得
         gameObject.transform.Translate(Chase(pPosition, dPosition));//playerオブジェクトを目標に移動
     }
 
