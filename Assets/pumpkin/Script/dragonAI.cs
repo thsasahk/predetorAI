@@ -5,10 +5,6 @@ using UnityEngine;
 public class dragonAI : MonoBehaviour
 {
     /// <summary>
-    /// GameDirecterオブジェクトのスクリプト
-    /// </summary>
-    private GameDirector gdController;
-    /// <summary>
     /// 移動方向と速度を表すベクトル
     /// </summary>
     private Vector2 speed;
