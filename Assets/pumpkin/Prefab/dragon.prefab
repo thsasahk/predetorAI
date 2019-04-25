@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5101080244559134534}
   - component: {fileID: 9090148416408929576}
+  - component: {fileID: 8578726020490076493}
   m_Layer: 0
-  m_Name: dragon-attack
+  m_Name: dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,3 +80,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8578726020490076493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237847611827929628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d150aed9cb53c4b92317be41ce7901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDirecter: {fileID: 8408245553178241769, guid: cc6f497b5387b3c4f8810c52bb56dc09,
+    type: 3}
+  player: {fileID: 6459475278578808634, guid: 1c8f0e351f743e24581ae91490e977d3, type: 3}
+  speedX: 0.1
+  speedY: 0.1
