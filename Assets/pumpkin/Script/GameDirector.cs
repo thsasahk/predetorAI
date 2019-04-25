@@ -46,7 +46,9 @@ public class GameDirector : MonoBehaviour
         dPosition = dragon.transform.position;//現在のdragonオブジェクトの位置を記録
         pPosition = player.transform.position;//現在のplayerオブジェクトの位置を記録
         dragonAI.pPosition = pPosition;//dragonAIに現在のplayerの位置を受け渡し
+        /*
         Debug.Log(dPosition);
         Debug.Log(pPosition);
+        */
     }
 }
