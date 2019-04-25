@@ -37,6 +37,6 @@ public class playerController : MonoBehaviour
     {
         speed.x = h * speedX;
         speed.y = v * speedY;
-        return speed;
+        return speed * Time.deltaTime;
     }
 }

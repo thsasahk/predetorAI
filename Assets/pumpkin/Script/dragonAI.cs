@@ -63,6 +63,6 @@ public class dragonAI : MonoBehaviour
         {
             speed.y = speedY;
         }
-        return speed;
+        return speed * Time.deltaTime;
     }
 }
