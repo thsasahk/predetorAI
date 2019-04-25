@@ -43,7 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c581571f9d44fb543b2a8c7e26bab8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6459475278578808634, guid: 1c8f0e351f743e24581ae91490e977d3, type: 3}
-  dragon: {fileID: 3237847611827929628, guid: 935274b16a265104295a61970d3cb969, type: 3}
+  playerPrefab: {fileID: 6459475278578808634, guid: 1c8f0e351f743e24581ae91490e977d3,
+    type: 3}
+  dragonPrefab: {fileID: 3237847611827929628, guid: 935274b16a265104295a61970d3cb969,
+    type: 3}
+  dragonAI: {fileID: 0}
   pPosition: {x: 5, y: 0}
   dPosition: {x: -5, y: 0}

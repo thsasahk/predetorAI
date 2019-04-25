@@ -5,42 +5,44 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     /// <summary>
-    /// playerオブジェクト
+    /// playerオブジェクトプレファブ
     /// </summary>
-    public GameObject player;
+    [SerializeField]private GameObject playerPrefab;
     /// <summary>
-    /// dragonオブジェクト
+    /// dragonオブジェクトプレファブ
     /// </summary>
-    public GameObject dragon;
+    [SerializeField]private GameObject dragonPrefab;
+    /// <summary>
+    /// インスタンスしたplayerオブジェクト
+    /// </summary>
+    private GameObject player;
+    /// <summary>
+    /// インスタンスしたdragonオブジェクト
+    /// </summary>
+    private GameObject dragon;
+    /// <summary>
+    /// playerオブジェクトのポジション
+    /// </summary>
+    public Vector2 pPosition;
+    /// <summary>
+    /// dragonオブジェクトのポジション
+    /// </summary>
+    public Vector2 dPosition;
 
-    [SerializeField] private Vector2 pPosition;
-
-    [SerializeField] private Vector2 dPosition;
-
-    /*
-    [SerializeField] private float pPositionX;
-
-    [SerializeField] private float pPositionY;
-
-    [SerializeField] private float dPositionX;
-
-    [SerializeField] private float dPositionY;
-    */
-
-    // Start is called before the first frame update
     void Start()
     {
-        Instantiate(player, pPosition, Quaternion.identity);
-        Instantiate(dragon, dPosition, Quaternion.identity);
-        /*
-        Instantiate(player, new Vector2(pPositionX, pPositionY), Quaternion.identity);
-        Instantiate(dragon, new Vector2(dPositionX, dPositionY), Quaternion.identity);
-        */
+        player = Instantiate(playerPrefab);//playerPrefabをインスタンスしてplayerに格納
+        player.transform.position = pPosition;//インスタンスしたplayerオブジェクトのpositionを変更
+        dragon = Instantiate(dragonPrefab);//dragonPrefabをインスタンスしてdragonに格納
+        dragon.transform.position = dPosition;//インスタンスしたdragonオブジェクトのpositionを変更
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        dPosition = dragon.transform.position;//現在のdragonオブジェクトの位置を記録
+        pPosition = player.transform.position;//現在のplayerオブジェクトの位置を記録
+        Debug.Log(dPosition);
+        Debug.Log(pPosition);
     }
 }
