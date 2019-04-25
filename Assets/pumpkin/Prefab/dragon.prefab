@@ -92,8 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d150aed9cb53c4b92317be41ce7901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDirecter: {fileID: 8408245553178241769, guid: cc6f497b5387b3c4f8810c52bb56dc09,
-    type: 3}
-  player: {fileID: 6459475278578808634, guid: 1c8f0e351f743e24581ae91490e977d3, type: 3}
-  speedX: 0.1
-  speedY: 0.1
+  speedX: 1
+  speedY: 1
+  pPosition: {x: 0, y: 0}
