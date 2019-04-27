@@ -28,9 +28,13 @@ public class GameDirector : MonoBehaviour
     /// dragonオブジェクトのポジション
     /// </summary>
     public Vector2 dPosition;
-    //dragonオブジェクトのスクリプト
+    /// <summary>
+    /// dragonオブジェクトのスクリプト
+    /// </summary>
     private dragonAI dragonAI;
-
+    /// <summary>
+    /// tileオブジェクト
+    /// </summary>
     [SerializeField] private GameObject tile;
 
     void Start()
@@ -40,7 +44,7 @@ public class GameDirector : MonoBehaviour
         dragon = Instantiate(dragonPrefab);//dragonPrefabをインスタンスしてdragonに格納
         dragon.transform.position = dPosition;//インスタンスしたdragonオブジェクトのpositionを変更
         dragonAI = dragon.GetComponent<dragonAI>();//インスタンスしたdragonオブジェクトのスクリプトを取得
-        Instantiate(tile, Vector2.zero, Quaternion.identity);
+        Instantiate(tile, Vector2.zero, Quaternion.identity);//tileオブジェクトを生成
     }
 
     // Update is called once per frame
@@ -49,9 +53,5 @@ public class GameDirector : MonoBehaviour
         dPosition = dragon.transform.position;//現在のdragonオブジェクトの位置を記録
         pPosition = player.transform.position;//現在のplayerオブジェクトの位置を記録
         dragonAI.pPosition = pPosition;//dragonAIに現在のplayerの位置を受け渡し
-        /*
-        Debug.Log(dPosition);
-        Debug.Log(pPosition);
-        */
     }
 }
