@@ -31,6 +31,8 @@ public class GameDirector : MonoBehaviour
     //dragonオブジェクトのスクリプト
     private dragonAI dragonAI;
 
+    [SerializeField] private GameObject tile;
+
     void Start()
     {
         player = Instantiate(playerPrefab);//playerPrefabをインスタンスしてplayerに格納
@@ -38,6 +40,7 @@ public class GameDirector : MonoBehaviour
         dragon = Instantiate(dragonPrefab);//dragonPrefabをインスタンスしてdragonに格納
         dragon.transform.position = dPosition;//インスタンスしたdragonオブジェクトのpositionを変更
         dragonAI = dragon.GetComponent<dragonAI>();//インスタンスしたdragonオブジェクトのスクリプトを取得
+        Instantiate(tile, Vector2.zero, Quaternion.identity);
     }
 
     // Update is called once per frame

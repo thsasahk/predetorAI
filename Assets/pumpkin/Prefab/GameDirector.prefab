@@ -47,6 +47,6 @@ MonoBehaviour:
     type: 3}
   dragonPrefab: {fileID: 3237847611827929628, guid: 935274b16a265104295a61970d3cb969,
     type: 3}
-  dragonAI: {fileID: 0}
   pPosition: {x: 5, y: 0}
   dPosition: {x: -5, y: 0}
+  tile: {fileID: 4968919158448333624, guid: a63b0083ac0265c40ad3fcc99d283b6a, type: 3}
