@@ -5,64 +5,52 @@ using UnityEngine;
 public class dragonAI : MonoBehaviour
 {
     /// <summary>
-    /// 移動方向と速度を表すベクトル
-    /// </summary>
-    private Vector2 speed;
-    /// <summary>
-    /// X方向の移動速度
-    /// </summary>
-    [SerializeField] private float speedX;
-    /// <summary>
-    /// Y方向の移動速度
-    /// </summary>
-    [SerializeField] private float speedY;
-    /// <summary>
-    /// playerオブジェクトの現在位置
+    /// playerオブジェクトの現在位置、GameDirecterから取得
     /// </summary>
     public Vector2 pPosition;
     /// <summary>
+    /// 移動速度
+    /// </summary>
+    [SerializeField] private float step;
+    /// <summary>
     /// 自身の現在位置
     /// </summary>
-    private Vector2 dPosition;
+    private Vector2 current;
+    /// <summary>
+    /// 目標地点
+    /// </summary>
+    private Vector2 target;
 
-    // Start is called before the first frame update
     void Start()
     {
-
+        target = gameObject.transform.position;//初期のtargetを現在位置に設定
     }
 
-    // Update is called once per frame
     void Update()
     {
-        dPosition = gameObject.transform.position;//自身の現在位置をdPositionに記録
-        gameObject.transform.Translate(Chase(pPosition, dPosition));//playerオブジェクトを目標に移動
+        current = gameObject.transform.position;//現在位置をcurrentに記録
+        if (current == target)
+        {
+            SetTarget(pPosition - current);//pPositionとcurrentをもとに目標地点を設定
+        }
+        transform.position = Vector3.MoveTowards(current, target, step * Time.deltaTime);//目標地点へ移動
     }
 
     /// <summary>
-    /// 自身の位置とplayerオブジェクトの位置を参照して移動方向を決定
+    /// 目標地点を設定する
     /// </summary>
-    /// <param name="p">pPosition</param>
-    /// <param name="d">dPosition</param>
+    /// <param name="t">pPosition - currentで決定</param>
     /// <returns></returns>
-    private Vector2 Chase(Vector2 p, Vector2 d)
+    private Vector2 SetTarget(Vector2 t)
     {
-        if (d.x > p.x)
+        if (t.x != 0)
         {
-            speed.x = -speedX;
+            target.x += Mathf.Sign(t.x);
         }
-        else if (d.x < p.x)
+        if (t.y != 0)
         {
-            speed.x = speedX;
+            target.y += Mathf.Sign(t.y);
         }
-
-        if (d.y > p.y)
-        {
-            speed.y = -speedY;
-        }
-        else if (d.y < p.y)
-        {
-            speed.y = speedY;
-        }
-        return speed * Time.deltaTime;
+        return target;
     }
 }
