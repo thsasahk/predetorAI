@@ -95,3 +95,5 @@ MonoBehaviour:
   pPosition: {x: 0, y: 0}
   step: 3
   target: {x: 0, y: 0}
+  nextCell: {x: 0, y: 0}
+  cellSize: {x: 1, y: 1}
