@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class directer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// batPrefabオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject batPrefab;
+    /// <summary>
+    /// firePrefabオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject firePrefab;
+    /// <summary>
+    /// インスタンスしたbatオブジェクト
+    /// </summary>
+    private GameObject bat;
+    /// <summary>
+    /// インスタンスしたfireオブジェクト
+    /// </summary>
+    private GameObject fire;
+    /// <summary>
+    /// batオブジェクトのポジション
+    /// </summary>
+    [SerializeField] private Vector2 bPosition;
+    /// <summary>
+    /// fireオブジェクトのポジション
+    /// </summary>
+    [SerializeField] private Vector2 fPosition;
+
     void Start()
     {
-        
+        bat = Instantiate(batPrefab, bPosition, Quaternion.identity);
+        fire = Instantiate(firePrefab, fPosition, Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

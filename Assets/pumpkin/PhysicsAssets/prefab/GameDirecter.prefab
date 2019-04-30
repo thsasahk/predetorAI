@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc57893ff44cbff4f93033d7f0a1fdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  batPrefab: {fileID: 4329448484895445704, guid: d13184be972c42140aaaa301d561bece,
+    type: 3}
+  firePrefab: {fileID: 4869523616619755228, guid: 36763f168ea8c2d4989d30ead6c2429b,
+    type: 3}
+  bPosition: {x: 5, y: 0}
+  fPosition: {x: -5, y: 0}
