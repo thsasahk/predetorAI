@@ -93,9 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4e9602ab7d435498cf760f3c20bf99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 5000
-  maxSpeed: 10
-  damp: 1
+  power: 1000
+  backPower: 300
   thrusterPower: 2
 --- !u!50 &-5371196219928824107
 Rigidbody2D:

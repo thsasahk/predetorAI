@@ -17,17 +17,13 @@ public class batController : MonoBehaviour
     /// </summary>
     private Vector2 direction;
     /// <summary>
-    /// 最高速度
+    /// 速度制限の為の逆噴射
     /// </summary>
-    [SerializeField] private float maxSpeed;
+    [SerializeField] private float backPower;
     /// <summary>
     /// オブジェクトのローカルベクトル方向の速度
     /// </summary>
     private Vector2 speed;
-    /// <summary>
-    /// 速度の減衰率
-    /// </summary>
-    [SerializeField] private float damp;
     /// <summary>
     /// オブジェクトの角度
     /// </summary>
@@ -40,44 +36,34 @@ public class batController : MonoBehaviour
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
-        angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
+        angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
+        //direction = Vector2.zero;
     }
 
     void Update()
     {
-        rb2D.velocity *= damp * Time.deltaTime;//フレームごとに速度を減衰させる
-        speed = transform.TransformDirection(rb2D.velocity);//ローカルベクトル方向の速度を記録
-        if (Input.GetButton("Horizontal"))
-        {
-            SetThruster(Mathf.Sign(Input.GetAxis("Horizontal")));
-        }
-        if (Input.GetButton("Vertical") && Mathf.Abs(speed.y) <= maxSpeed)
-        {
-            Drive(Mathf.Sign(Input.GetAxis("Vertical")));
-        }
+        speed = rb2D.velocity;//現在の速度を記録
+        SetThruster(Input.GetAxis("Horizontal"));
+        Drive(Input.GetAxis("Vertical"));
     }
 
     /// <summary>
     /// 進行方向を変更する
     /// </summary>
-    /// <param name="h">水平入力の正負</param>
+    /// <param name="h">水平入力</param>
     private void SetThruster(float h)
     {
         angle += h * thrusterPower * Time.deltaTime;
-        direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));//自身の方向ベクトルを取得
-        direction = direction.normalized;//方向ベクトルを正規化
+        direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;//自身の方向ベクトルを取得、正規化
     }
 
     /// <summary>
     /// ベクトル方向に直進する
     /// </summary>
-    /// <param name="v">垂直方向の入力の正負</param>
+    /// <param name="v">垂直方向の入力</param>
     private void Drive(float v)
     {
-        if (Mathf.Abs(speed.y) >= maxSpeed)//現在の速度の絶対値と最高速を比べる
-        {
-            speed.y = v * maxSpeed;//maxSpeed以上の速度にはしない
-        }
-        rb2D.AddForce(v * power * direction * Time.deltaTime);//ベクトル方向に力を加える
+        rb2D.AddForce(v * power * direction * Time.deltaTime);//directionベクトル方向に力を加える
+        rb2D.AddForce(backPower * (v * direction - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 }
