@@ -9,6 +9,10 @@ public class directer : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject batPrefab;
     /// <summary>
+    /// fireオブジェクトのスクリプト
+    /// </summary>
+    private fireController fireController;
+    /// <summary>
     /// firePrefabオブジェクト
     /// </summary>
     [SerializeField] private GameObject firePrefab;
@@ -33,11 +37,12 @@ public class directer : MonoBehaviour
     {
         bat = Instantiate(batPrefab, bPosition, Quaternion.identity);
         fire = Instantiate(firePrefab, fPosition, Quaternion.identity);
+        fireController = fire.GetComponent<fireController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        fireController.bPosition = bat.transform.position;
     }
 }
