@@ -7,7 +7,7 @@ public class batController : MonoBehaviour
     /// <summary>
     /// オブジェクトのRigidBody2D
     /// </summary>
-    private Rigidbody2D rb2D;
+    public Rigidbody2D rb2D;
     /// <summary>
     /// 推進力
     /// </summary>
@@ -21,9 +21,9 @@ public class batController : MonoBehaviour
     /// </summary>
     [SerializeField] private float backPower;
     /// <summary>
-    /// オブジェクトのローカルベクトル方向の速度
+    /// オブジェクトの速度
     /// </summary>
-    private Vector2 speed;
+    public Vector2 speed;
     /// <summary>
     /// 進行方向の角度
     /// </summary>
