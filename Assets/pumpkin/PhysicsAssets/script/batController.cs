@@ -54,7 +54,6 @@ public class batController : MonoBehaviour
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         angle += h * thrusterPower * Time.deltaTime;//水平入力をもとに進行方向を変更
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトに進行方向を向かせる
-        //direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;//自身の方向ベクトルを取得、正規化
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
     }
