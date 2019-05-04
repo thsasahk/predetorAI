@@ -37,6 +37,14 @@ public class fireController : MonoBehaviour
     /// </summary>
     private Vector2 speed;
     /// <summary>
+    /// ターゲットの移動速度
+    /// </summary>
+    public Vector2 targetSpeed;
+    /// <summary>
+    /// ターゲットの進行方向
+    /// </summary>
+    //public Vector2 targetDirection;
+    /// <summary>
     /// オブジェクトの角度
     /// </summary>
     private float angle;
@@ -56,10 +64,23 @@ public class fireController : MonoBehaviour
     /// 角度の変化値の調整に使用する
     /// </summary>
     [SerializeField] private float thrusterPower;
+    /// <summary>
+    /// 接近速度
+    /// </summary>
+    private float cV;
+    /// <summary>
+    /// 接近時間
+    /// </summary>
+    private float ttC;
+    /// <summary>
+    /// 迎撃予測地点
+    /// </summary>
+    private Vector2 interceptPosition;
 
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        interceptPosition = bPosition;
     }
 
     void Update()
@@ -70,7 +91,8 @@ public class fireController : MonoBehaviour
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
-        SetThruster(direction.normalized,target);
+        Prediction(speed, targetSpeed, target.magnitude);
+        SetThruster(direction.normalized,interceptPosition);
         Drive();
     }
 
@@ -88,9 +110,25 @@ public class fireController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトにangle方向を向かせる
     }
 
+    /// <summary>
+    /// target方向へ前進
+    /// </summary>
     private void Drive()
     {
-        rb2D.AddForce(power * target * Time.deltaTime);//targetベクトル方向に力を加える
-        rb2D.AddForce(backPower * (target - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
+        rb2D.AddForce(power * interceptPosition * Time.deltaTime);//targetベクトル方向に力を加える
+        rb2D.AddForce(backPower * (interceptPosition - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
+    }
+
+    /// <summary>
+    /// 接近速度、方向と接近時間を求めてターゲットを迎撃する地点を予測する
+    /// </summary>
+    /// <param name="s">自身の速度</param>
+    /// <param name="ts">ターゲットの速度</param>
+    /// <param name="t">ターゲットへのベクトルの長さ</param>
+    private void Prediction(Vector2 s,Vector2 ts,float t)
+    {
+        cV = (s - ts).magnitude;
+        ttC = Mathf.Abs(t) / Mathf.Abs(cV);
+        interceptPosition = (target + ts * ttC).normalized;
     }
 }
