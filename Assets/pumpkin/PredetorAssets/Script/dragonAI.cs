@@ -76,6 +76,14 @@ public class dragonAI : MonoBehaviour
     /// 移動距離の少ない軸を移動するタイミングを決定
     /// </summary>
     private float fraction;
+    /// <summary>
+    /// オブジェクトからターゲットへの距離
+    /// </summary>
+    private Vector2 delta;
+    /// <summary>
+    /// 索敵範囲
+    /// </summary>
+    private float searchEria;
 
     void Start()
     {
@@ -88,15 +96,18 @@ public class dragonAI : MonoBehaviour
     void Update()
     {
         current = gameObject.transform.position;//現在位置をcurrentに記録
-        if (target != pPosition && current == nextCell)//目標が移動しており、自身の移動が終了しているタイミング
+        delta = pPosition - current;
+        if (target != pPosition && current == nextCell && //目標が移動しており、自身の移動が終了しているタイミング
+            Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria) //索敵範囲内
         {
-            SetDirection(pPosition - current);
-            SetPath(pPosition - current);
+            SetDirection(delta);
+            SetPath(delta);
         }
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
         {
             SetNextCell(num);
-            if (num < maxNum)//numを配列の要素数以上にしない
+            if (num < maxNum && //numを配列の要素数以上にしない
+                Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria)//索敵範囲外なら現在値で止まる
             {
                 num++;
             }
