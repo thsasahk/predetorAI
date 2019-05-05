@@ -84,17 +84,35 @@ public class dragonAI : MonoBehaviour
     /// 索敵範囲
     /// </summary>
     [SerializeField]private float searchEria;
+    /// <summary>
+    /// パトロール構造体
+    /// </summary>
+    private Patrol patrol;
+    /// <summary>
+    /// パトロール構造体から取り出す配列の要素番号
+    /// </summary>
+    private int pNum;
 
     void Start()
     {
         target = gameObject.transform.position;//ターゲットを現在位置に設定
         nextCell = target;//最初の移動先を現在位置に設定
+        element = 1;
         pathCol = new float[1] { target.x };//最初の移動経路に現在位置を設定
         pathRow = new float[1] { target.y };//最初の移動経路に現在位置を設定
+        nextCell = gameObject.transform.position;
+        patrol = new Patrol();
+        patrol.Pattern(0);
+        maxNum = patrol.num;
     }
 
     void Update()
     {
+        if (patrol.restTime > 0)
+        {
+            patrol.restTime -= Time.deltaTime;
+            return;
+        }
         current = gameObject.transform.position;//現在位置をcurrentに記録
         delta = pPosition - current;
         if (target != pPosition && current == nextCell && //目標が移動しており、自身の移動が終了しているタイミング
@@ -106,11 +124,15 @@ public class dragonAI : MonoBehaviour
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
         {
             SetNextCell(num);
-            if (num < maxNum && //numを配列の要素数以上にしない
-                Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria)//索敵範囲外なら現在値で止まる
+            if (num < maxNum) //numを配列の要素数以上にしない)
+                //&& Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria)//索敵範囲外なら現在値で止まる。徘徊行動させる場合はコメントアウトする
             {
                 num++;
             }
+        }
+        if (Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) >= searchEria)//索敵範囲外の時には徘徊させる
+        {
+
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//現在位置からnextCellへ定速で移動
     }
@@ -173,8 +195,37 @@ public class dragonAI : MonoBehaviour
     /// <param name="i">num</param>
     private void SetNextCell(int i)
     {
-        nextCell.x = pathCol[i];
-        nextCell.y = pathRow[i];
+        if(Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria)
+        {
+            nextCell.x = pathCol[i];
+            nextCell.y = pathRow[i];
+            pNum = maxNum;
+        }
+        else//ターゲットを見失ったらパトロールする
+        {
+            if (pNum < maxNum)
+            {
+                nextCell.x = current.x + patrol.horizontal[pNum];
+                nextCell.y = current.y + patrol.verticla[pNum];
+                pNum++;
+            }
+            else
+            {
+                switch (patrol.rest)
+                {
+                    case true:
+                        patrol.Pattern(Random.Range(1, 7));
+                        break;
+
+                    case false:
+                        patrol.Pattern(0);
+                        break;
+                }
+                pNum = 0;
+                maxNum = patrol.num;
+            }
+            
+        }
     }
 
     /// <summary>
@@ -201,5 +252,75 @@ public class dragonAI : MonoBehaviour
         }
         deltaCol = Mathf.Abs(d.x);//x方向の移動距離を格納
         deltaRow = Mathf.Abs(d.y);//y方向の移動距離を格納
+    }
+}
+
+public struct Patrol
+{
+    /// <summary>
+    /// パトロール時のx座標の移動パターンを格納
+    /// </summary>
+    public int[] horizontal;
+    /// <summary>
+    /// パトロール時のy座標の移動パターンを格納
+    /// </summary>
+    public int[] verticla;
+    /// <summary>
+    /// 休憩するかどうか
+    /// </summary>
+    public bool rest;
+    /// <summary>
+    /// 配列の要素数
+    /// </summary>
+    public int num;
+    /// <summary>
+    /// 休憩時間
+    /// </summary>
+    public float restTime;
+
+    public void Pattern(int a)
+    {
+        switch (a)//引数によって行動が決まる
+        {
+            case 0://その場で休憩
+                rest = true;
+                restTime = Random.Range(1.0f, 3.0f);
+                break;
+
+            case 1://上を偵察
+                horizontal = new int[4] { 0, 0, 0, 0 };
+                verticla = new int[4] { 1, 1, 1, 1 };
+                rest = false;
+                num = 4;
+                break;
+
+            case 2://ぐるりと徘徊
+                horizontal = new int[8] { 1, 0, 0, -1, -1, 0, 0, 1 };
+                verticla = new int[8] { 0, 1, 1, 0, 0, -1, -1, 0 };
+                num = 8;
+                rest = false;
+                break;
+
+            case 4://下を偵察
+                horizontal = new int[4] { 0, 0, 0, 0 };
+                verticla = new int[4] { -1, -1, -1, -1 };
+                num = 4;
+                rest = false;
+                break;
+                
+            case 5://左を偵察
+                horizontal = new int[4] { -1, -1, -1, -1 };
+                verticla = new int[4] { 0, 0, 0, 0 };
+                num = 4;
+                rest = false;
+                break;
+
+            case 6://右を偵察
+                horizontal = new int[4] { 1, 1, 1, 1 };
+                verticla = new int[4] { 0, 0, 0, 0 };
+                num = 4;
+                rest = false;
+                break;
+        }
     }
 }
