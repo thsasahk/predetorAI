@@ -83,7 +83,7 @@ public class dragonAI : MonoBehaviour
     /// <summary>
     /// 索敵範囲
     /// </summary>
-    private float searchEria;
+    [SerializeField]private float searchEria;
 
     void Start()
     {
