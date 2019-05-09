@@ -41,10 +41,6 @@ public class fireController : MonoBehaviour
     /// </summary>
     public Vector2 targetSpeed;
     /// <summary>
-    /// ターゲットの進行方向
-    /// </summary>
-    //public Vector2 targetDirection;
-    /// <summary>
     /// オブジェクトの角度
     /// </summary>
     private float angle;
