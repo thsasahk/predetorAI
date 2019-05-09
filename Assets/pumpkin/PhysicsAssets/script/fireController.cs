@@ -73,23 +73,61 @@ public class fireController : MonoBehaviour
     /// </summary>
     private Vector2 interceptPosition;
 
+    [SerializeField] private float searchEria;
+    /// <summary>
+    /// オブジェクトからターゲットへの距離
+    /// </summary>
+    private Vector2 delta;
+
+    private FirePatrol firePatrol;
+
+    //[SerializeField] private float patrolPointMin;
+
+    //[SerializeField] private float patrolPointMax;
+
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         interceptPosition = bPosition;
+        firePatrol = new FirePatrol();
+        firePatrol.Set();
     }
 
     void Update()
     {
         speed = rb2D.velocity;//現在の速度を記録
         fPosition = gameObject.transform.position;//現在の位置を記録
-        target = (bPosition - fPosition).normalized;//目標物への方向ベクトルを取得し正規化
+        delta = bPosition - fPosition;
+        target = delta.normalized;//目標物への方向ベクトルを取得し正規化
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
+        direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
+        direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
+        if (Mathf.Abs(delta.x)+ Mathf.Abs(delta.y) <= searchEria)
+        {
+            Prediction(speed, targetSpeed, target.magnitude);
+            SetThruster(direction.normalized, interceptPosition);
+            Drive(interceptPosition);
+        }
+        else
+        {
+            //addAngle = Random.Range(patrolAngleMin, patrolAngleMax);
+            //angle += addAngle;
+            //if (fPosition == firePatrol.patrolTarget)
+            if(Mathf.RoundToInt(fPosition.x - firePatrol.patrolTarget.x) == 0 && 
+                Mathf.RoundToInt(fPosition.y - firePatrol.patrolTarget.y) == 0)
+            {
+                firePatrol.Pattern();
+            }
+            SetThruster(direction.normalized, (firePatrol.patrolTarget - fPosition).normalized);
+            Drive((firePatrol.patrolTarget - fPosition).normalized);
+        }
+        /*
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
         Prediction(speed, targetSpeed, target.magnitude);
         SetThruster(direction.normalized,interceptPosition);
-        Drive();
+        Drive(interceptPosition);
+        */
     }
 
     /// <summary>
@@ -107,12 +145,13 @@ public class fireController : MonoBehaviour
     }
 
     /// <summary>
-    /// target方向へ前進
+    /// 前進する
     /// </summary>
-    private void Drive()
+    /// <param name="t">進行方向ベクトル</param>
+    private void Drive(Vector2 t)
     {
-        rb2D.AddForce(power * interceptPosition * Time.deltaTime);//targetベクトル方向に力を加える
-        rb2D.AddForce(backPower * (interceptPosition - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
+        rb2D.AddForce(power * t * Time.deltaTime);//tベクトル方向に力を加える
+        rb2D.AddForce(backPower * (t - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
     /// <summary>
@@ -126,5 +165,39 @@ public class fireController : MonoBehaviour
         cV = (s - ts).magnitude;
         ttC = Mathf.Abs(t) / Mathf.Abs(cV);
         interceptPosition = (target + ts * ttC).normalized;
+    }
+}
+
+public struct FirePatrol
+{
+    public Vector2 patrolTarget;
+
+    public Vector2[] patrolPoint;
+
+    public void Set()
+    {
+        patrolPoint = new Vector2[4] { new Vector2(-8.0f, 4.0f), new Vector2(8.0f, 4.0f),
+            new Vector2(8.0f, -4.0f), new Vector2(-8.0f, -4.0f) };
+        patrolTarget = patrolPoint[0];
+    }
+
+    public void Pattern()
+    {
+        if (patrolTarget == patrolPoint[0])
+        {
+            patrolTarget = patrolPoint[1];
+        }
+        else if (patrolTarget == patrolPoint[1])
+        {
+            patrolTarget = patrolPoint[2];
+        }
+        else if (patrolTarget == patrolPoint[2])
+        {
+            patrolTarget = patrolPoint[3];
+        }
+        else if (patrolTarget == patrolPoint[3])
+        {
+            patrolTarget = patrolPoint[0];
+        }
     }
 }

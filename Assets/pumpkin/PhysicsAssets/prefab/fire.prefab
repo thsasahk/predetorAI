@@ -96,11 +96,9 @@ MonoBehaviour:
   power: 499
   backPower: 200
   bPosition: {x: 0, y: 0}
-  target: {x: 0, y: 0}
-  angle: 0
-  targetAngle: 0
-  targetDirection: {x: 0, y: 0, z: 0}
+  targetSpeed: {x: 0, y: 0}
   thrusterPower: 3
+  searchEria: 7
 --- !u!50 &469465837895692690
 Rigidbody2D:
   serializedVersion: 4
