@@ -50,5 +50,16 @@ public class directer : MonoBehaviour
     {
         fireController.bPosition = bat.transform.position;
         fireController.targetSpeed = batController.speed;
+        if (Input.touchCount > 0)
+        {
+            batController.touch.x = Input.GetTouch(0).position.x;//スクリーン座標を記録
+            batController.touch.y = Input.GetTouch(0).position.y;//スクリーン座標を記録
+            batController.touch = Camera.main.ScreenToWorldPoint(batController.touch);//スクリーン座標をワールド座標に変換
+        }
+        if (Input.GetMouseButton(0))//開発用、ビルド時コメントアウト
+        {
+            batController.touch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        
     }
 }
