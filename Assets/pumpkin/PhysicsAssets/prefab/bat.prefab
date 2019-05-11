@@ -93,9 +93,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4e9602ab7d435498cf760f3c20bf99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb2D: {fileID: 0}
   power: 1000
   backPower: 300
-  thrusterPower: 2
+  speed: {x: 0, y: 0}
+  thrusterPower: 3
+  touch: {x: 0, y: 0}
+  brake: 1
+  dec: 0
 --- !u!50 &-5371196219928824107
 Rigidbody2D:
   serializedVersion: 4
