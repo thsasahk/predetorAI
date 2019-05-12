@@ -92,5 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717a40248d3d719469d3eff282d323af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSize: 1
+  cellSize: {x: 1, y: 1}
   step: 5
+  touch: {x: 0, y: 0}
