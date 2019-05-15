@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class directer_flocks : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField] private GameObject eye;
+    /// <summary>
+    /// eyeオブジェクトの配列
+    /// </summary>
+    private GameObject[] eyes;
+    /// <summary>
+    /// eye配列の要素数
+    /// </summary>
+    [SerializeField] private int elements;
+
     void Start()
     {
-        
+        eyes = new GameObject[elements];
+        for(int i = 0; i <= elements - 1; i++)
+        {
+            eyes[i] = Instantiate(eye);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         
