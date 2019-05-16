@@ -92,6 +92,22 @@ public class dragonAI : MonoBehaviour
     /// パトロール構造体から取り出す配列の要素番号
     /// </summary>
     private int pNum;
+    /// <summary>
+    /// 移動範囲
+    /// </summary>
+    [SerializeField] private float maxX;
+    /// <summary>
+    /// 移動範囲
+    /// </summary>
+    [SerializeField] private float minX;
+    /// <summary>
+    /// 移動範囲
+    /// </summary>
+    [SerializeField] private float maxY;
+    /// <summary>
+    /// 移動範囲
+    /// </summary>
+    [SerializeField] private float minY;
 
     void Start()
     {
@@ -193,6 +209,24 @@ public class dragonAI : MonoBehaviour
     {
         if(Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) <= searchEria)
         {
+            /*
+            if(pathCol[i] >= minX && pathCol[i] <= maxX)
+            {
+                nextCell.x = pathCol[i];
+            }
+            else
+            {
+                nextCell.x = current.x;
+            }
+            if (pathRow[i] >= minY && pathRow[i] <= maxY)
+            {
+                nextCell.y = pathRow[i];
+            }
+            else
+            {
+                nextCell.y = current.y;
+            }
+            */
             nextCell.x = pathCol[i];
             nextCell.y = pathRow[i];
             pNum = maxNum;
@@ -201,8 +235,22 @@ public class dragonAI : MonoBehaviour
         {
             if (pNum < maxNum)
             {
-                nextCell.x = current.x + patrol.horizontal[pNum];
-                nextCell.y = current.y + patrol.verticla[pNum];
+                if (current.x + patrol.horizontal[pNum] >= minX && current.x + patrol.horizontal[pNum] <= maxX)
+                {
+                    nextCell.x = current.x + patrol.horizontal[pNum];
+                }
+                else
+                {
+                    nextCell.x = current.x;
+                }
+                if (current.y + patrol.verticla[pNum] >= minY && current.y + patrol.verticla[pNum] <= maxY)
+                {
+                    nextCell.y = current.y + patrol.verticla[pNum];
+                }
+                else
+                {
+                    nextCell.y = current.y;
+                }
                 pNum++;
             }
             else

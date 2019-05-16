@@ -96,3 +96,7 @@ MonoBehaviour:
   step: 3
   cellSize: {x: 1, y: 1}
   searchEria: 7
+  maxX: 9
+  minX: -9
+  maxY: 5
+  minY: -5
