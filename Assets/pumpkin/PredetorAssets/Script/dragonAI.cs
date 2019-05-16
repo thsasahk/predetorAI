@@ -130,10 +130,6 @@ public class dragonAI : MonoBehaviour
                 num++;
             }
         }
-        if (Mathf.RoundToInt(Mathf.Abs(delta.x) + Mathf.Abs(delta.y)) >= searchEria)//索敵範囲外の時には徘徊させる
-        {
-
-        }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//現在位置からnextCellへ定速で移動
     }
 
