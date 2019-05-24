@@ -92,3 +92,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3adc74ceea6733041ae173c8d22fc9d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0}
+  viewLength: 3
+  viewAngle: 180
+  member: []
+  number: 0
+  xMin: -5
+  xMax: 5
+  yMin: -2
+  yMax: 2
