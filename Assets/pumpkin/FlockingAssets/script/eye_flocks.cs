@@ -32,10 +32,32 @@ public class eye_flocks : MonoBehaviour
     /// member配列に格納されているオブジェクトの数
     /// </summary>
     public int number = 0;
+    /// <summary>
+    /// スタート時のポジション
+    /// </summary>
+    private Vector2 startPosition;
+    /// <summary>
+    /// スタート時のポジションのx最小値
+    /// </summary>
+    [SerializeField] private float xMin;
+    /// <summary>
+    /// スタート時のポジションのx最大値
+    /// </summary>
+    [SerializeField] private float xMax;
+    /// <summary>
+    /// スタート時のポジションのy最小値
+    /// </summary>
+    [SerializeField] private float yMin;
+    /// <summary>
+    /// スタート時のポジションのy最大値
+    /// </summary>
+    [SerializeField] private float yMax;
 
     void Start()
     {
-
+        startPosition.x = Random.Range(xMin, xMax);
+        startPosition.y = Random.Range(yMin, yMax);
+        transform.position = startPosition;
     }
 
     void Update()
@@ -43,5 +65,6 @@ public class eye_flocks : MonoBehaviour
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
+        Debug.Log(number);
     }
 }
