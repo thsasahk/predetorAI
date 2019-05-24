@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class camera_flocks : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// GameDirecterオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject gameDirecter;
+
     void Start()
     {
-        
+        Instantiate(gameDirecter);
     }
 
     // Update is called once per frame
