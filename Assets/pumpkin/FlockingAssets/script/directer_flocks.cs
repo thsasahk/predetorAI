@@ -47,9 +47,11 @@ public class directer_flocks : MonoBehaviour
         {
             for(int n = 0; n <= elements - 1; n++)
             {
-                if (i == n)
+                if (eye_Flocks[i] == eye_Flocks[n])
                 {
-                    return;
+                    //Debug.Log(i);
+                    //Debug.Log(n);
+                    continue;
                 }
                 target = eyes[i].transform.position - eyes[n].transform.position;
                 deltaAngle = Mathf.Abs(Vector3.Angle(eye_Flocks[i].direction.normalized, target.normalized));
@@ -58,14 +60,14 @@ public class directer_flocks : MonoBehaviour
                 {
                     eye_Flocks[i].member[eye_Flocks[i].number] = eyes[n];//条件を満たしたオブジェクトを配列に格納する
                     eye_Flocks[i].number++;//要素番号を更新
+                    Debug.Log("ok");
                 }
             }
-            /*初期化コード、number変数を使えばわざわざ初期化する必要はないかもしれない
+            //初期化コード、number変数を使えばわざわざ初期化する必要はないかもしれない
             for(int a= eye_Flocks[i].number; a <= elements - 1; a++)
             {
                 eye_Flocks[i].member[a] = null;
             }
-            */
         }
     }
 }
