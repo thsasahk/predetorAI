@@ -70,6 +70,6 @@ public class eye_flocks : MonoBehaviour
     private void LateUpdate()
     {
         Debug.Log(number);
-        number = 0;
+        number = 0;//初期化
     }
 }
