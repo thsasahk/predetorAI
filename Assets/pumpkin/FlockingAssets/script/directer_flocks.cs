@@ -21,11 +21,11 @@ public class directer_flocks : MonoBehaviour
     /// </summary>
     [SerializeField] private int elements;
     /// <summary>
-    /// 
+    /// eyeオブジェクトから別のeyeオブジェクトへの距離ベクトル
     /// </summary>
     private Vector2 target;
     /// <summary>
-    /// 
+    /// 方向ベクトルと距離ベクトルの角度差
     /// </summary>
     private float deltaAngle;
 
@@ -51,8 +51,8 @@ public class directer_flocks : MonoBehaviour
                 {
                     return;
                 }
-                target = eyes[i].transform.position - eyes[n].transform.position;//2点間の距離ベクトル
-                deltaAngle = Mathf.Abs(Vector3.Angle(eye_Flocks[i].direction.normalized, target.normalized));//方向ベクトルと距離ベクトルの角度差を求める
+                target = eyes[i].transform.position - eyes[n].transform.position;
+                deltaAngle = Mathf.Abs(Vector3.Angle(eye_Flocks[i].direction.normalized, target.normalized));
                 if (Mathf.Abs((target).magnitude) <= eye_Flocks[i].viewLength //視界距離内にオブジェクトが存在する
                     && deltaAngle <= eye_Flocks[i].viewAngle / 2)//視界角度内にオブジェクトが存在する
                 {

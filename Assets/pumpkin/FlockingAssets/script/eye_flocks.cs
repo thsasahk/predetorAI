@@ -29,7 +29,7 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     private float angle;
     /// <summary>
-    /// 
+    /// member配列に格納されているオブジェクトの数
     /// </summary>
     public int number = 0;
 
