@@ -45,7 +45,17 @@ public class directer_flocks : MonoBehaviour
     {
         for (int i = 0; i <= elements - 1; i++)
         {
-            for(int n = 0; n <= elements - 1; n++)
+            if (Input.touchCount > 0)
+            {
+                eye_Flocks[i].touch.x = Input.GetTouch(0).position.x;//スクリーン座標を記録
+                eye_Flocks[i].touch.y = Input.GetTouch(0).position.y;//スクリーン座標を記録
+                eye_Flocks[i].touch = Camera.main.ScreenToWorldPoint(eye_Flocks[i].touch);//スクリーン座標をワールド座標に変換
+            }
+            if (Input.GetMouseButton(0))//開発用、ビルド時コメントアウト
+            {
+                eye_Flocks[i].touch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+            for (int n = 0; n <= elements - 1; n++)
             {
                 if (eye_Flocks[i] == eye_Flocks[n])
                 {
