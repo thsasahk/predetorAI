@@ -103,6 +103,11 @@ MonoBehaviour:
   yMin: -2
   yMax: 2
   touch: {x: 0, y: 0}
+  rb2D: {fileID: 0}
+  brake: 1
+  power: 1000
+  backPower: 300
+  thrusterPower: 3
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
