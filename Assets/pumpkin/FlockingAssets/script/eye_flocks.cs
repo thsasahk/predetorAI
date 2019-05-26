@@ -52,6 +52,10 @@ public class eye_flocks : MonoBehaviour
     /// スタート時のポジションのy最大値
     /// </summary>
     [SerializeField] private float yMax;
+    /// <summary>
+    /// タッチ情報
+    /// </summary>
+    public Vector2 touch;
 
     void Start()
     {
@@ -65,6 +69,7 @@ public class eye_flocks : MonoBehaviour
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
+        Debug.Log(touch);
     }
 
     private void LateUpdate()
