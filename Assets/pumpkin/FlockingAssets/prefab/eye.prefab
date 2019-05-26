@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8209969370800261217}
   - component: {fileID: 7628656046685455203}
   - component: {fileID: 2355177189142633636}
+  - component: {fileID: 2784772325731353887}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -101,3 +102,25 @@ MonoBehaviour:
   xMax: 5
   yMin: -2
   yMax: 2
+  touch: {x: 0, y: 0}
+--- !u!50 &2784772325731353887
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375897841222673692}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
