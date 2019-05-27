@@ -111,6 +111,7 @@ public class eye_flocks : MonoBehaviour
         startPosition.y = Random.Range(yMin, yMax);
         transform.position = startPosition;
         rb2D = GetComponent<Rigidbody2D>();
+        touch = startPosition;
     }
 
     void Update()
