@@ -13,6 +13,10 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     public Vector2 direction;
     /// <summary>
+    /// 視界内のオブジェクトの方向ベクトル
+    /// </summary>
+    public Vector2[] directions;
+    /// <summary>
     /// 視界の長さ
     /// </summary>
     public float viewLength;
