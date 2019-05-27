@@ -37,7 +37,8 @@ public class directer_flocks : MonoBehaviour
         {
             eyes[i] = Instantiate(eye);//プレファブを生成
             eye_Flocks[i] = eyes[i].GetComponent<eye_flocks>();
-            eye_Flocks[i].member = new GameObject[elements];
+            eye_Flocks[i].member = new GameObject[elements - 1];
+            eye_Flocks[i].directions = new Vector2[elements - 1];
         }
     }
 
@@ -67,12 +68,14 @@ public class directer_flocks : MonoBehaviour
                     && deltaAngle <= eye_Flocks[i].viewAngle / 2)//視界角度内にオブジェクトが存在する
                 {
                     eye_Flocks[i].member[eye_Flocks[i].number] = eyes[n];//条件を満たしたオブジェクトを配列に格納する
+                    eye_Flocks[i].directions[eye_Flocks[i].number] = eye_Flocks[n].direction;//条件を満たしたオブジェクトの方向ベクトルを配列に格納する
                     eye_Flocks[i].number++;//要素番号を更新
                 }
             }
-            for(int a= eye_Flocks[i].number; a <= elements - 1; a++)
+            for(int a= eye_Flocks[i].number; a <= elements - 2; a++)
             {
                 eye_Flocks[i].member[a] = null;//初期化
+                eye_Flocks[i].directions[a] = Vector2.zero;
             }
         }
     }
