@@ -104,6 +104,14 @@ public class eye_flocks : MonoBehaviour
     /// 進路の修正値
     /// </summary>
     private float addAngle;
+    /// <summary>
+    /// 視界内のユニットの平均位置ベクトル
+    /// </summary>
+    private Vector2 pave;
+    /// <summary>
+    /// 視界内のユニットの平均速度ベクトル
+    /// </summary>
+    private Vector2 vave;
 
     void Start()
     {
@@ -118,6 +126,17 @@ public class eye_flocks : MonoBehaviour
     {
         speed = rb2D.velocity;//現在の速度を記録
         ePosition = gameObject.transform.position;//現在の位置を記録
+        for(int i = 0; i <= number - 1; i++)
+        {
+            pave.x += member[i].transform.position.x;//視界内のオブジェクトのx座標を合計する
+            pave.y += member[i].transform.position.y;//視界内のオブジェクトのy座標を合計する
+            vave.x += directions[i].x;//視界内のオブジェクトの方向ベクトルのx値を合計する
+            vave.y += directions[i].y;//視界内のオブジェクトの方向ベクトルのy値を合計する
+        }
+        pave += ePosition;//自らの位置ベクトルを加算する
+        vave += direction;//自らの方向ベクトルを加算する
+        pave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
+        vave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         target = touch - ePosition;//目標地点への方向ベクトルを取得
         angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
@@ -137,7 +156,11 @@ public class eye_flocks : MonoBehaviour
     private void LateUpdate()
     {
         //Debug.Log(number);
+        //Debug.Log(pave);
+        //Debug.Log(vave);
         number = 0;//初期化
+        pave = Vector2.zero;//初期化
+        vave = Vector2.zero;//初期化
     }
 
     /// <summary>
