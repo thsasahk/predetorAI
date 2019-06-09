@@ -143,7 +143,7 @@ public class eye_flocks : MonoBehaviour
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
         if (Mathf.Abs(target.x) + Mathf.Abs(target.y) >= brake)//目標地点へ近づいたらブレーキをかける
         {
-            SetThruster(direction.normalized, target.normalized);
+            SetThruster(direction.normalized, target.normalized, vave.normalized);
             Drive(direction.normalized);
         }
         else
@@ -178,11 +178,21 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     /// <param name="d">正規化したdirectionベクトル</param>
     /// <param name="t">targetベクトル</param>
-    private void SetThruster(Vector2 d, Vector2 t)
+    private void SetThruster(Vector2 d, Vector2 t,Vector2 v)
     {
-        targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
-        cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
-        addAngle = cross.z * thrusterPower * Time.deltaTime;
+        if(Vector3.Angle(d, t)> Vector3.Angle(d, v))
+        {
+            targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
+            cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+        }
+        else
+        {
+            targetAngle = Vector3.Angle(d, v);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
+            cross = Vector3.Cross(d, v);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+        }
+        //targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
+        //cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+        addAngle = cross.z * targetAngle * thrusterPower * Time.deltaTime;
         angle += addAngle;//両ベクトルが重なるように角度を加算減算する
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトにangle方向を向かせる
     }
