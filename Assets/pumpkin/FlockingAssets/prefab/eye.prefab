@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
+  directions: []
   viewLength: 3
   viewAngle: 180
   member: []
@@ -105,7 +106,7 @@ MonoBehaviour:
   touch: {x: 0, y: 0}
   rb2D: {fileID: 0}
   brake: 1
-  power: 1000
+  power: 200
   backPower: 300
   thrusterPower: 3
 --- !u!50 &2784772325731353887
