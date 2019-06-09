@@ -169,7 +169,7 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        rb2D.AddForce(power * d * Time.deltaTime);//tベクトル方向に力を加える
+        rb2D.AddForce(power * d * (touch - pave).magnitude * Time.deltaTime);//tベクトル方向に力を加える
         rb2D.AddForce(backPower * (d - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
