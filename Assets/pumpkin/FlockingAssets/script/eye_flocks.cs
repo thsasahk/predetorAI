@@ -180,6 +180,7 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">targetベクトル</param>
     private void SetThruster(Vector2 d, Vector2 t,Vector2 v)
     {
+        /*
         if(Vector3.Angle(d, t)> Vector3.Angle(d, v))
         {
             targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
@@ -190,9 +191,11 @@ public class eye_flocks : MonoBehaviour
             targetAngle = Vector3.Angle(d, v);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
             cross = Vector3.Cross(d, v);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
         }
+        */
         //targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
         //cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
-        addAngle = cross.z * targetAngle * thrusterPower * Time.deltaTime;
+        targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v);
+        addAngle = targetAngle * thrusterPower * Time.deltaTime;
         angle += addAngle;//両ベクトルが重なるように角度を加算減算する
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトにangle方向を向かせる
     }
