@@ -107,7 +107,7 @@ MonoBehaviour:
   touch: {x: 0, y: 0}
   rb2D: {fileID: 0}
   brake: 1
-  power: 200
+  power: 80
   backPower: 300
   thrusterPower: 0.1
   distance: []
