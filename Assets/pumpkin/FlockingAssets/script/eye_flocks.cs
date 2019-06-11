@@ -113,6 +113,14 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     private Vector2 vave;
 
+    public Vector2[] distance;
+
+    [SerializeField] private float coefficient;
+
+    [SerializeField] private float collisionLimit;
+
+    float m = 0;
+
     void Start()
     {
         startPosition.x = Random.Range(xMin, xMax);
@@ -124,6 +132,7 @@ public class eye_flocks : MonoBehaviour
 
     void Update()
     {
+        m = 0;
         speed = rb2D.velocity;//現在の速度を記録
         ePosition = gameObject.transform.position;//現在の位置を記録
         for(int i = 0; i <= number - 1; i++)
@@ -194,7 +203,21 @@ public class eye_flocks : MonoBehaviour
         */
         //targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
         //cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
-        targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v);
+        for (int i = 0; i <= number - 1; i++)
+        {
+            m += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);
+        }
+        if (m >= collisionLimit)
+        {
+            targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
+            - m;
+        }
+        else
+        {
+            targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v);
+        }
+        //targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
+        //    - m;
         addAngle = targetAngle * thrusterPower * Time.deltaTime;
         angle += addAngle;//両ベクトルが重なるように角度を加算減算する
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトにangle方向を向かせる
