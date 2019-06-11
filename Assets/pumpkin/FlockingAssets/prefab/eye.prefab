@@ -110,6 +110,9 @@ MonoBehaviour:
   power: 200
   backPower: 300
   thrusterPower: 0.1
+  distance: []
+  coefficient: 1
+  collisionLimit: 0.5
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
