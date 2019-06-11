@@ -112,13 +112,21 @@ public class eye_flocks : MonoBehaviour
     /// 視界内のユニットの平均速度ベクトル
     /// </summary>
     private Vector2 vave;
-
+    /// <summary>
+    /// 視界内のeyeオブジェクトへのベクトル
+    /// </summary>
     public Vector2[] distance;
-
+    /// <summary>
+    /// 係数
+    /// </summary>
     [SerializeField] private float coefficient;
-
+    /// <summary>
+    /// 衝突回避を開始する条件
+    /// </summary>
     [SerializeField] private float collisionLimit;
-
+    /// <summary>
+    /// 
+    /// </summary>
     float m = 0;
 
     void Start()
@@ -205,7 +213,7 @@ public class eye_flocks : MonoBehaviour
         //cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
         for (int i = 0; i <= number - 1; i++)
         {
-            m += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);
+            m += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
         }
         if (m >= collisionLimit)
         {
