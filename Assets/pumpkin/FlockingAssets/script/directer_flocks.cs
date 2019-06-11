@@ -39,6 +39,7 @@ public class directer_flocks : MonoBehaviour
             eye_Flocks[i] = eyes[i].GetComponent<eye_flocks>();
             eye_Flocks[i].member = new GameObject[elements - 1];
             eye_Flocks[i].directions = new Vector2[elements - 1];
+            eye_Flocks[i].distance = new Vector2[elements - 1];
         }
     }
 
@@ -69,6 +70,7 @@ public class directer_flocks : MonoBehaviour
                 {
                     eye_Flocks[i].member[eye_Flocks[i].number] = eyes[n];//条件を満たしたオブジェクトを配列に格納する
                     eye_Flocks[i].directions[eye_Flocks[i].number] = eye_Flocks[n].direction;//条件を満たしたオブジェクトの方向ベクトルを配列に格納する
+                    eye_Flocks[i].distance[eye_Flocks[i].number] = target;
                     eye_Flocks[i].number++;//要素番号を更新
                 }
             }
