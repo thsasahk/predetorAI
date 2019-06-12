@@ -4,13 +4,28 @@ using UnityEngine;
 
 public class stone_flocks : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// x座標の最大値
+    /// </summary>
+    [SerializeField] private float maxHorizon;
+    /// <summary>
+    /// x座標の最小値
+    /// </summary>
+    [SerializeField] private float minHorizon;
+    /// <summary>
+    /// y座標の最大値
+    /// </summary>
+    [SerializeField] private float maxVertical;
+    /// <summary>
+    /// y座標の最小値
+    /// </summary>
+    [SerializeField] private float minVertical;
+
     void Start()
     {
-        
+        transform.position = new Vector2(Random.Range(minHorizon, maxHorizon), Random.Range(minVertical, maxVertical));
     }
 
-    // Update is called once per frame
     void Update()
     {
         
