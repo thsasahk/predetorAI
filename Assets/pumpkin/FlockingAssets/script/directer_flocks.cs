@@ -33,6 +33,10 @@ public class directer_flocks : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject stone;
     /// <summary>
+    /// stoneオブジェクトの配列
+    /// </summary>
+    private GameObject[] stones;
+    /// <summary>
     /// stoneの数
     /// </summary>
     [SerializeField] private int stoneElements;
@@ -41,6 +45,11 @@ public class directer_flocks : MonoBehaviour
     {
         eyes = new GameObject[elements];
         eye_Flocks = new eye_flocks[elements];
+        stones = new GameObject[stoneElements];
+        for(int n = 0; n <= stoneElements - 1; n++)
+        {
+            stones[n] = Instantiate(stone);
+        }
         for(int i = 0; i <= elements - 1; i++)
         {
             eyes[i] = Instantiate(eye);//プレファブを生成
@@ -51,7 +60,7 @@ public class directer_flocks : MonoBehaviour
             eye_Flocks[i].stone = new GameObject[stoneElements];
             for (int m = 0; m <= stoneElements - 1; m++)
             {
-                eye_Flocks[i].stone[m] = Instantiate(stone);
+                eye_Flocks[i].stone[m] = stones[m];//stoneオブジェクトを格納
             }
         }
     }
