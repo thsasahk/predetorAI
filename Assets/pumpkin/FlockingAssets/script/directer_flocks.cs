@@ -28,6 +28,14 @@ public class directer_flocks : MonoBehaviour
     /// 方向ベクトルと距離ベクトルの角度差
     /// </summary>
     private float deltaAngle;
+    /// <summary>
+    /// stoneプレファブ
+    /// </summary>
+    [SerializeField] private GameObject stone;
+    /// <summary>
+    /// stoneの数
+    /// </summary>
+    [SerializeField] private int stoneElements;
 
     void Start()
     {
@@ -40,6 +48,11 @@ public class directer_flocks : MonoBehaviour
             eye_Flocks[i].member = new GameObject[elements - 1];
             eye_Flocks[i].directions = new Vector2[elements - 1];
             eye_Flocks[i].distance = new Vector2[elements - 1];
+            eye_Flocks[i].stone = new GameObject[stoneElements];
+            for (int m = 0; m <= stoneElements - 1; m++)
+            {
+                eye_Flocks[i].stone[m] = Instantiate(stone);
+            }
         }
     }
 
