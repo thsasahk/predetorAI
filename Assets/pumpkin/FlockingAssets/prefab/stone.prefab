@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5f852f2a2da04ba0cd8567d4f5471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHorizon: 0
-  minHorizon: 0
-  maxVertical: 0
-  minVertical: 0
+  maxHorizon: 7
+  minHorizon: -7
+  maxVertical: 3
+  minVertical: -3
