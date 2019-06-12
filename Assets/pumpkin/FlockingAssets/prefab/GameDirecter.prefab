@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eye: {fileID: 5375897841222673692, guid: 42f0f237d3250e64284f17b9cee6fc5e, type: 3}
   elements: 3
+  stone: {fileID: 5375897841222673692, guid: 42f0f237d3250e64284f17b9cee6fc5e, type: 3}
+  stoneElements: 0
