@@ -113,6 +113,8 @@ MonoBehaviour:
   distance: []
   coefficient: 1
   collisionLimit: 0.5
+  stone: []
+  sensorLength: 4
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
