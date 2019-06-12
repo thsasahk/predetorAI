@@ -139,7 +139,7 @@ public class eye_flocks : MonoBehaviour
     /// <summary>
     /// センサーの長さ
     /// </summary>
-    [SerializeField] private Vector2 sensorLength;
+    [SerializeField] private float sensorLength;
 
     void Start()
     {
