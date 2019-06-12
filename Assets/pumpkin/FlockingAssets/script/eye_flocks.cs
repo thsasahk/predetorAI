@@ -125,9 +125,13 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     [SerializeField] private float collisionLimit;
     /// <summary>
-    /// 
+    /// eyeオブジェクトとの衝突回避の条件
     /// </summary>
     float total = 0;
+    /// <summary>
+    /// 障害物
+    /// </summary>
+    public GameObject[] stone;
 
     void Start()
     {
