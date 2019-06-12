@@ -132,6 +132,14 @@ public class eye_flocks : MonoBehaviour
     /// 障害物
     /// </summary>
     public GameObject[] stone;
+    /// <summary>
+    /// 障害物を検知するセンサー
+    /// </summary>
+    private Vector2 sensor;
+    /// <summary>
+    /// センサーの長さ
+    /// </summary>
+    [SerializeField] private Vector2 sensorLength;
 
     void Start()
     {
@@ -147,6 +155,7 @@ public class eye_flocks : MonoBehaviour
         total = 0;//初期化
         speed = rb2D.velocity;//現在の速度を記録
         ePosition = gameObject.transform.position;//現在の位置を記録
+        sensor = sensorLength * speed.normalized + ePosition;//センサーの長さ*センサーの方向+センサーのゼロ点
         for(int i = 0; i <= number - 1; i++)
         {
             pave.x += member[i].transform.position.x;//視界内のオブジェクトのx座標を合計する
