@@ -283,7 +283,6 @@ public class eye_flocks : MonoBehaviour
                 {
                     angle = Mathf.Sign(angle) * maxAngle;
                 }
-                Debug.Log(angle);
                 direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
                 direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
             }
