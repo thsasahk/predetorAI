@@ -97,7 +97,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   directions: []
   viewLength: 3
-  viewAngle: 360
+  viewAngle: 180
   member: []
   number: 0
   xMin: -5
@@ -107,14 +107,19 @@ MonoBehaviour:
   touch: {x: 0, y: 0}
   rb2D: {fileID: 0}
   brake: 1
-  power: 80
+  power: 100
   backPower: 300
-  thrusterPower: 0.1
+  thrusterPower: 3
   distance: []
-  coefficient: 1
-  collisionLimit: 0.5
+  coefficient: 10
+  collisionLimit: 1.1
   stone: []
   sensorLength: 4
+  sensorPower: 3
+  sNumber: 0
+  surplus: 1
+  maxAngle: 40
+  saftyAngle: 89
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
