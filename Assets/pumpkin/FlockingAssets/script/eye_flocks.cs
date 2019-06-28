@@ -127,7 +127,7 @@ public class eye_flocks : MonoBehaviour
     /// <summary>
     /// eyeオブジェクトとの衝突回避の条件
     /// </summary>
-    float total = 0;
+    private float total;
     /// <summary>
     /// 障害物
     /// </summary>
@@ -140,22 +140,75 @@ public class eye_flocks : MonoBehaviour
     /// センサーの長さ
     /// </summary>
     [SerializeField] private float sensorLength;
+    /// <summary>
+    /// センサーが作動したときの修正値
+    /// </summary>
+    [SerializeField] private float sensorPower;
+    /// <summary>
+    /// stoneオブジェクトへの距離
+    /// </summary>
+    private Vector2[] stoneLength;
+    /// <summary>
+    /// 進行予定の方向からstoneオブジェクトの方向への角度
+    /// </summary>
+    private float stoneAngle;
+    /// <summary>
+    /// stoneオブジェクトからdirectionベクトルへの最短距離
+    /// </summary>
+    private float length;
+    /// <summary>
+    /// コライダーの半径
+    /// </summary>
+    private float radius;
+    /// <summary>
+    /// 障害物の数
+    /// </summary>
+    public int sNumber;
+    /// <summary>
+    /// stoneオブジェクトのCircleCollider
+    /// </summary>
+    private CircleCollider2D circle;
+    /// <summary>
+    /// 障害物回避の際にコライダーの半径を大きく見積もる値
+    /// </summary>
+    [SerializeField] private float surplus;
+    /// <summary>
+    /// 舵修正角度の最大値
+    /// </summary>
+    [SerializeField] private float maxAngle;
+    /// <summary>
+    /// 障害物を無視してよい角度
+    /// </summary>
+    [SerializeField] private float saftyAngle;
 
     void Start()
     {
         startPosition.x = Random.Range(xMin, xMax);
         startPosition.y = Random.Range(yMin, yMax);
+        stoneLength = new Vector2[sNumber];
         transform.position = startPosition;
         rb2D = GetComponent<Rigidbody2D>();
         touch = startPosition;
+        radius = stone[0].GetComponent<CircleCollider2D>().radius + surplus;//障害物の企画が一定ならこれでok
+        direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
+        direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
     }
 
     void Update()
     {
         total = 0;//初期化
         speed = rb2D.velocity;//現在の速度を記録
+        //angle = Mathf.Deg2Rad * transform.rotation.z;
+        angle = transform.eulerAngles.z; //* (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         ePosition = gameObject.transform.position;//現在の位置を記録
-        sensor = sensorLength * speed.normalized + ePosition;//センサーの長さ*センサーの方向+センサーのゼロ点
+        /*
+        sn = speed.normalized;
+        a.x = stone[0].transform.position.x - ePosition.x;
+        a.y = stone[0].transform.position.y - ePosition.y;
+        p = (a * sn) * sn;
+        b = (p - a).magnitude;
+        //sensor = sensorLength * sn;//センサーの長さ*センサーの方向+センサーのゼロ点
+        */
         for(int i = 0; i <= number - 1; i++)
         {
             pave.x += member[i].transform.position.x;//視界内のオブジェクトのx座標を合計する
@@ -168,9 +221,19 @@ public class eye_flocks : MonoBehaviour
         pave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         vave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         target = touch - ePosition;//目標地点への方向ベクトルを取得
-        angle = transform.eulerAngles.z * (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
-        direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
-        direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
+        
+        //direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        //direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        
+        for(int n = 0; n <= sNumber - 1; n++)
+        {
+            stoneLength[n].x = stone[n].transform.position.x - ePosition.x;
+            stoneLength[n].y = stone[n].transform.position.y - ePosition.y;
+        }
+        /*
+        stoneLength[0].x = stone[0].transform.position.x - ePosition.x;
+        stoneLength[0].y = stone[0].transform.position.y - ePosition.y;
+        */
         if (Mathf.Abs(target.x) + Mathf.Abs(target.y) >= brake)//目標地点へ近づいたらブレーキをかける
         {
             SetThruster(direction.normalized, target.normalized, vave.normalized);
@@ -180,14 +243,10 @@ public class eye_flocks : MonoBehaviour
         {
             rb2D.AddForce(backPower * -speed * Time.deltaTime);
         }
-        //Debug.Log(touch);
     }
 
     private void LateUpdate()
     {
-        //Debug.Log(number);
-        //Debug.Log(pave);
-        //Debug.Log(vave);
         number = 0;//初期化
         pave = Vector2.zero;//初期化
         vave = Vector2.zero;//初期化
@@ -199,7 +258,9 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        rb2D.AddForce(power * d * (touch - pave).magnitude * Time.deltaTime);//tベクトル方向に力を加える
+        rb2D.AddForce(power * d * /*(touch - pave).magnitude*/ Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
+        //direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        //direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
         rb2D.AddForce(backPower * (d - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
@@ -210,37 +271,62 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">targetベクトル</param>
     private void SetThruster(Vector2 d, Vector2 t,Vector2 v)
     {
-        /*
-        if(Vector3.Angle(d, t)> Vector3.Angle(d, v))
+        for (int n = 0; n <= sNumber - 1; n++)
         {
-            targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
-            cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+            stoneAngle = Vector3.Angle(d, stoneLength[n].normalized);
+            if (stoneLength[n].magnitude * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * stoneAngle)) < radius &&
+                stoneLength[n].magnitude * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength &&
+                Mathf.Abs(stoneAngle) <= saftyAngle)
+            {
+                angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[n].normalized).z) * sensorPower * stoneAngle * Time.deltaTime; /// stoneLength[n].magnitude;
+                if (Mathf.Abs(angle) >= maxAngle)
+                {
+                    angle = Mathf.Sign(angle) * maxAngle;
+                }
+                Debug.Log(angle);
+                direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+                direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+            }
         }
-        else
+        if (angle != transform.eulerAngles.z)
         {
-            targetAngle = Vector3.Angle(d, v);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
-            cross = Vector3.Cross(d, v);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);//オブジェクトにangle方向を向かせる
+            return;
         }
-        */
-        //targetAngle = Vector3.Angle(d, t);//自身の方向ベクトルと目標物への方向ベクトルの角度差を求める
-        //cross = Vector3.Cross(d, t);//自身の方向ベクトルと目標物への方向ベクトルの外積を求め、自身の方向ベクトルを基準とした場合の目標物への方向ベクトルの方角を明らかにする
+        angle += ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
+            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower * Time.deltaTime;
         for (int i = 0; i <= number - 1; i++)
         {
             total += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
         }
-        if (total >= collisionLimit)
+        if (Mathf.Abs(total) >= collisionLimit)
         {
-            targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
-            - total;
+            /*targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
+            + w - total;*/
+            //angle -= total * Time.deltaTime;
         }
+        /*
         else
         {
-            targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v);
+            //targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v) + w;
         }
-        //targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
-        //    - m;
-        addAngle = targetAngle * thrusterPower * Time.deltaTime;
-        angle += addAngle;//両ベクトルが重なるように角度を加算減算する
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, Mathf.Rad2Deg * angle);//オブジェクトにangle方向を向かせる
+        */
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);//オブジェクトにangle方向を向かせる
+        direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        /*
+        for (int n = 0; n <= sNumber - 1; n++)
+        {
+            stoneAngle = Vector3.Angle(direction, stoneLength[n].normalized);
+            if (stoneLength[n].magnitude * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * stoneAngle)) < radius &&
+                stoneLength[n].magnitude * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength)
+            {
+                Debug.Log(stoneAngle);
+                angle += Mathf.Sign(Vector3.Cross(direction, stoneLength[n].normalized).z) * sensorPower * stoneAngle; /// stoneLength[n].magnitude;
+                direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+                direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+            }
+        }
+        */
     }
 }
