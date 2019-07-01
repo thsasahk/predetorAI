@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class directer_flocks : MonoBehaviour
 {
@@ -102,6 +103,10 @@ public class directer_flocks : MonoBehaviour
                 eye_Flocks[i].member[a] = null;//初期化
                 eye_Flocks[i].directions[a] = Vector2.zero;
             }
+        }
+        if (Input.touchCount >= 3)
+        {
+            SceneManager.LoadScene("PredetorScene");
         }
     }
 }

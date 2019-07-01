@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class directer : MonoBehaviour
 {
@@ -60,6 +61,9 @@ public class directer : MonoBehaviour
         {
             batController.touch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-        
+        if (Input.touchCount >= 3)
+        {
+            SceneManager.LoadScene("Flocking");
+        }
     }
 }

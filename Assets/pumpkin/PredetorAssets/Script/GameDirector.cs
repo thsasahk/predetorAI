@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
@@ -71,6 +72,10 @@ public class GameDirector : MonoBehaviour
             playerCon.touch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             playerCon.touch.x = Mathf.RoundToInt(playerCon.touch.x);//マス目に合わせて整数化
             playerCon.touch.y = Mathf.RoundToInt(playerCon.touch.y);//マス目に合わせて整数化
+        }
+        if (Input.touchCount >= 3)
+        {
+            SceneManager.LoadScene("PhysicsScene");
         }
     }
 }
