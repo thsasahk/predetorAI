@@ -288,9 +288,9 @@ public class eye_flocks : MonoBehaviour
                 targetStone = n;
             }
         }
-        if (targetLength * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * stoneAngle)) < radius &&
-            targetLength * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength &&
-            Mathf.Abs(stoneAngle) <= saftyAngle)
+        if (targetLength * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * stoneAngle)) < radius &&//障害物の中心から進行方向ベクトルへ垂直に下したベクトルと障害物の半径を比較
+            targetLength * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength &&//障害物との接触予想点がセンサーの範囲内であるか確認
+            Mathf.Abs(stoneAngle) <= saftyAngle)//背後の障害物には反応しない
         {
             angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
                 sensorPower * stoneAngle * Time.deltaTime;
