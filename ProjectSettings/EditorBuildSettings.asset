@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/pumpkin/Scenes/PredetorScene.unity
     guid: 7cd5b8b38a10d5f4abefce9e2e09975f
   - enabled: 1
     path: Assets/pumpkin/Scenes/PhysicsScene.unity
     guid: f854dcb86c62f8f458653b81b2c248c9
+  - enabled: 1
+    path: Assets/pumpkin/Scenes/Flocking.unity
+    guid: 298538c3fe2b3824c993564f16d4f17c
   m_configObjects: {}
