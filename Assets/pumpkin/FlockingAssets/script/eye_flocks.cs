@@ -188,6 +188,14 @@ public class eye_flocks : MonoBehaviour
     /// 回避する障害物への距離
     /// </summary>
     private float targetLength;
+    /// <summary>
+    /// 最後に方向転換してからの時間
+    /// </summary>
+    private float time;
+    /// <summary>
+    /// 方向転換の時間の間隔
+    /// </summary>
+    [SerializeField] private float delay;
 
     void Start()
     {
@@ -244,8 +252,13 @@ public class eye_flocks : MonoBehaviour
         */
         if (Mathf.Abs(target.x) + Mathf.Abs(target.y) >= brake)//目標地点へ近づいたらブレーキをかける
         {
-            SetThruster(direction.normalized, target.normalized, vave.normalized);
+            if (time >= delay)
+            {
+                SetThruster(direction.normalized, target.normalized, vave.normalized);
+                time = 0;
+            }
             Drive(direction.normalized);
+            time += Time.deltaTime;
         }
         else
         {
@@ -293,7 +306,7 @@ public class eye_flocks : MonoBehaviour
             Mathf.Abs(stoneAngle) <= saftyAngle)//背後の障害物には反応しない
         {
             angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
-                sensorPower * stoneAngle * Time.deltaTime;
+                sensorPower * stoneAngle /** Time.deltaTime*/;
             if (Mathf.Abs(angle) >= maxAngle)
             {
                 angle = Mathf.Sign(angle) * maxAngle;
@@ -307,7 +320,7 @@ public class eye_flocks : MonoBehaviour
             return;
         }
         angle += ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
-            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower * Time.deltaTime;
+            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
         for (int i = 0; i <= number - 1; i++)
         {
             total += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
