@@ -307,9 +307,10 @@ public class eye_flocks : MonoBehaviour
         {
             angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
                 sensorPower * stoneAngle /** Time.deltaTime*/;
-            if (Mathf.Abs(angle) >= maxAngle)
+            if (Mathf.Abs(angle - transform.eulerAngles.z) >= maxAngle)
             {
-                angle = Mathf.Sign(angle) * maxAngle;
+                angle = -Mathf.Sign(Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
+                sensorPower * stoneAngle) * maxAngle + transform.eulerAngles.z;
             }
             direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
             direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
@@ -321,6 +322,11 @@ public class eye_flocks : MonoBehaviour
         }
         angle += ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
             (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
+        if (Mathf.Abs(angle - transform.eulerAngles.z) >= maxAngle)
+        {
+            angle = Mathf.Sign(((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) +
+            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower) * maxAngle + transform.eulerAngles.z;
+        }
         for (int i = 0; i <= number - 1; i++)
         {
             total += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
