@@ -118,8 +118,9 @@ MonoBehaviour:
   sensorPower: 3
   sNumber: 0
   surplus: 1
-  maxAngle: 40
+  maxAngle: 10
   saftyAngle: 89
+  delay: 0.05
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
