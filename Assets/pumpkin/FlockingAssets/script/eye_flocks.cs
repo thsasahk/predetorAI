@@ -215,7 +215,8 @@ public class eye_flocks : MonoBehaviour
         total = 0;//初期化
         speed = rb2D.velocity;//現在の速度を記録
         //angle = Mathf.Deg2Rad * transform.rotation.z;
-        angle = transform.eulerAngles.z; //* (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
+        //angle = transform.eulerAngles.z; //* (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
+        angle = 0;//初期化
         ePosition = gameObject.transform.position;//現在の位置を記録
         /*
         sn = speed.normalized;
@@ -305,27 +306,25 @@ public class eye_flocks : MonoBehaviour
             targetLength * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength &&//障害物との接触予想点がセンサーの範囲内であるか確認
             Mathf.Abs(stoneAngle) <= saftyAngle)//背後の障害物には反応しない
         {
-            angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
+            angle = -Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
                 sensorPower * stoneAngle /** Time.deltaTime*/;
-            if (Mathf.Abs(angle - transform.eulerAngles.z) >= maxAngle)
+            if (Mathf.Abs(angle) >= maxAngle)
             {
-                angle = -Mathf.Sign(Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
-                sensorPower * stoneAngle) * maxAngle + transform.eulerAngles.z;
+                angle = Mathf.Sign(angle) * maxAngle;
             }
-            direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-            direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+            direction.x = Mathf.Cos(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
+            direction.y = Mathf.Sin(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
         }
-        if (angle != transform.eulerAngles.z)
+        if (angle != 0)
         {
-            transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);//オブジェクトにangle方向を向かせる
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
             return;
         }
-        angle += ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
+        angle = ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
             (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
-        if (Mathf.Abs(angle - transform.eulerAngles.z) >= maxAngle)
+        if (Mathf.Abs(angle) >= maxAngle)
         {
-            angle = Mathf.Sign(((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) +
-            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower) * maxAngle + transform.eulerAngles.z;
+            angle = Mathf.Sign(angle) * maxAngle;
         }
         for (int i = 0; i <= number - 1; i++)
         {
@@ -343,9 +342,9 @@ public class eye_flocks : MonoBehaviour
             //targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v) + w;
         }
         */
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);//オブジェクトにangle方向を向かせる
-        direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-        direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
+        direction.x = Mathf.Cos(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
+        direction.y = Mathf.Sin(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
         /*
         for (int n = 0; n <= sNumber - 1; n++)
         {
