@@ -93,6 +93,10 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     [SerializeField] private float thrusterPower;
     /// <summary>
+    /// 群れの平均方向ベクトルに重なるように調整する力
+    /// </summary>
+    [SerializeField] private float fixPower;
+    /// <summary>
     /// 現在の進路ベクトルと目標へのベクトルの角度差
     /// </summary>
     private float targetAngle;
@@ -282,7 +286,7 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        rb2D.AddForce(power * d * /*(touch - pave).magnitude **/ Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
+        rb2D.AddForce(power * d * (touch - pave).magnitude * Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
         rb2D.AddForce(backPower * (d - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
@@ -306,7 +310,7 @@ public class eye_flocks : MonoBehaviour
             targetLength * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength &&//障害物との接触予想点がセンサーの範囲内であるか確認
             Mathf.Abs(stoneAngle) <= saftyAngle)//背後の障害物には反応しない
         {
-            angle = -Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
+            angle -= Mathf.Sign(Vector3.Cross(d, stoneLength[targetStone].normalized).z) *
                 sensorPower * stoneAngle /** Time.deltaTime*/;
             if (Mathf.Abs(angle) >= maxAngle)
             {
@@ -320,8 +324,10 @@ public class eye_flocks : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
             return;
         }
-        angle = ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
-            (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
+        //angle = ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
+        //    (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
+        angle += Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t) * thrusterPower;
+        angle += Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v) * fixPower;
         if (Mathf.Abs(angle) >= maxAngle)
         {
             angle = Mathf.Sign(angle) * maxAngle;
