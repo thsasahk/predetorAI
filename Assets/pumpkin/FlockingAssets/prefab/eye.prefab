@@ -109,7 +109,8 @@ MonoBehaviour:
   brake: 1
   power: 100
   backPower: 300
-  thrusterPower: 3
+  thrusterPower: 0.5
+  fixPower: 0.1
   distance: []
   coefficient: 10
   collisionLimit: 1.1
