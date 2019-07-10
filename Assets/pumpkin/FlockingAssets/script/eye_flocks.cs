@@ -286,7 +286,7 @@ public class eye_flocks : MonoBehaviour
     /// <param name="t">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        rb2D.AddForce(power * d * (touch - pave).magnitude * Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
+        rb2D.AddForce(power * d * touch.magnitude * Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
         rb2D.AddForce(backPower * (d - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
@@ -299,7 +299,7 @@ public class eye_flocks : MonoBehaviour
     {
         for (int n = 0; n <= sNumber - 1; n++)
         {
-            if (stoneLength[n].magnitude < targetLength)
+            if (stoneLength[n].magnitude < targetLength)//より近い障害物を回避する対象に設定する
             {
                 stoneAngle = Vector3.Angle(d, stoneLength[n].normalized);
                 targetLength= stoneLength[n].magnitude;
