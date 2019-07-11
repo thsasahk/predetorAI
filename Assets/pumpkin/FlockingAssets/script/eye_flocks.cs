@@ -201,11 +201,26 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     [SerializeField] private float delay;
 
+    private Vector2[] mPosition;
+
+    private float memberAngle;
+
+    [SerializeField] private float saftyLength;
+
+    public bool safty;
+
+    [SerializeField] private float suddenBraking;
+
+    [SerializeField] private float saftyPower;
+
+    private float totalBack;
+
     void Start()
     {
         startPosition.x = Random.Range(xMin, xMax);
         startPosition.y = Random.Range(yMin, yMax);
         stoneLength = new Vector2[sNumber];
+        mPosition = new Vector2[2];
         transform.position = startPosition;
         rb2D = GetComponent<Rigidbody2D>();
         touch = startPosition;
@@ -216,7 +231,7 @@ public class eye_flocks : MonoBehaviour
 
     void Update()
     {
-        total = 0;//初期化
+        //total = 0;//初期化
         speed = rb2D.velocity;//現在の速度を記録
         //angle = Mathf.Deg2Rad * transform.rotation.z;
         //angle = transform.eulerAngles.z; //* (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
@@ -255,6 +270,7 @@ public class eye_flocks : MonoBehaviour
         stoneLength[0].x = stone[0].transform.position.x - ePosition.x;
         stoneLength[0].y = stone[0].transform.position.y - ePosition.y;
         */
+        
         if (Mathf.Abs(target.x) + Mathf.Abs(target.y) >= brake)//目標地点へ近づいたらブレーキをかける
         {
             if (time >= delay)
@@ -267,8 +283,24 @@ public class eye_flocks : MonoBehaviour
         }
         else
         {
-            rb2D.AddForce(backPower * -speed * Time.deltaTime);
+            rb2D.AddForce(totalBack * -speed * Time.deltaTime);
+            /*
+            if (safty != true)
+            {
+                rb2D.AddForce(suddenBraking * -direction.normalized * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
+            }
+            */
         }
+        
+        /*
+        if (time >= delay)
+        {
+            SetThruster(direction.normalized, target.normalized, vave.normalized);
+            time = 0;
+        }
+        Drive(direction.normalized);
+        time += Time.deltaTime;
+        */
     }
 
     private void LateUpdate()
@@ -283,11 +315,21 @@ public class eye_flocks : MonoBehaviour
     /// <summary>
     /// 前進する
     /// </summary>
-    /// <param name="t">進行方向ベクトル</param>
+    /// <param name="d">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        rb2D.AddForce(power * d * touch.magnitude * Time.deltaTime);//tベクトル方向に力を加える、コメントアウトの記述では群れの平均位置をタッチに合わせようとしている
-        rb2D.AddForce(backPower * (d - speed) * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
+        if (safty != true)
+        {
+            //rb2D.AddForce(suddenBraking * -d * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
+            //rb2D.AddForce(power * d * target.magnitude * Time.deltaTime);//dベクトル方向に力を加える
+            //rb2D.AddForce(backPower * -speed * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07
+        }
+        else
+        {
+            //rb2D.AddForce(suddenBraking * -d * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
+        }
+        rb2D.AddForce(power * d * target.magnitude * Time.deltaTime);//dベクトル方向に力を加える
+        rb2D.AddForce(totalBack * -speed * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
 
     /// <summary>
@@ -295,8 +337,11 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     /// <param name="d">正規化したdirectionベクトル</param>
     /// <param name="t">targetベクトル</param>
+    /// <param name="v">群れの平均速度ベクトル</param>
     private void SetThruster(Vector2 d, Vector2 t,Vector2 v)
     {
+        //safty = true;//初期化
+        totalBack = backPower;
         for (int n = 0; n <= sNumber - 1; n++)
         {
             if (stoneLength[n].magnitude < targetLength)//より近い障害物を回避する対象に設定する
@@ -331,6 +376,23 @@ public class eye_flocks : MonoBehaviour
         if (Mathf.Abs(angle) >= maxAngle)
         {
             angle = Mathf.Sign(angle) * maxAngle;
+        }
+        if (member[0] != null)
+        {
+            for (int m = 0; m <= number - 1; m++)
+            {
+                mPosition[1] = member[m].transform.position;
+                if (mPosition[0].magnitude > mPosition[1].magnitude || m == 0)
+                {
+                    mPosition[0] = mPosition[1];
+                }
+            }
+            memberAngle = Vector2.Angle(direction, mPosition[0] - ePosition);
+            if (memberAngle <= saftyAngle)
+            {
+                angle -= Mathf.Sign(Vector3.Cross(direction, mPosition[0] - ePosition).z) * coefficient / memberAngle;
+                totalBack += saftyPower;
+            }
         }
         for (int i = 0; i <= number - 1; i++)
         {
