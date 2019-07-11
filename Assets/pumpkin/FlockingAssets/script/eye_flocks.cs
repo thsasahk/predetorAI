@@ -207,10 +207,6 @@ public class eye_flocks : MonoBehaviour
 
     [SerializeField] private float saftyLength;
 
-    public bool safty;
-
-    [SerializeField] private float suddenBraking;
-
     [SerializeField] private float saftyPower;
 
     private float totalBack;
