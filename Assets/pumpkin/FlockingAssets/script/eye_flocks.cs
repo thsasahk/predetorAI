@@ -231,20 +231,9 @@ public class eye_flocks : MonoBehaviour
 
     void Update()
     {
-        //total = 0;//初期化
         speed = rb2D.velocity;//現在の速度を記録
-        //angle = Mathf.Deg2Rad * transform.rotation.z;
-        //angle = transform.eulerAngles.z; //* (Mathf.PI / 180.0f);//自身の向いている方向角度をラジアン化、参考元→http://ftvoid.com/blog/post/631
         angle = 0;//初期化
         ePosition = gameObject.transform.position;//現在の位置を記録
-        /*
-        sn = speed.normalized;
-        a.x = stone[0].transform.position.x - ePosition.x;
-        a.y = stone[0].transform.position.y - ePosition.y;
-        p = (a * sn) * sn;
-        b = (p - a).magnitude;
-        //sensor = sensorLength * sn;//センサーの長さ*センサーの方向+センサーのゼロ点
-        */
         for(int i = 0; i <= number - 1; i++)
         {
             pave.x += member[i].transform.position.x;//視界内のオブジェクトのx座標を合計する
@@ -257,20 +246,11 @@ public class eye_flocks : MonoBehaviour
         pave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         vave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         target = touch - ePosition;//目標地点への方向ベクトルを取得
-        
-        //direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-        //direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-        
         for(int n = 0; n <= sNumber - 1; n++)
         {
             stoneLength[n].x = stone[n].transform.position.x - ePosition.x;
             stoneLength[n].y = stone[n].transform.position.y - ePosition.y;
         }
-        /*
-        stoneLength[0].x = stone[0].transform.position.x - ePosition.x;
-        stoneLength[0].y = stone[0].transform.position.y - ePosition.y;
-        */
-        
         if (Mathf.Abs(target.x) + Mathf.Abs(target.y) >= brake)//目標地点へ近づいたらブレーキをかける
         {
             if (time >= delay)
@@ -284,23 +264,7 @@ public class eye_flocks : MonoBehaviour
         else
         {
             rb2D.AddForce(totalBack * -speed * Time.deltaTime);
-            /*
-            if (safty != true)
-            {
-                rb2D.AddForce(suddenBraking * -direction.normalized * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
-            }
-            */
         }
-        
-        /*
-        if (time >= delay)
-        {
-            SetThruster(direction.normalized, target.normalized, vave.normalized);
-            time = 0;
-        }
-        Drive(direction.normalized);
-        time += Time.deltaTime;
-        */
     }
 
     private void LateUpdate()
@@ -318,16 +282,6 @@ public class eye_flocks : MonoBehaviour
     /// <param name="d">進行方向ベクトル</param>
     private void Drive(Vector2 d)
     {
-        if (safty != true)
-        {
-            //rb2D.AddForce(suddenBraking * -d * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
-            //rb2D.AddForce(power * d * target.magnitude * Time.deltaTime);//dベクトル方向に力を加える
-            //rb2D.AddForce(backPower * -speed * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07
-        }
-        else
-        {
-            //rb2D.AddForce(suddenBraking * -d * Time.deltaTime / (mPosition[0] - ePosition).magnitude);//急ブレーキ
-        }
         rb2D.AddForce(power * d * target.magnitude * Time.deltaTime);//dベクトル方向に力を加える
         rb2D.AddForce(totalBack * -speed * Time.deltaTime);//現在の進行方向と逆方向に力を加える、速度が大きいほど逆噴射も大きくなる。参考元→http://nnana-gamedev.hatenablog.com/entry/2017/09/07/012721
     }
@@ -369,8 +323,6 @@ public class eye_flocks : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
             return;
         }
-        //angle = ((Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t)) + 
-        //    (Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v))) * thrusterPower /** Time.deltaTime*/;
         angle += Mathf.Sign(Vector3.Cross(d, t).z) * Vector3.Angle(d, t) * thrusterPower;
         angle += Mathf.Sign(Vector3.Cross(d, v).z) * Vector3.Angle(d, v) * fixPower;
         if (Mathf.Abs(angle) >= maxAngle)
@@ -398,34 +350,8 @@ public class eye_flocks : MonoBehaviour
         {
             total += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
         }
-        if (Mathf.Abs(total) >= collisionLimit)
-        {
-            /*targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v)
-            + w - total;*/
-            //angle -= total * Time.deltaTime;
-        }
-        /*
-        else
-        {
-            //targetAngle = Vector3.Cross(d, t).z * Vector3.Angle(d, t) + Vector3.Cross(d, v).z * Vector3.Angle(d, v) + w;
-        }
-        */
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
         direction.x = Mathf.Cos(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
-        /*
-        for (int n = 0; n <= sNumber - 1; n++)
-        {
-            stoneAngle = Vector3.Angle(direction, stoneLength[n].normalized);
-            if (stoneLength[n].magnitude * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * stoneAngle)) < radius &&
-                stoneLength[n].magnitude * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * stoneAngle)) < sensorLength)
-            {
-                Debug.Log(stoneAngle);
-                angle += Mathf.Sign(Vector3.Cross(direction, stoneLength[n].normalized).z) * sensorPower * stoneAngle; /// stoneLength[n].magnitude;
-                direction.x = Mathf.Cos(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-                direction.y = Mathf.Sin(Mathf.Deg2Rad * angle);//自身の方向ベクトルを取得
-            }
-        }
-        */
     }
 }
