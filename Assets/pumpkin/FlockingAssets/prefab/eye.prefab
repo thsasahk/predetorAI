@@ -97,7 +97,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   directions: []
   viewLength: 3
-  viewAngle: 180
+  viewAngle: 360
   member: []
   number: 0
   xMin: -5
@@ -107,8 +107,8 @@ MonoBehaviour:
   touch: {x: 0, y: 0}
   rb2D: {fileID: 0}
   brake: 1
-  power: 50
-  backPower: 300
+  power: 60
+  backPower: 150
   thrusterPower: 0.5
   fixPower: 0.1
   distance: []
@@ -122,6 +122,10 @@ MonoBehaviour:
   maxAngle: 10
   saftyAngle: 89
   delay: 0.05
+  saftyLength: 1
+  safty: 0
+  suddenBraking: 400
+  saftyPower: 200
 --- !u!50 &2784772325731353887
 Rigidbody2D:
   serializedVersion: 4
