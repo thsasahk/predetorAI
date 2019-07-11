@@ -200,15 +200,21 @@ public class eye_flocks : MonoBehaviour
     /// 方向転換の時間の間隔
     /// </summary>
     [SerializeField] private float delay;
-
+    /// <summary>
+    /// 回避行動をとる対象を比較しながら格納する
+    /// </summary>
     private Vector2[] mPosition;
-
+    /// <summary>
+    /// 回避行動をとる対象へのベクトルと自身の方向ベクトルの角度差
+    /// </summary>
     private float memberAngle;
-
-    [SerializeField] private float saftyLength;
-
+    /// <summary>
+    /// 回避行動をとる際にブレーキの力に加える値
+    /// </summary>
     [SerializeField] private float saftyPower;
-
+    /// <summary>
+    /// ブレーキの力
+    /// </summary>
     private float totalBack;
 
     void Start()
