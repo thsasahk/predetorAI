@@ -216,7 +216,9 @@ public class eye_flocks : MonoBehaviour
     /// ブレーキの力
     /// </summary>
     private float totalBack;
-
+    /// <summary>
+    /// touchポジションに最も近いリーダーオブジェクト
+    /// </summary>
     public GameObject leader;
 
     void Start()

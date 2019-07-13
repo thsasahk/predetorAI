@@ -41,9 +41,13 @@ public class directer_flocks : MonoBehaviour
     /// stoneの数
     /// </summary>
     [SerializeField] private int stoneElements;
-
+    /// <summary>
+    /// 自身からtouchポジションへの距離ベクトル
+    /// </summary>
     private Vector2 goalPos;
-
+    /// <summary>
+    /// leaderからtouchポジションへのベクトル
+    /// </summary>
     private Vector2 leaderVector;
 
     void Start()
