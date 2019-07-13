@@ -29,6 +29,8 @@ public class directer_flocks : MonoBehaviour
     /// 方向ベクトルと距離ベクトルの角度差
     /// </summary>
     private float deltaAngle;
+
+    private float deltaAngle2;
     /// <summary>
     /// stoneプレファブ
     /// </summary>
@@ -41,6 +43,10 @@ public class directer_flocks : MonoBehaviour
     /// stoneの数
     /// </summary>
     [SerializeField] private int stoneElements;
+
+    private Vector2 goalPos;
+
+    private Vector2 leaderVector;
 
     void Start()
     {
@@ -70,11 +76,22 @@ public class directer_flocks : MonoBehaviour
     {
         for (int i = 0; i <= elements - 1; i++)
         {
+            eye_Flocks[i].follower = 0;//初期化
             if (Input.touchCount > 0)
             {
                 eye_Flocks[i].touch.x = Input.GetTouch(0).position.x;//スクリーン座標を記録
                 eye_Flocks[i].touch.y = Input.GetTouch(0).position.y;//スクリーン座標を記録
                 eye_Flocks[i].touch = Camera.main.ScreenToWorldPoint(eye_Flocks[i].touch);//スクリーン座標をワールド座標に変換
+            }
+            goalPos.x = eye_Flocks[i].touch.x - eyes[i].transform.position.x;//タッチ情報へのベクトルを取得
+            goalPos.y = eye_Flocks[i].touch.y - eyes[i].transform.position.y;//タッチ情報へのベクトルを取得
+            if (i == 0 || goalPos.magnitude < leaderVector.magnitude)//leaderが未定の場合もしくはリーダーよりも目標に近いオブジェクトがある場合
+            {
+                leaderVector = goalPos;//リーダーから目標へのベクトルを記録
+                for (int m = 0; m <= elements - 1; m++)
+                {
+                    eye_Flocks[m].leader = eyes[i];//各オブジェクトのスクリプトにリーダーを記載
+                }
             }
             if (Input.GetMouseButton(0))//開発用、ビルド時コメントアウト
             {
@@ -88,6 +105,7 @@ public class directer_flocks : MonoBehaviour
                 }
                 target = eyes[i].transform.position - eyes[n].transform.position;
                 deltaAngle = Mathf.Abs(Vector3.Angle(eye_Flocks[i].direction.normalized, target.normalized));
+                deltaAngle2 = Vector3.Angle(goalPos.normalized, -target.normalized);
                 if (Mathf.Abs((target).magnitude) <= eye_Flocks[i].viewLength //視界距離内にオブジェクトが存在する
                     && deltaAngle <= eye_Flocks[i].viewAngle / 2)//視界角度内にオブジェクトが存在する
                 {
