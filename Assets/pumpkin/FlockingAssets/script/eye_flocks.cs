@@ -75,7 +75,7 @@ public class eye_flocks : MonoBehaviour
     /// <summary>
     /// オブジェクトから目標へのベクトル
     /// </summary>
-    private Vector2 target;
+    public Vector2 target;
     /// <summary>
     /// ブレーキをかけるタイミング
     /// </summary>
@@ -217,6 +217,10 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     private float totalBack;
 
+    public int follower;
+
+    public GameObject leader;
+
     void Start()
     {
         startPosition.x = Random.Range(xMin, xMax);
@@ -229,6 +233,7 @@ public class eye_flocks : MonoBehaviour
         radius = stone[0].GetComponent<CircleCollider2D>().radius + surplus;//障害物の企画が一定ならこれでok
         direction.x = Mathf.Cos(angle);//自身の方向ベクトルを取得
         direction.y = Mathf.Sin(angle);//自身の方向ベクトルを取得
+        leader = gameObject;
     }
 
     void Update()
@@ -247,8 +252,17 @@ public class eye_flocks : MonoBehaviour
         vave += direction;//自らの方向ベクトルを加算する
         pave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
         vave /= (number + 1);//要素数に自身を加えた値で除算して平均値を算出する
-        target = touch - ePosition;//目標地点への方向ベクトルを取得
-        for(int n = 0; n <= sNumber - 1; n++)
+        if (leader == gameObject)//自身がリーダーであるかを確認
+        {
+            target = touch - ePosition;//目標地点への方向ベクトルを取得
+        }
+        else
+        {
+            target.x = leader.transform.position.x - ePosition.x;//目標地点への方向ベクトルを取得
+            target.y = leader.transform.position.y - ePosition.y;//目標地点への方向ベクトルを取得
+        }
+        //target = touch - ePosition;//目標地点への方向ベクトルを取得
+        for (int n = 0; n <= sNumber - 1; n++)
         {
             stoneLength[n].x = stone[n].transform.position.x - ePosition.x;
             stoneLength[n].y = stone[n].transform.position.y - ePosition.y;
@@ -296,7 +310,6 @@ public class eye_flocks : MonoBehaviour
     /// <param name="v">群れの平均速度ベクトル</param>
     private void SetThruster(Vector2 d, Vector2 t,Vector2 v)
     {
-        //safty = true;//初期化
         totalBack = backPower;
         for (int n = 0; n <= sNumber - 1; n++)
         {
