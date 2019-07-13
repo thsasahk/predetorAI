@@ -29,8 +29,6 @@ public class directer_flocks : MonoBehaviour
     /// 方向ベクトルと距離ベクトルの角度差
     /// </summary>
     private float deltaAngle;
-
-    private float deltaAngle2;
     /// <summary>
     /// stoneプレファブ
     /// </summary>
@@ -76,7 +74,6 @@ public class directer_flocks : MonoBehaviour
     {
         for (int i = 0; i <= elements - 1; i++)
         {
-            eye_Flocks[i].follower = 0;//初期化
             if (Input.touchCount > 0)
             {
                 eye_Flocks[i].touch.x = Input.GetTouch(0).position.x;//スクリーン座標を記録
@@ -105,7 +102,6 @@ public class directer_flocks : MonoBehaviour
                 }
                 target = eyes[i].transform.position - eyes[n].transform.position;
                 deltaAngle = Mathf.Abs(Vector3.Angle(eye_Flocks[i].direction.normalized, target.normalized));
-                deltaAngle2 = Vector3.Angle(goalPos.normalized, -target.normalized);
                 if (Mathf.Abs((target).magnitude) <= eye_Flocks[i].viewLength //視界距離内にオブジェクトが存在する
                     && deltaAngle <= eye_Flocks[i].viewAngle / 2)//視界角度内にオブジェクトが存在する
                 {

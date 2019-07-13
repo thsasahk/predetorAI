@@ -217,8 +217,6 @@ public class eye_flocks : MonoBehaviour
     /// </summary>
     private float totalBack;
 
-    public int follower;
-
     public GameObject leader;
 
     void Start()
@@ -360,10 +358,6 @@ public class eye_flocks : MonoBehaviour
                 angle -= Mathf.Sign(Vector3.Cross(direction, mPosition[0] - ePosition).z) * coefficient / memberAngle;
                 totalBack += saftyPower;
             }
-        }
-        for (int i = 0; i <= number - 1; i++)
-        {
-            total += coefficient / (Vector3.Cross(d, distance[i]).z * distance[i].magnitude);//視界内のeyeオブジェクトへの距離が近い程影響が大きくなる
         }
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + transform.eulerAngles.z);//オブジェクトにangle方向を向かせる
         direction.x = Mathf.Cos(Mathf.Deg2Rad * (angle + transform.eulerAngles.z));//自身の方向ベクトルを取得
