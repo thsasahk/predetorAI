@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cf1b553617e3045a49b22b34274088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slimePrefab: {fileID: 7656651797612723620, guid: 4dd66ecb72f1c4c498363d2df5f5c226,
+    type: 3}
+  frogPrefab: {fileID: 6341534362967695083, guid: 84d689009e354d24a9041a38c34505c8,
+    type: 3}
