@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class PotentialDirecter : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// slimeプレファブオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject slimePrefab;
+    /// <summary>
+    /// frogプレファブオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject frogPrefab;
+    /// <summary>
+    /// インスタンスしたslimeオブジェクト
+    /// </summary>
+    private GameObject slime;
+    /// <summary>
+    /// インスタンスしたfrogオブジェクト
+    /// </summary>
+    private GameObject frog;
+
     void Start()
     {
-        
+        slime = Instantiate(slimePrefab);
+        frog = Instantiate(frogPrefab);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
