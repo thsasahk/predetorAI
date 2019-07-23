@@ -79,5 +79,8 @@ public class slimeAI : MonoBehaviour
         slimePosition = transform.position;
         target = (slimePosition - frogPosition).normalized;
         distance = (slimePosition - frogPosition).magnitude;
+        d = distance / cc2D.radius;
+        U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);
+        rb2D.AddForce(U * target * Time.deltaTime);
     }
 }
