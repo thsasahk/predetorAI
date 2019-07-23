@@ -31,15 +31,15 @@ public class PotentialDirecter : MonoBehaviour
 
     void Start()
     {
-        slime = Instantiate(slimePrefab);
-        frog = Instantiate(frogPrefab);
+        slime = Instantiate(slimePrefab);//slimePrefabを生成、slime変数に格納
+        frog = Instantiate(frogPrefab);//frogPrefabを生成、frog変数に格納
         slimeAI = slime.GetComponent<slimeAI>();
         frogAI = frog.GetComponent<frogAI>();
     }
 
     void Update()
     {
-        slimeAI.frogPosition = frog.transform.position;
-        frogAI.slimePosition = slime.transform.position;
+        slimeAI.frogPosition = frog.transform.position;//flogオブジェクトのpositionを受け渡す
+        frogAI.slimePosition = slime.transform.position;//slimeオブジェクトのpositionを受け渡す
     }
 }
