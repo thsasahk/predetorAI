@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3820538928843428372}
   - component: {fileID: 992756978161698295}
   - component: {fileID: 7939728736567319503}
+  - component: {fileID: 2529748485671617933}
   m_Layer: 0
   m_Name: slime
   m_TagString: Untagged
@@ -99,3 +100,24 @@ MonoBehaviour:
   B: 4000
   n: 2
   m: 3
+--- !u!50 &2529748485671617933
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7656651797612723620}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

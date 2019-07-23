@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4876723957261976155}
   - component: {fileID: 3591479573159483251}
   - component: {fileID: 3609811589113846515}
+  - component: {fileID: 604154962988180256}
   m_Layer: 0
   m_Name: frog
   m_TagString: Untagged
@@ -95,3 +96,24 @@ MonoBehaviour:
   slimePosition: {x: 0, y: 0}
   minPosition: {x: -8.5, y: -4.5}
   maxPosition: {x: 8.5, y: 4.5}
+--- !u!50 &604154962988180256
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6341534362967695083}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
