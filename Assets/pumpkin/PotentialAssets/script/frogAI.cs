@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class frogAI : MonoBehaviour
 {
+    public Vector2 slimePosition;
+
     void Start()
     {
         
