@@ -20,15 +20,26 @@ public class PotentialDirecter : MonoBehaviour
     /// インスタンスしたfrogオブジェクト
     /// </summary>
     private GameObject frog;
+    /// <summary>
+    /// slimeオブジェクトのスクリプト
+    /// </summary>
+    private slimeAI slimeAI;
+    /// <summary>
+    /// frogオブジェクトのスクリプト
+    /// </summary>
+    private frogAI frogAI;
 
     void Start()
     {
         slime = Instantiate(slimePrefab);
         frog = Instantiate(frogPrefab);
+        slimeAI = slime.GetComponent<slimeAI>();
+        frogAI = frog.GetComponent<frogAI>();
     }
 
     void Update()
     {
-        
+        slimeAI.frogPosition = frog.transform.position;
+        frogAI.slimePosition = slime.transform.position;
     }
 }
