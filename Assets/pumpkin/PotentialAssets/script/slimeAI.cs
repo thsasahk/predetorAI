@@ -25,6 +25,7 @@ public class slimeAI : MonoBehaviour
     {
         startPosition.x = Random.Range(minPosition.x, maxPosition.x);//位置をランダムに決定
         startPosition.y = Random.Range(minPosition.y, maxPosition.y);//位置をランダムに決定
+        transform.position = startPosition;
     }
 
     void Update()
