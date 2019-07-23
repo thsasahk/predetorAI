@@ -32,6 +32,30 @@ public class slimeAI : MonoBehaviour
     /// ターゲットへの距離
     /// </summary>
     private float distance;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、力の合計
+    /// </summary>
+    private float U;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、引力の大きさに影響
+    /// </summary>
+    [SerializeField] private float A;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float B;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、引力の大きさに影響
+    /// </summary>
+    [SerializeField] private float n;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float m;
+    /// <summary>
+    /// ポテンシャル関数に使用する変数、ユニット間の距離をユニットの長さの単位で取得(ユニット何個分みたいな)
+    /// </summary>
+    private float d;
 
     void Start()
     {
