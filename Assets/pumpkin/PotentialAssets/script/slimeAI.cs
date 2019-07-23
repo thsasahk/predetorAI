@@ -65,6 +65,8 @@ public class slimeAI : MonoBehaviour
     /// </summary>
     private float d;
 
+    [SerializeField] private float dMin;
+
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -79,8 +81,21 @@ public class slimeAI : MonoBehaviour
         slimePosition = transform.position;
         target = (slimePosition - frogPosition).normalized;
         distance = (slimePosition - frogPosition).magnitude;
+        rb2D.AddForce(Potencial() * target * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// ポテンシャル関数を使ってオブジェクトに与える力の大きさを計算する
+    /// </summary>
+    /// <returns></returns>
+    private float Potencial()
+    {
         d = distance / cc2D.radius;
-        U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);
-        rb2D.AddForce(U * target * Time.deltaTime);
+        if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
+        {
+            d = dMin;
+        }
+        U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
+        return U;
     }
 }
