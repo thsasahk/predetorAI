@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3591479573159483251}
   - component: {fileID: 3609811589113846515}
   - component: {fileID: 604154962988180256}
+  - component: {fileID: 5437389035241790263}
   m_Layer: 0
   m_Name: frog
   m_TagString: Untagged
@@ -117,3 +118,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &5437389035241790263
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6341534362967695083}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.03}
+  serializedVersion: 2
+  m_Radius: 0.07
