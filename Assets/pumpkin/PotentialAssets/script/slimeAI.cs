@@ -5,6 +5,10 @@ using UnityEngine;
 public class slimeAI : MonoBehaviour
 {
     /// <summary>
+    /// 自身のRigidbody2D
+    /// </summary>
+    private Rigidbody2D rb2D;
+    /// <summary>
     /// 自身の位置
     /// </summary>
     private Vector2 slimePosition;
@@ -59,6 +63,7 @@ public class slimeAI : MonoBehaviour
 
     void Start()
     {
+        rb2D = GetComponent<Rigidbody2D>();
         startPosition.x = Random.Range(minPosition.x, maxPosition.x);//位置をランダムに決定
         startPosition.y = Random.Range(minPosition.y, maxPosition.y);//位置をランダムに決定
         transform.position = startPosition;
