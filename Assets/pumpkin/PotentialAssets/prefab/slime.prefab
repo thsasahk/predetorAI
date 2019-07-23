@@ -92,3 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa024ce54039d44fb573c3529d248c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frogPosition: {x: 0, y: 0}
+  minPosition: {x: 0, y: 0}
+  maxPosition: {x: 0, y: 0}
+  A: 2000
+  B: 4000
+  n: 2
+  m: 3
