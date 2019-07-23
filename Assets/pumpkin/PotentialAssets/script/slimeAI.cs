@@ -5,6 +5,10 @@ using UnityEngine;
 public class slimeAI : MonoBehaviour
 {
     /// <summary>
+    /// 自身の位置
+    /// </summary>
+    private Vector2 slimePosition;
+    /// <summary>
     /// flogオブジェクトのposition
     /// </summary>
     public Vector2 frogPosition;
@@ -20,6 +24,14 @@ public class slimeAI : MonoBehaviour
     /// start時の位置の最大値
     /// </summary>
     [SerializeField] private Vector2 maxPosition;
+    /// <summary>
+    /// ターゲットへの方向ベクトル
+    /// </summary>
+    private Vector2 target;
+    /// <summary>
+    /// ターゲットへの距離
+    /// </summary>
+    private float distance;
 
     void Start()
     {
@@ -30,6 +42,8 @@ public class slimeAI : MonoBehaviour
 
     void Update()
     {
-        
+        slimePosition = transform.position;
+        target = (slimePosition - frogPosition).normalized;
+        distance = (slimePosition - frogPosition).magnitude;
     }
 }
