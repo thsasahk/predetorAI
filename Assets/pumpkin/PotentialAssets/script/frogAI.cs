@@ -73,6 +73,14 @@ public class frogAI : MonoBehaviour
     /// 変数dの最大値
     /// </summary>
     [SerializeField] private float dMax;
+    /// <summary>
+    /// 自身の速度
+    /// </summary>
+    private Vector2 speed;
+    /// <summary>
+    /// 制限速度を変化させる関数
+    /// </summary>
+    [SerializeField] private float coefficient;
 
     void Start()
     {
@@ -87,6 +95,7 @@ public class frogAI : MonoBehaviour
     void Update()
     {
         frogPosition = transform.position;
+        speed = rb2D.velocity;
         if (Input.touchCount > 0)
         {
             touchPosition = Input.GetTouch(0).position;
@@ -97,7 +106,7 @@ public class frogAI : MonoBehaviour
         }
         target = (frogPosition - touchPosition).normalized;
         distance = (frogPosition - touchPosition).magnitude;
-        rb2D.AddForce(Potencial() * target * Time.deltaTime);
+        rb2D.AddForce(Potencial() * (coefficient * target + speed) * Time.deltaTime);
     }
 
     /// <summary>

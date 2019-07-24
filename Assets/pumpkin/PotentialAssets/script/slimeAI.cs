@@ -72,6 +72,14 @@ public class slimeAI : MonoBehaviour
     /// 変数dの最大値
     /// </summary>
     [SerializeField] private float dMax;
+    /// <summary>
+    /// 自身の速度
+    /// </summary>
+    private Vector2 speed;
+    /// <summary>
+    /// 制限速度を変化させる関数
+    /// </summary>
+    [SerializeField] private float coefficient;
 
     void Start()
     {
@@ -85,9 +93,10 @@ public class slimeAI : MonoBehaviour
     void Update()
     {
         slimePosition = transform.position;
+        speed = rb2D.velocity;
         target = (slimePosition - frogPosition).normalized;
         distance = (slimePosition - frogPosition).magnitude;
-        rb2D.AddForce(Potencial() * target * Time.deltaTime);
+        rb2D.AddForce(Potencial() * (coefficient * target + speed) * Time.deltaTime);
     }
 
     /// <summary>
