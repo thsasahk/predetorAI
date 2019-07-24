@@ -97,6 +97,11 @@ MonoBehaviour:
   slimePosition: {x: 0, y: 0}
   minPosition: {x: -8.5, y: -4.5}
   maxPosition: {x: 8.5, y: 4.5}
+  A: 2500
+  B: 2500
+  n: 1
+  m: 2
+  dMin: 1
 --- !u!50 &604154962988180256
 Rigidbody2D:
   serializedVersion: 4
