@@ -69,6 +69,10 @@ public class frogAI : MonoBehaviour
     /// d変数の最小値
     /// </summary>
     [SerializeField] private float dMin;
+    /// <summary>
+    /// 変数dの最大値
+    /// </summary>
+    [SerializeField] private float dMax;
 
     void Start()
     {
@@ -105,6 +109,10 @@ public class frogAI : MonoBehaviour
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
             d = dMin;
+        }
+        else if (d >= dMax)
+        {
+            d = dMax;
         }
         U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
         return U;
