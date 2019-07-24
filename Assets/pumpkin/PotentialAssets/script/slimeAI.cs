@@ -64,7 +64,9 @@ public class slimeAI : MonoBehaviour
     /// ポテンシャル関数に使用する変数、ユニット間の距離をユニットの長さの単位で取得(ユニット何個分みたいな)
     /// </summary>
     private float d;
-
+    /// <summary>
+    /// 変数dの最小値
+    /// </summary>
     [SerializeField] private float dMin;
 
     void Start()
