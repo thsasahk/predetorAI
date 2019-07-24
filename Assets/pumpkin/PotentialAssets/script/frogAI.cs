@@ -81,6 +81,7 @@ public class frogAI : MonoBehaviour
         startPosition.x = Random.Range(minPosition.x, maxPosition.x);//位置をランダムに決定
         startPosition.y = Random.Range(minPosition.y, maxPosition.y);//位置をランダムに決定
         transform.position = startPosition;
+        touchPosition = startPosition;//初期値
     }
 
     void Update()
