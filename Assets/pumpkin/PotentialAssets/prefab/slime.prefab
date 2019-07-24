@@ -102,6 +102,7 @@ MonoBehaviour:
   n: 1
   m: 2
   dMin: 1
+  dMax: 10
 --- !u!50 &2529748485671617933
 Rigidbody2D:
   serializedVersion: 4
