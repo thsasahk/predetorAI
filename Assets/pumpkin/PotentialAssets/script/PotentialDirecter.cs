@@ -27,11 +27,11 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// インスタンスしたcapsuleオブジェクトの配列
     /// </summary>
-    private GameObject[] capsule;
+    public GameObject[] capsule;
     /// <summary>
     /// capsule配列の要素数
     /// </summary>
-    [SerializeField] private int cNumber;
+    public int cNumber;
     /// <summary>
     /// slimeオブジェクトのスクリプト
     /// </summary>
