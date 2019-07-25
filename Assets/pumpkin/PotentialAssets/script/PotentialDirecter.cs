@@ -61,7 +61,9 @@ public class PotentialDirecter : MonoBehaviour
                 Quaternion.identity);
         }
         slimeAI = slime.GetComponent<slimeAI>();
+        slimeAI.directer = gameObject;
         frogAI = frog.GetComponent<frogAI>();
+        frogAI.directer = gameObject;
     }
 
     void Update()
