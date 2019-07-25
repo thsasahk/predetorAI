@@ -32,7 +32,9 @@ public class frogAI : MonoBehaviour
     /// 自身の位置
     /// </summary>
     private Vector2 frogPosition;
-
+    /// <summary>
+    /// タッチした位置
+    /// </summary>
     private Vector2 touchPosition;
     /// ターゲットへの方向ベクトル
     /// </summary>
@@ -124,7 +126,7 @@ public class frogAI : MonoBehaviour
     /// <returns></returns>
     private float Potencial()
     {
-        d = distance / cc2D.radius;
+        d = distance / 2 * cc2D.radius;
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
             d = dMin;
@@ -136,4 +138,6 @@ public class frogAI : MonoBehaviour
         U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
         return U;
     }
+
+    private 
 }
