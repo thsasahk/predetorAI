@@ -81,6 +81,14 @@ public class frogAI : MonoBehaviour
     /// 制限速度を変化させる関数
     /// </summary>
     [SerializeField] private float coefficient;
+    /// <summary>
+    /// potentialDirecterオブジェクト
+    /// </summary>
+    public GameObject directer;
+    /// <summary>
+    /// potentialDirecterオブジェクトのスクリプト
+    /// </summary>
+    private PotentialDirecter directerScript;
 
     void Start()
     {
@@ -90,6 +98,7 @@ public class frogAI : MonoBehaviour
         startPosition.y = Random.Range(minPosition.y, maxPosition.y);//位置をランダムに決定
         transform.position = startPosition;
         touchPosition = startPosition;//初期値
+        directerScript = directer.GetComponent<PotentialDirecter>();
     }
 
     void Update()
