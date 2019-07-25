@@ -104,6 +104,9 @@ MonoBehaviour:
   dMin: 1
   dMax: 10
   coefficient: 1.2
+  directer: {fileID: 0}
+  avoidB: 5000
+  avoidM: 1.7
 --- !u!50 &604154962988180256
 Rigidbody2D:
   serializedVersion: 4
