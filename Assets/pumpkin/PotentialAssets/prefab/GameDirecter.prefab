@@ -47,3 +47,8 @@ MonoBehaviour:
     type: 3}
   frogPrefab: {fileID: 6341534362967695083, guid: 84d689009e354d24a9041a38c34505c8,
     type: 3}
+  capsulePrefab: {fileID: 4586931448168353761, guid: 29ad0205ce1882642bb65b556e90b183,
+    type: 3}
+  cNumber: 5
+  minPosition: {x: -8.5, y: -4.5}
+  maxPosition: {x: 8.5, y: 4.5}
