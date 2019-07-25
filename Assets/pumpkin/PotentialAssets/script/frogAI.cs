@@ -36,6 +36,7 @@ public class frogAI : MonoBehaviour
     /// タッチした位置
     /// </summary>
     private Vector2 touchPosition;
+    /// <summary>
     /// ターゲットへの方向ベクトル
     /// </summary>
     private Vector2 target;
@@ -91,6 +92,26 @@ public class frogAI : MonoBehaviour
     /// potentialDirecterオブジェクトのスクリプト
     /// </summary>
     private PotentialDirecter directerScript;
+    /// <summary>
+    /// Avoid関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float avoidB;
+    /// <summary>
+    /// Avoid関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float avoidM;
+    /// <summary>
+    /// 斥力を計算する障害物の位置
+    /// </summary>
+    private Vector2 capsulPosition;
+    /// <summary>
+    /// 障害物から自身への方向ベクトル
+    /// </summary>
+    private Vector2 obstacle;
+    /// <summary>
+    /// 障害物を回避する際に力を加える方向ベクトル
+    /// </summary>
+    private Vector2 thruster;
 
     void Start()
     {
@@ -118,6 +139,23 @@ public class frogAI : MonoBehaviour
         target = (frogPosition - touchPosition).normalized;
         distance = (frogPosition - touchPosition).magnitude;
         rb2D.AddForce(Potencial() * (coefficient * target + speed) * Time.deltaTime);
+        for (int m = 0; m < directerScript.cNumber; m++)//回避する方向と力の大きさを障害物ごとに決める
+        {
+            capsulPosition = directerScript.capsule[m].transform.position;
+            obstacle = (frogPosition - capsulPosition).normalized;
+            distance = (frogPosition - capsulPosition).magnitude;
+            if (Vector3.Cross(target, obstacle).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
+            {
+                thruster.x = target.y;
+                thruster.y = -target.x;
+            }
+            else
+            {
+                thruster.x = -target.y;
+                thruster.y = target.x;
+            }
+            rb2D.AddForce(Avoid() * thruster * Time.deltaTime);
+        }
     }
 
     /// <summary>
@@ -126,7 +164,7 @@ public class frogAI : MonoBehaviour
     /// <returns></returns>
     private float Potencial()
     {
-        d = distance / 2 * cc2D.radius;
+        d = distance / (2 * cc2D.radius);
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
             d = dMin;
@@ -139,5 +177,14 @@ public class frogAI : MonoBehaviour
         return U;
     }
 
-    private 
+    private float Avoid()
+    {
+        d = distance / (2 * cc2D.radius);
+        if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
+        {
+            d = dMin;
+        }
+        U = avoidB / Mathf.Pow(d, avoidM);
+        return U;
+    }
 }
