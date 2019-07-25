@@ -13,6 +13,10 @@ public class PotentialDirecter : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject frogPrefab;
     /// <summary>
+    /// capsuleプレファブオブジェクト
+    /// </summary>
+    [SerializeField] private GameObject capsulePrefab;
+    /// <summary>
     /// インスタンスしたslimeオブジェクト
     /// </summary>
     private GameObject slime;
@@ -21,6 +25,14 @@ public class PotentialDirecter : MonoBehaviour
     /// </summary>
     private GameObject frog;
     /// <summary>
+    /// インスタンスしたcapsuleオブジェクトの配列
+    /// </summary>
+    private GameObject[] capsule;
+    /// <summary>
+    /// capsule配列の要素数
+    /// </summary>
+    [SerializeField] private int cNumber;
+    /// <summary>
     /// slimeオブジェクトのスクリプト
     /// </summary>
     private slimeAI slimeAI;
@@ -28,11 +40,26 @@ public class PotentialDirecter : MonoBehaviour
     /// frogオブジェクトのスクリプト
     /// </summary>
     private frogAI frogAI;
+    /// <summary>
+    /// capsuleオブジェクトの配置の最小値
+    /// </summary>
+    [SerializeField] private Vector2 minPosition;
+    /// <summary>
+    /// capsuleオブジェクトの配置の最大値
+    /// </summary>
+    [SerializeField] private Vector2 maxPosition;
 
     void Start()
     {
         slime = Instantiate(slimePrefab);//slimePrefabを生成、slime変数に格納
         frog = Instantiate(frogPrefab);//frogPrefabを生成、frog変数に格納
+        capsule = new GameObject[cNumber];
+        for (int m = 0; m < cNumber; m++)
+        {
+            capsule[m] = Instantiate(capsulePrefab,
+                new Vector2(Random.Range(minPosition.x, maxPosition.x), Random.Range(minPosition.y, maxPosition.y)),
+                Quaternion.identity);
+        }
         slimeAI = slime.GetComponent<slimeAI>();
         frogAI = frog.GetComponent<frogAI>();
     }
