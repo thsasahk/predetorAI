@@ -101,17 +101,37 @@ public class frogAI : MonoBehaviour
     /// </summary>
     [SerializeField] private float avoidM;
     /// <summary>
+    /// Avoid関数に使用する変数、力の合計
+    /// </summary>
+    private float avoidU;
+    /// <summary>
     /// 斥力を計算する障害物の位置
     /// </summary>
     private Vector2 capsulPosition;
     /// <summary>
     /// 障害物から自身への方向ベクトル
     /// </summary>
-    private Vector2 obstacle;
+    private Vector2 capVec;
+    /// <summary>
+    /// 障害物への距離
+    /// </summary>
+    private float capDis;
     /// <summary>
     /// 障害物を回避する際に力を加える方向ベクトル
     /// </summary>
     private Vector2 thruster;
+    /// <summary>
+    /// 障害物を回避する角度条件
+    /// </summary>
+    [SerializeField] private float angle;
+    /// <summary>
+    /// 角度条件を満たす中で、最も近い障害物
+    /// </summary>
+    private float minDis;
+    /// <summary>
+    /// 角度条件を満たす中で、最も近い障害物から自身への方向ベクトル
+    /// </summary>
+    private Vector2 minVec;
 
     void Start()
     {
@@ -128,6 +148,7 @@ public class frogAI : MonoBehaviour
     {
         frogPosition = transform.position;
         speed = rb2D.velocity;
+        minVec = Vector2.zero;//初期化
         if (Input.touchCount > 0)
         {
             touchPosition = Input.GetTouch(0).position;
@@ -138,24 +159,29 @@ public class frogAI : MonoBehaviour
         }
         target = (frogPosition - touchPosition).normalized;
         distance = (frogPosition - touchPosition).magnitude;
-        rb2D.AddForce(Potencial() * (coefficient * target + speed) * Time.deltaTime);
         for (int m = 0; m < directerScript.cNumber; m++)//回避する方向と力の大きさを障害物ごとに決める
         {
             capsulPosition = directerScript.capsule[m].transform.position;
-            obstacle = (frogPosition - capsulPosition).normalized;
-            distance = (frogPosition - capsulPosition).magnitude;
-            if (Vector3.Cross(target, obstacle).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
+            capVec = (frogPosition - capsulPosition).normalized;
+            capDis = (frogPosition - capsulPosition).magnitude;
+            if (Vector3.Angle(target, capVec) <= angle && (minVec == Vector2.zero || 
+                capDis < minDis))//
             {
-                thruster.x = target.y;
-                thruster.y = -target.x;
+                minVec = capVec;
+                minDis = capDis;
             }
-            else
-            {
-                thruster.x = -target.y;
-                thruster.y = target.x;
-            }
-            rb2D.AddForce(Avoid() * thruster * Time.deltaTime);
         }
+        if (Vector3.Cross(target, minVec).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
+        {
+            thruster.x = target.y;
+            thruster.y = -target.x;
+        }
+        else
+        {
+            thruster.x = -target.y;
+            thruster.y = target.x;
+        }
+        rb2D.AddForce((Potencial() * (coefficient * target + speed) + Avoid() * thruster) * Time.deltaTime);
     }
 
     /// <summary>
@@ -173,18 +199,17 @@ public class frogAI : MonoBehaviour
         {
             d = dMax;
         }
-        U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
-        return U;
+        return -A / Mathf.Pow(d, n) + 
+            B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
     }
 
     private float Avoid()
     {
-        d = distance / (2 * cc2D.radius);
+        d = minDis / (2 * cc2D.radius);
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
             d = dMin;
         }
-        U = avoidB / Mathf.Pow(d, avoidM);
-        return U;
+        return avoidB / Mathf.Pow(d, avoidM);
     }
 }
