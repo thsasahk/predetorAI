@@ -149,30 +149,6 @@ public class frogAI : MonoBehaviour
         {
             touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-        target = (frogPosition - touchPosition).normalized;
-        distance = (frogPosition - touchPosition).magnitude;
-        for (int m = 0; m < directerScript.cNumber; m++)//回避する方向と力の大きさを障害物ごとに決める
-        {
-            capsulPosition = directerScript.capsule[m].transform.position;
-            capVec = (frogPosition - capsulPosition).normalized;
-            capDis = (frogPosition - capsulPosition).magnitude;
-            if (Vector3.Angle(target, capVec) <= angle && (minVec == Vector2.zero || 
-                capDis < minDis))//
-            {
-                minVec = capVec;
-                minDis = capDis;
-            }
-        }
-        if (Vector3.Cross(target, minVec).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
-        {
-            thruster.x = target.y;
-            thruster.y = -target.x;
-        }
-        else
-        {
-            thruster.x = -target.y;
-            thruster.y = target.x;
-        }
         rb2D.AddForce((Potencial() * (coefficient * target + speed) + Avoid() * thruster) * Time.deltaTime);
     }
 
@@ -182,6 +158,8 @@ public class frogAI : MonoBehaviour
     /// <returns></returns>
     private float Potencial()
     {
+        target = (frogPosition - touchPosition).normalized;
+        distance = (frogPosition - touchPosition).magnitude;
         d = distance / (2 * cc2D.radius);
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
@@ -197,6 +175,28 @@ public class frogAI : MonoBehaviour
 
     private float Avoid()
     {
+        for (int m = 0; m < directerScript.cNumber; m++)
+        {
+            capsulPosition = directerScript.capsule[m].transform.position;
+            capVec = (frogPosition - capsulPosition).normalized;
+            capDis = (frogPosition - capsulPosition).magnitude;
+            if (Vector3.Angle(target, capVec) <= angle && (minVec == Vector2.zero ||
+                capDis < minDis))//角度条件と距離で回避する障害物を決める
+            {
+                minVec = capVec;
+                minDis = capDis;
+            }
+        }
+        if (Vector3.Cross(target, minVec).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
+        {
+            thruster.x = target.y;
+            thruster.y = -target.x;
+        }
+        else
+        {
+            thruster.x = -target.y;
+            thruster.y = target.x;
+        }
         d = minDis / (2 * cc2D.radius);
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
