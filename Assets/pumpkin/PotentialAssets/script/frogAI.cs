@@ -173,6 +173,10 @@ public class frogAI : MonoBehaviour
             B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
     }
 
+    /// <summary>
+    /// 回避する障害物を決定して力を加える向き大きさを指定する
+    /// </summary>
+    /// <returns></returns>
     private float Avoid()
     {
         for (int m = 0; m < directerScript.cNumber; m++)
