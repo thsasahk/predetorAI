@@ -105,6 +105,9 @@ MonoBehaviour:
   dMax: 10
   coefficient: 1
   directer: {fileID: 0}
+  angle: 90
+  avoidB: 5000
+  avoidM: 1.6
 --- !u!50 &2529748485671617933
 Rigidbody2D:
   serializedVersion: 4
