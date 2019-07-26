@@ -45,10 +45,6 @@ public class frogAI : MonoBehaviour
     /// </summary>
     private float distance;
     /// <summary>
-    /// ポテンシャル関数に使用する変数、力の合計
-    /// </summary>
-    private float U;
-    /// <summary>
     /// ポテンシャル関数に使用する変数、引力の大きさに影響
     /// </summary>
     [SerializeField] private float A;
@@ -100,10 +96,6 @@ public class frogAI : MonoBehaviour
     /// Avoid関数に使用する変数、斥力の大きさに影響
     /// </summary>
     [SerializeField] private float avoidM;
-    /// <summary>
-    /// Avoid関数に使用する変数、力の合計
-    /// </summary>
-    private float avoidU;
     /// <summary>
     /// 斥力を計算する障害物の位置
     /// </summary>
