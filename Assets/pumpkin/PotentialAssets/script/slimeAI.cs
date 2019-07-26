@@ -88,6 +88,42 @@ public class slimeAI : MonoBehaviour
     /// potentialDirecterオブジェクトのスクリプト
     /// </summary>
     private PotentialDirecter directerScript;
+    /// <summary>
+    /// 斥力を計算する障害物の位置
+    /// </summary>
+    private Vector2 capsulPosition;
+    /// <summary>
+    /// 障害物から自身への方向ベクトル
+    /// </summary>
+    private Vector2 capVec;
+    /// <summary>
+    /// 障害物への距離
+    /// </summary>
+    private float capDis;
+    /// <summary>
+    /// 障害物を回避する角度条件
+    /// </summary>
+    [SerializeField] private float angle;
+    /// <summary>
+    /// 角度条件を満たす中で、最も近い障害物
+    /// </summary>
+    private float minDis;
+    /// <summary>
+    /// 角度条件を満たす中で、最も近い障害物から自身への方向ベクトル
+    /// </summary>
+    private Vector2 minVec;
+    /// <summary>
+    /// 障害物を回避する際に力を加える方向ベクトル
+    /// </summary>
+    private Vector2 thruster;
+    /// <summary>
+    /// Avoid関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float avoidB;
+    /// <summary>
+    /// Avoid関数に使用する変数、斥力の大きさに影響
+    /// </summary>
+    [SerializeField] private float avoidM;
 
     void Start()
     {
@@ -103,9 +139,8 @@ public class slimeAI : MonoBehaviour
     {
         slimePosition = transform.position;
         speed = rb2D.velocity;
-        target = (slimePosition - frogPosition).normalized;
-        distance = (slimePosition - frogPosition).magnitude;
-        rb2D.AddForce(Potencial() * (coefficient * target + speed) * Time.deltaTime);
+        minVec = Vector2.zero;//初期化
+        rb2D.AddForce((Potencial() * (coefficient * target + speed) + Avoid() * thruster) * Time.deltaTime);
     }
 
     /// <summary>
@@ -114,6 +149,8 @@ public class slimeAI : MonoBehaviour
     /// <returns></returns>
     private float Potencial()
     {
+        target = (slimePosition - frogPosition).normalized;
+        distance = (slimePosition - frogPosition).magnitude;
         d = distance / cc2D.radius;
         if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
         {
@@ -123,7 +160,43 @@ public class slimeAI : MonoBehaviour
         {
             d = dMax;
         }
-        U = -A / Mathf.Pow(d, n) + B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
-        return U;
+        return -A / Mathf.Pow(d, n) + 
+            B / Mathf.Pow(d, m);//-A / Mathf.Pow(d, n)で対象からの引力、B / Mathf.Pow(d, m)で対象からの斥力を計算する
+    }
+
+    /// <summary>
+    /// 回避する障害物を決定して力を加える向き大きさを指定する
+    /// </summary>
+    /// <returns></returns>
+    private float Avoid()
+    {
+        for (int m = 0; m < directerScript.cNumber; m++)
+        {
+            capsulPosition = directerScript.capsule[m].transform.position;
+            capVec = (slimePosition - capsulPosition).normalized;
+            capDis = (slimePosition - capsulPosition).magnitude;
+            if (Vector3.Angle(target, capVec) <= angle && (minVec == Vector2.zero ||
+                capDis < minDis))//角度条件と距離で回避する障害物を決める
+            {
+                minVec = capVec;
+                minDis = capDis;
+            }
+        }
+        if (Vector3.Cross(target, minVec).z < 0)//内積の正負で障害物を左右どちら周りで回避するか決定する
+        {
+            thruster.x = target.y;
+            thruster.y = -target.x;
+        }
+        else
+        {
+            thruster.x = -target.y;
+            thruster.y = target.x;
+        }
+        d = minDis / (2 * cc2D.radius);
+        if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
+        {
+            d = dMin;
+        }
+        return avoidB / Mathf.Pow(d, avoidM);
     }
 }
