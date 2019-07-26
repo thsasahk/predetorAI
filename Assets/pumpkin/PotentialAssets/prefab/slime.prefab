@@ -104,6 +104,7 @@ MonoBehaviour:
   dMin: 1
   dMax: 10
   coefficient: 1
+  directer: {fileID: 0}
 --- !u!50 &2529748485671617933
 Rigidbody2D:
   serializedVersion: 4
@@ -124,7 +125,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &6401018467103910551
 CircleCollider2D:
   m_ObjectHideFlags: 0
