@@ -19,7 +19,11 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// インスタンスしたslimeオブジェクト
     /// </summary>
-    private GameObject slime;
+    private GameObject[] slime;
+    /// <summary>
+    /// slimeオブジェクトの数
+    /// </summary>
+    [SerializeField] private int sNumber;
     /// <summary>
     /// インスタンスしたfrogオブジェクト
     /// </summary>
@@ -35,7 +39,7 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// slimeオブジェクトのスクリプト
     /// </summary>
-    private slimeAI slimeAI;
+    private slimeAI[] slimeAI;
     /// <summary>
     /// frogオブジェクトのスクリプト
     /// </summary>
@@ -51,7 +55,14 @@ public class PotentialDirecter : MonoBehaviour
 
     void Start()
     {
-        slime = Instantiate(slimePrefab);//slimePrefabを生成、slime変数に格納
+        slime = new GameObject[sNumber];
+        slimeAI = new slimeAI[sNumber];
+        for (int n = 0; n < sNumber; n++)
+        {
+            slime[n] = Instantiate(slimePrefab);//slimePrefabを生成、slime変数に格納
+            slimeAI[n] = slime[n].GetComponent<slimeAI>();
+            slimeAI[n].directer = gameObject;
+        }
         frog = Instantiate(frogPrefab);//frogPrefabを生成、frog変数に格納
         capsule = new GameObject[cNumber];
         for (int m = 0; m < cNumber; m++)
@@ -60,15 +71,16 @@ public class PotentialDirecter : MonoBehaviour
                 new Vector2(Random.Range(minPosition.x, maxPosition.x), Random.Range(minPosition.y, maxPosition.y)),
                 Quaternion.identity);
         }
-        slimeAI = slime.GetComponent<slimeAI>();
-        slimeAI.directer = gameObject;
         frogAI = frog.GetComponent<frogAI>();
         frogAI.directer = gameObject;
     }
 
     void Update()
     {
-        slimeAI.frogPosition = frog.transform.position;//flogオブジェクトのpositionを受け渡す
-        frogAI.slimePosition = slime.transform.position;//slimeオブジェクトのpositionを受け渡す
+        for (int n = 0; n < sNumber; n++)
+        {
+            slimeAI[n].frogPosition = frog.transform.position;//flogオブジェクトのpositionを受け渡す
+            frogAI.slimePosition = slime[n].transform.position;//slimeオブジェクトのpositionを受け渡す
+        }
     }
 }
