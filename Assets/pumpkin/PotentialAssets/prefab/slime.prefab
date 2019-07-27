@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frogPosition: {x: 0, y: 0}
-  minPosition: {x: 0, y: 0}
-  maxPosition: {x: 0, y: 0}
+  minPosition: {x: -8.5, y: -4.5}
+  maxPosition: {x: 8.5, y: 4.5}
   A: 2000
   B: 2000
   n: 1
