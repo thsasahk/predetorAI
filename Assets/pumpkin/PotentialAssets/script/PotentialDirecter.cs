@@ -19,7 +19,7 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// インスタンスしたslimeオブジェクト
     /// </summary>
-    private GameObject[] slime;
+    public GameObject[] slime;
     /// <summary>
     /// slimeオブジェクトの数
     /// </summary>
