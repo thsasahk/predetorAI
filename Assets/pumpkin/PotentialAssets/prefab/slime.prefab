@@ -108,6 +108,10 @@ MonoBehaviour:
   angle: 90
   avoidB: 5000
   avoidM: 1.6
+  swarmA: 800
+  swarmN: 1
+  swarmB: 1000
+  swarmM: 2
 --- !u!50 &2529748485671617933
 Rigidbody2D:
   serializedVersion: 4
