@@ -124,6 +124,30 @@ public class slimeAI : MonoBehaviour
     /// Avoid関数に使用する変数、斥力の大きさに影響
     /// </summary>
     [SerializeField] private float avoidM;
+    /// <summary>
+    /// 群れを形成するために力を加える方向
+    /// </summary>
+    private Vector2 swarm;
+    /// <summary>
+    /// 自分以外のslimeオブジェクトのポジション
+    /// </summary>
+    private Vector2 targetSlime;
+    /// <summary>
+    /// swarm関数で使用する、斥力に影響
+    /// </summary>
+    [SerializeField] private float swarmA;
+    /// <summary>
+    /// swarm関数で使用する、斥力に影響
+    /// </summary>
+    [SerializeField] private float swarmN;
+    /// <summary>
+    /// swarm関数で使用する、引力に影響
+    /// </summary>
+    [SerializeField] private float swarmB;
+    /// <summary>
+    /// swarm関数で使用する、引力に影響
+    /// </summary>
+    [SerializeField] private float swarmM;
 
     void Start()
     {
@@ -140,7 +164,10 @@ public class slimeAI : MonoBehaviour
         slimePosition = transform.position;
         speed = rb2D.velocity;
         minVec = Vector2.zero;//初期化
-        rb2D.AddForce((Potencial() * (coefficient * target + speed) + Avoid() * thruster) * Time.deltaTime);
+        rb2D.AddForce((Potencial() * (coefficient * target + speed)
+            + Avoid() * thruster
+            + Swarm() * swarm)
+            * Time.deltaTime);
     }
 
     /// <summary>
@@ -198,5 +225,28 @@ public class slimeAI : MonoBehaviour
             d = dMin;
         }
         return avoidB / Mathf.Pow(d, avoidM);
+    }
+
+    /// <summary>
+    /// 群れを形成する
+    /// </summary>
+    /// <returns></returns>
+    private float Swarm()
+    {
+        for (int n = 0; n < directerScript.sNumber; n++)
+            //slimeオブジェクトごとにベクトルを算出して合計することで力を加える方向を決める
+        {
+            if (directerScript.slime[n] != gameObject)//自身は除外
+            {
+                targetSlime = directerScript.slime[n].transform.position;
+                swarm += slimePosition - targetSlime;
+            }
+        }
+        d = swarm.magnitude / (2 * cc2D.radius);
+        if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
+        {
+            d = dMin;
+        }
+        return -swarmA / Mathf.Pow(d, swarmN) + swarmB / Mathf.Pow(d, swarmM);
     }
 }
