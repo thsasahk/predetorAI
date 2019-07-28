@@ -23,7 +23,7 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// slimeオブジェクトの数
     /// </summary>
-    [SerializeField] private int sNumber;
+    public int sNumber;
     /// <summary>
     /// インスタンスしたfrogオブジェクト
     /// </summary>
