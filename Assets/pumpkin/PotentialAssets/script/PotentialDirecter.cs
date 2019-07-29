@@ -55,7 +55,7 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// リーダーを用意するかどうかを決定する
     /// </summary>
-    [SerializeField] private bool leader;
+    public bool leader;
     /// <summary>
     /// slimeオブジェクトからfrogオブジェクトへの距離
     /// </summary>
@@ -67,7 +67,7 @@ public class PotentialDirecter : MonoBehaviour
     /// <summary>
     /// リーダーオブジェクトの要素番号
     /// </summary>
-    private int leaderNumber;
+    public int leaderNumber;
 
     void Start()
     {
@@ -100,7 +100,7 @@ public class PotentialDirecter : MonoBehaviour
             {
                 slimeAI[n].isLeader = false;//初期化
                 distance = (slime[n].transform.position - frog.transform.position).magnitude;
-                if (distance < minDis || distance == 0)
+                if (distance < minDis || n == 0)
                 {
                     minDis = distance;
                     leaderNumber = n;
