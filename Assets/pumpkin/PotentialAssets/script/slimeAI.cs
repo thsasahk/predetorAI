@@ -164,9 +164,10 @@ public class slimeAI : MonoBehaviour
         slimePosition = transform.position;
         speed = rb2D.velocity;
         minVec = Vector2.zero;//初期化
+        swarm = Vector2.zero;//初期化
         rb2D.AddForce((Potencial() * (coefficient * target + speed)
-            + Avoid() * thruster
-            + Swarm() * swarm)
+            + Avoid() * (coefficient * thruster - speed)
+            + Swarm() * (coefficient * swarm - speed))
             * Time.deltaTime);
     }
 
@@ -239,7 +240,11 @@ public class slimeAI : MonoBehaviour
             if (directerScript.slime[n] != gameObject)//自身は除外
             {
                 targetSlime = directerScript.slime[n].transform.position;
-                swarm += slimePosition - targetSlime;
+            }
+            if (targetSlime.magnitude < swarm.magnitude || swarm == Vector2.zero)
+                //最も近いスライムに近づいて群れを形成する
+            {
+                swarm = slimePosition - targetSlime;
             }
         }
         d = swarm.magnitude / (2 * cc2D.radius);
