@@ -149,7 +149,9 @@ public class frogAI : MonoBehaviour
         {
             touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-        rb2D.AddForce((Potencial() * (coefficient * target + speed) + Avoid() * thruster) * Time.deltaTime);
+        rb2D.AddForce((Potencial() * (coefficient * target + speed) 
+            + Avoid() * (coefficient * thruster - speed)) 
+            * Time.deltaTime);
     }
 
     /// <summary>
