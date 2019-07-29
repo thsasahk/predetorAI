@@ -148,6 +148,10 @@ public class slimeAI : MonoBehaviour
     /// swarm関数で使用する、引力に影響
     /// </summary>
     [SerializeField] private float swarmM;
+    /// <summary>
+    /// trueなら自身がリーダーオブジェクト
+    /// </summary>
+    public bool isLeader;
 
     void Start()
     {
@@ -234,6 +238,24 @@ public class slimeAI : MonoBehaviour
     /// <returns></returns>
     private float Swarm()
     {
+        if (directerScript.leader)
+        {
+            if (isLeader)
+            {
+                return 0;//自身がリーダーなら群れを作るための力は加えない
+            }
+            else
+            {
+                targetSlime = directerScript.slime[directerScript.leaderNumber].transform.position;
+                swarm = slimePosition - targetSlime;
+                d = swarm.magnitude / (2 * cc2D.radius);
+                if (d <= dMin)//Uの値が急激に大きくなってしまうのを防ぐ
+                {
+                    d = dMin;
+                }
+                return -swarmA / Mathf.Pow(d, swarmN) + swarmB / Mathf.Pow(d, swarmM);
+            }
+        }
         for (int n = 0; n < directerScript.sNumber; n++)
             //slimeオブジェクトごとにベクトルを算出して合計することで力を加える方向を決める
         {
