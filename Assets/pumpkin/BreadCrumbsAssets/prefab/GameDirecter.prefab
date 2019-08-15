@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34ae41f2439a284c8a49962bac67497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1035981524829609143, guid: 7db54577cfb9c3e499ddd041d9ae3254,
+    type: 3}
+  enemyPrefab: {fileID: 510005427431982570, guid: 120335a7cf9cfb647846cf40d4387eff,
+    type: 3}
+  stonePrefab: {fileID: 1869470420117093503, guid: de9fb0596d1bc7a45b47ad5beea0215b,
+    type: 3}
