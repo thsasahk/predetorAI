@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BreadPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Vector2 touch;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
