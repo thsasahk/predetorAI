@@ -43,6 +43,18 @@ public class BreadDirecter : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.touchCount > 0)
+        {
+            playerScript.touch = Input.GetTouch(0).position;//スクリーン座標を記録
+            playerScript.touch = Camera.main.ScreenToWorldPoint(playerScript.touch);//スクリーン座標をワールド座標に変換
+            playerScript.touch.x = Mathf.RoundToInt(playerScript.touch.x);//マス目に合わせて整数化
+            playerScript.touch.y = Mathf.RoundToInt(playerScript.touch.y);//マス目に合わせて整数化
+        }
+        if (Input.GetMouseButton(0))//開発用、ビルド時コメントアウト
+        {
+            playerScript.touch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            playerScript.touch.x = Mathf.RoundToInt(playerScript.touch.x);//マス目に合わせて整数化
+            playerScript.touch.y = Mathf.RoundToInt(playerScript.touch.y);//マス目に合わせて整数化
+        }
     }
 }
