@@ -13,6 +13,10 @@ public class BreadDirecter : MonoBehaviour
     /// </summary>
     private GameObject player;
     /// <summary>
+    /// 生成したplayerオブジェクトのスクリプト
+    /// </summary>
+    private BreadPlayer playerScript;
+    /// <summary>
     /// EnemyPrefab
     /// </summary>
     [SerializeField] private GameObject enemyPrefab;
@@ -32,6 +36,7 @@ public class BreadDirecter : MonoBehaviour
     void Start()
     {
         player = Instantiate(playerPrefab);
+        playerScript = player.GetComponent<BreadPlayer>();
         enemy = Instantiate(enemyPrefab);
         stone = Instantiate(stonePrefab);
     }
