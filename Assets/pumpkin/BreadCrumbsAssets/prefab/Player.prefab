@@ -92,3 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3382070312c204aa95f2d03acf8ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touch: {x: 0, y: 0}
+  step: 1
