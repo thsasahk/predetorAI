@@ -145,5 +145,6 @@ public class BreadPlayer : MonoBehaviour
                 pathCol[n] = path.x;
             }
         }
+        n = 0;//初期化
     }
 }
