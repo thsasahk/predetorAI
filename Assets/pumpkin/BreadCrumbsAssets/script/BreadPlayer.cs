@@ -48,6 +48,10 @@ public class BreadPlayer : MonoBehaviour
     /// 配列の要素数
     /// </summary>
     private int element;
+    /// <summary>
+    /// 経路探索の配列に記録するベクトル
+    /// </summary>
+    private Vector2 path;
 
     void Start()
     {
