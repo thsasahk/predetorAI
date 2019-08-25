@@ -28,10 +28,6 @@ public class BreadPlayer : MonoBehaviour
     /// 自身からtargetへのベクトル
     /// </summary>
     private Vector2 delta;
-    /// <summary>
-    /// マス目の大きさ
-    /// </summary>
-    [SerializeField] private Vector2 cellSize;
 
     void Start()
     {
