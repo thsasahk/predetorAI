@@ -52,6 +52,10 @@ public class BreadPlayer : MonoBehaviour
     /// 経路探索の配列に記録するベクトル
     /// </summary>
     private Vector2 path;
+    /// <summary>
+    /// 移動距離の少ない軸を移動するタイミングを決定
+    /// </summary>
+    private float fraction;
 
     void Start()
     {
