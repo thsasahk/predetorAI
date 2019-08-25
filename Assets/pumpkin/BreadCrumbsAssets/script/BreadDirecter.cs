@@ -35,7 +35,7 @@ public class BreadDirecter : MonoBehaviour
     /// <summary>
     /// マス目の大きさを決定する
     /// </summary>
-    [SerializeField] private Vector2 cellSize;
+    public Vector2 cellSize;
 
     void Start()
     {
