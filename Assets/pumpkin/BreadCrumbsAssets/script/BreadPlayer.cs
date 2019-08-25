@@ -56,6 +56,10 @@ public class BreadPlayer : MonoBehaviour
     /// 移動距離の少ない軸を移動するタイミングを決定
     /// </summary>
     private float fraction;
+    /// <summary>
+    /// 繰り返し処理に使う変数
+    /// </summary>
+    private int n;
 
     void Start()
     {
