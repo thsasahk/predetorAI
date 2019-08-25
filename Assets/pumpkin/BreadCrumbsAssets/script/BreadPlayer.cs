@@ -44,6 +44,10 @@ public class BreadPlayer : MonoBehaviour
     /// 目標への経路のy座標配列
     /// </summary>
     private float[] pathRow;
+    /// <summary>
+    /// 配列の要素数
+    /// </summary>
+    private int element;
 
     void Start()
     {
