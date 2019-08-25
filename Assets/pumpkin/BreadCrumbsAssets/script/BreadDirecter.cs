@@ -32,6 +32,10 @@ public class BreadDirecter : MonoBehaviour
     /// 生成したStonePrefab
     /// </summary>
     private GameObject stone;
+    /// <summary>
+    /// マス目の大きさを決定する
+    /// </summary>
+    [SerializeField] private Vector2 cellSize;
 
     void Start()
     {
