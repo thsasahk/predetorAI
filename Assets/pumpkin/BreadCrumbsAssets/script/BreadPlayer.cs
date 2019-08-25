@@ -65,6 +65,7 @@ public class BreadPlayer : MonoBehaviour
     {
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
+        touch = gameObject.transform.position;//初期化
     }
 
     void Update()
