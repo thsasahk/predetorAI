@@ -67,12 +67,12 @@ public class BreadPlayer : MonoBehaviour
         {
             target = touch;//移動目標を更新
             delta = target - current;
-            SetPath(delta);
+            SetPath(delta, directer.cellSize);
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
-    private void SetPath(Vector2 d)
+    private void SetPath(Vector2 d,Vector2 c)
     {
         if (d.x >= 0)
         {
@@ -91,5 +91,13 @@ public class BreadPlayer : MonoBehaviour
             direction.y = -directer.cellSize.y;//d.yが負なら負方向にマス目の長さ分移動
         }
         path = current;//経路探索のスタート位置を記録
+        if (d.x >= d.y)//x方向への移動距離が長い場合
+        {
+            element = Mathf.CeilToInt(d.x / c.x);//移動するマス目の数を配列の要素数とする
+        }
+        else//y方向への移動距離が長い場合
+        {
+            element = Mathf.CeilToInt(d.y / c.y);//移動するマス目の数を配列の要素数とする
+        }
     }
 }
