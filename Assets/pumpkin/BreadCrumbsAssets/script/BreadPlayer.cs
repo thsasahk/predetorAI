@@ -28,6 +28,10 @@ public class BreadPlayer : MonoBehaviour
     /// 自身からtargetへのベクトル
     /// </summary>
     private Vector2 delta;
+    /// <summary>
+    /// GameDirecterオブジェクトのスクリプト
+    /// </summary>
+    public BreadDirecter directer;
 
     void Start()
     {
