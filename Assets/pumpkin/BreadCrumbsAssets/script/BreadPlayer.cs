@@ -70,7 +70,6 @@ public class BreadPlayer : MonoBehaviour
     void Update()
     {
         current = gameObject.transform.position;//変数を更新
-        nextCell = touch;//仮の記述
         if (target != touch && current == nextCell)
         {
             target = touch;//移動目標を更新
