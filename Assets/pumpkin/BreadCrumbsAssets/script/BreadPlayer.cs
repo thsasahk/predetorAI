@@ -80,7 +80,7 @@ public class BreadPlayer : MonoBehaviour
         {
             nextCell.x = pathCol[n];
             nextCell.y = pathRow[n];
-            if (n < element - 1) //numを配列の要素数以上にしない
+            if (n < element - 1) //nを配列の要素数以上にしない
             {
                 n++;
             }
