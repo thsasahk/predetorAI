@@ -58,6 +58,21 @@ public class BreadPlayer : MonoBehaviour
 
     private void SetPath(Vector2 d)
     {
-
+        if (d.x >= 0)
+        {
+            direction.x = directer.cellSize.x;//d.xが正なら正方向にマス目の長さ分移動
+        }
+        else
+        {
+            direction.x = -directer.cellSize.x;//d.xが負なら負方向にマス目の長さ分移動
+        }
+        if (d.y >= 0)
+        {
+            direction.y = directer.cellSize.y;//d.yが正なら正方向にマス目の長さ分移動
+        }
+        else
+        {
+            direction.y = -directer.cellSize.y;//d.yが負なら負方向にマス目の長さ分移動
+        }
     }
 }
