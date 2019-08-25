@@ -105,6 +105,18 @@ public class BreadPlayer : MonoBehaviour
             pathCol = new float[element];
             pathRow = new float[element];
             fraction = d.y * 2 - d.x;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
+            for (n = 0; n <= element - 1; n++)
+            {
+                path.x += direction.x;//次のマスのx座標を計算
+                pathCol[n] = path.x;//配列に記録
+                if (fraction >= 0)
+                {
+                    path.y += direction.y;//次のマスのy座標を計算
+                    fraction -= d.x;
+                }
+                fraction += d.y;
+                pathRow[n] = path.y;
+            }
         }
         else//y方向への移動距離が長い場合
         {
@@ -112,6 +124,18 @@ public class BreadPlayer : MonoBehaviour
             pathCol = new float[element];
             pathRow = new float[element];
             fraction = d.x * 2 - d.y;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
+            for (n = 0; n <= element - 1; n++)
+            {
+                path.y += direction.y;//次のマスのx座標を計算
+                pathRow[n] = path.y;//配列に記録
+                if (fraction >= 0)
+                {
+                    path.x += direction.x;//次のマスのy座標を計算
+                    fraction -= d.y;
+                }
+                fraction += d.x;
+                pathCol[n] = path.x;
+            }
         }
     }
 }
