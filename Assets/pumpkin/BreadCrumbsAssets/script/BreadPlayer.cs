@@ -94,10 +94,14 @@ public class BreadPlayer : MonoBehaviour
         if (d.x >= d.y)//x方向への移動距離が長い場合
         {
             element = Mathf.CeilToInt(d.x / c.x);//移動するマス目の数を配列の要素数とする
+            pathCol = new float[element];
+            pathRow = new float[element];
         }
         else//y方向への移動距離が長い場合
         {
             element = Mathf.CeilToInt(d.y / c.y);//移動するマス目の数を配列の要素数とする
+            pathCol = new float[element];
+            pathRow = new float[element];
         }
     }
 }
