@@ -32,6 +32,10 @@ public class BreadPlayer : MonoBehaviour
     /// GameDirecterオブジェクトのスクリプト
     /// </summary>
     public BreadDirecter directer;
+    /// <summary>
+    /// xyの移動方向と距離を記録
+    /// </summary>
+    private Vector2 direction;
 
     void Start()
     {
