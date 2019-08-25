@@ -77,6 +77,15 @@ public class BreadPlayer : MonoBehaviour
             delta = target - current;
             SetPath(delta, directer.cellSize);
         }
+        if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
+        {
+            nextCell.x = pathCol[n];
+            nextCell.y = pathRow[n];
+            if (n < element - 1) //numを配列の要素数以上にしない
+            {
+                n++;
+            }
+        }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
