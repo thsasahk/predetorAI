@@ -90,5 +90,6 @@ public class BreadPlayer : MonoBehaviour
         {
             direction.y = -directer.cellSize.y;//d.yが負なら負方向にマス目の長さ分移動
         }
+        path = current;//経路探索のスタート位置を記録
     }
 }
