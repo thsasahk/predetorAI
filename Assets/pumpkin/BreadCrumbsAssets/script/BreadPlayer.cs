@@ -36,6 +36,14 @@ public class BreadPlayer : MonoBehaviour
     /// xyの移動方向と距離を記録
     /// </summary>
     private Vector2 direction;
+    /// <summary>
+    /// 目標への経路のx座標配列
+    /// </summary>
+    private float[] pathCol;
+    /// <summary>
+    /// 目標への経路のy座標配列
+    /// </summary>
+    private float[] pathRow;
 
     void Start()
     {
