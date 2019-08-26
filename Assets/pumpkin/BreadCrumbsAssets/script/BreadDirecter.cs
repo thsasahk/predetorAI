@@ -11,7 +11,7 @@ public class BreadDirecter : MonoBehaviour
     /// <summary>
     /// 生成したPlayerPrefab
     /// </summary>
-    private GameObject player;
+    public GameObject player;
     /// <summary>
     /// 生成したplayerオブジェクトのスクリプト
     /// </summary>
