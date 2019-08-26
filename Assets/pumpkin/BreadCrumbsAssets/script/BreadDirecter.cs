@@ -25,6 +25,10 @@ public class BreadDirecter : MonoBehaviour
     /// </summary>
     private GameObject enemy;
     /// <summary>
+    /// enemyオブジェクトのスクリプト
+    /// </summary>
+    private BreadEnemy enemyScript;
+    /// <summary>
     /// StonePrefab
     /// </summary>
     [SerializeField] private GameObject stonePrefab;
