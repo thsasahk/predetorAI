@@ -8,7 +8,9 @@ public class BreadEnemy : MonoBehaviour
     /// タッチ情報を格納
     /// </summary>
     public Vector2 touch;
-
+    /// <summary>
+    /// Playerオブジェクトのposition
+    /// </summary>
     private Vector2 playerPosition;
     /// <summary>
     /// 現在位置を記録
@@ -74,9 +76,9 @@ public class BreadEnemy : MonoBehaviour
     {
         current = gameObject.transform.position;//変数を更新
         playerPosition = directer.player.transform.position;//変数を更新
-        if (target != touch && current == nextCell)
+        if (target != playerPosition && current == nextCell)
         {
-            target = touch;//移動目標を更新
+            target = playerPosition;//移動目標を更新
             delta = target - current;
             SetPath(delta, directer.cellSize);
         }
