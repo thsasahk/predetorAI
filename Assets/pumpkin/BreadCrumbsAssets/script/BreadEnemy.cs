@@ -5,10 +5,6 @@ using UnityEngine;
 public class BreadEnemy : MonoBehaviour
 {
     /// <summary>
-    /// タッチ情報を格納
-    /// </summary>
-    public Vector2 touch;
-    /// <summary>
     /// Playerオブジェクトのposition
     /// </summary>
     private Vector2 playerPosition;
@@ -69,7 +65,6 @@ public class BreadEnemy : MonoBehaviour
     {
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
-        touch = gameObject.transform.position;//初期化
     }
 
     void Update()
