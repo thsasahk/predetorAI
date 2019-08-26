@@ -47,6 +47,7 @@ public class BreadDirecter : MonoBehaviour
         playerScript = player.GetComponent<BreadPlayer>();
         playerScript.directer = GetComponent<BreadDirecter>();
         enemy = Instantiate(enemyPrefab);
+        enemyScript = enemy.GetComponent<BreadEnemy>();
         stone = Instantiate(stonePrefab);
     }
 
