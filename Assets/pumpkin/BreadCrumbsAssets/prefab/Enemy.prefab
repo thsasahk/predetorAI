@@ -94,3 +94,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   step: 1
   directer: {fileID: 0}
+  startCell: {x: -4, y: 0}
