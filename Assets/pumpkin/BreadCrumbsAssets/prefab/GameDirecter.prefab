@@ -45,8 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1035981524829609143, guid: 7db54577cfb9c3e499ddd041d9ae3254,
     type: 3}
+  player: {fileID: 0}
   enemyPrefab: {fileID: 510005427431982570, guid: 120335a7cf9cfb647846cf40d4387eff,
     type: 3}
   stonePrefab: {fileID: 1869470420117093503, guid: de9fb0596d1bc7a45b47ad5beea0215b,
     type: 3}
+  stoneNumber: 5
   cellSize: {x: 1, y: 1}
