@@ -35,7 +35,11 @@ public class BreadDirecter : MonoBehaviour
     /// <summary>
     /// 生成したStonePrefab
     /// </summary>
-    private GameObject stone;
+    private GameObject[] stone;
+    /// <summary>
+    /// stone配列の要素数
+    /// </summary>
+    [SerializeField] private int stoneNumber;
     /// <summary>
     /// マス目の大きさを決定する
     /// </summary>
@@ -49,7 +53,11 @@ public class BreadDirecter : MonoBehaviour
         enemy = Instantiate(enemyPrefab);
         enemyScript = enemy.GetComponent<BreadEnemy>();
         enemyScript.directer = GetComponent<BreadDirecter>();
-        stone = Instantiate(stonePrefab);
+        stone = new GameObject[stoneNumber];
+        for(int n = 0; n < stoneNumber; n++)
+        {
+            stone[n] = Instantiate(stonePrefab);
+        }
     }
 
     void Update()
