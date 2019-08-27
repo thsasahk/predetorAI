@@ -60,9 +60,14 @@ public class BreadPlayer : MonoBehaviour
     /// 繰り返し処理に使う変数
     /// </summary>
     private int n;
+    /// <summary>
+    /// スタート時のマス
+    /// </summary>
+    [SerializeField] private Vector2 startCell;
 
     void Start()
     {
+        transform.position = startCell * directer.cellSize;
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
         touch = gameObject.transform.position;//初期化
