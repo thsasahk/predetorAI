@@ -17,6 +17,10 @@ public class BreadDirecter : MonoBehaviour
     /// </summary>
     private BreadPlayer playerScript;
     /// <summary>
+    /// playerオブジェクトのposition
+    /// </summary>
+    private Vector2 playerPos;
+    /// <summary>
     /// EnemyPrefab
     /// </summary>
     [SerializeField] private GameObject enemyPrefab;
@@ -28,6 +32,10 @@ public class BreadDirecter : MonoBehaviour
     /// enemyオブジェクトのスクリプト
     /// </summary>
     private BreadEnemy enemyScript;
+    /// <summary>
+    /// enemyオブジェクトのposition
+    /// </summary>
+    private Vector2 enemyPos;
     /// <summary>
     /// StonePrefab
     /// </summary>
@@ -64,21 +72,53 @@ public class BreadDirecter : MonoBehaviour
     /// stoneオブジェクトのposition.yの最大値
     /// </summary>
     [SerializeField] private int maxPosY;
+    /// <summary>
+    /// stoneオブジェクトのpositionを格納する配列
+    /// </summary>
+    private Vector2[] _stonePos;
 
     void Start()
     {
         player = Instantiate(playerPrefab);
         playerScript = player.GetComponent<BreadPlayer>();
         playerScript.directer = GetComponent<BreadDirecter>();
+        playerPos = playerScript.startCell;
         enemy = Instantiate(enemyPrefab);
         enemyScript = enemy.GetComponent<BreadEnemy>();
         enemyScript.directer = GetComponent<BreadDirecter>();
+        enemyPos = enemyScript.startCell;
         stone = new GameObject[stoneNumber];
+        _stonePos = new Vector2[stoneNumber];
         for(int n = 0; n < stoneNumber; n++)
         {
-            stonePos.x = Random.Range(minPosX, maxPosX + 1);
-            stonePos.y = Random.Range(minPosY, maxPosY + 1);
-            stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
+            stonePos.x = Random.Range(minPosX, maxPosX + 1);//stoneオブジェクトの配置をランダムに決定
+            stonePos.y = Random.Range(minPosY, maxPosY + 1);//stoneオブジェクトの配置をランダムに決定
+            _stonePos[n] = stonePos;
+            if (n == 0 && stonePos == playerPos && stonePos == enemyPos)//生成済みの各オブジェクトと被らないように
+            {
+                stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
+            }
+            else
+            {
+                n--;//被ったら配列番号を戻してやり直し
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (stonePos == _stonePos[i] || stonePos == playerPos || stonePos == enemyPos)
+                    //生成済みの各オブジェクトと被らないように
+                {
+                    n--;//被ったら配列番号を戻してやり直し
+                    break;
+                }
+                else
+                {
+                    if (i == n - 1)
+                    {
+                        stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
+                        //自分の1つ前の配列番号までpositionが被らなかったら生成
+                    }
+                }
+            }
         }
     }
 
