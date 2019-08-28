@@ -63,7 +63,7 @@ public class BreadPlayer : MonoBehaviour
     /// <summary>
     /// スタート時のマス
     /// </summary>
-    [SerializeField] private Vector2 startCell;
+    public Vector2 startCell;
 
     void Start()
     {
