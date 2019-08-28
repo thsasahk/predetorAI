@@ -52,3 +52,7 @@ MonoBehaviour:
     type: 3}
   stoneNumber: 5
   cellSize: {x: 1, y: 1}
+  minPosX: -8
+  minPosY: -4
+  maxPosX: 4
+  maxPosY: 8
