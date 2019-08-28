@@ -44,6 +44,26 @@ public class BreadDirecter : MonoBehaviour
     /// マス目の大きさを決定する
     /// </summary>
     public Vector2 cellSize;
+    /// <summary>
+    /// stoneオブジェクトのポジション
+    /// </summary>
+    private Vector2 stonePos;
+    /// <summary>
+    /// stoneオブジェクトのposition.xの最小値
+    /// </summary>
+    [SerializeField] private int minPosX;
+    /// <summary>
+    /// stoneオブジェクトのposition.yの最小値
+    /// </summary>
+    [SerializeField] private int minPosY;
+    /// <summary>
+    /// stoneオブジェクトのposition.xの最大値
+    /// </summary>
+    [SerializeField] private int maxPosX;
+    /// <summary>
+    /// stoneオブジェクトのposition.yの最大値
+    /// </summary>
+    [SerializeField] private int maxPosY;
 
     void Start()
     {
@@ -56,7 +76,9 @@ public class BreadDirecter : MonoBehaviour
         stone = new GameObject[stoneNumber];
         for(int n = 0; n < stoneNumber; n++)
         {
-            stone[n] = Instantiate(stonePrefab);
+            stonePos.x = Random.Range(minPosX, maxPosX + 1);
+            stonePos.y = Random.Range(minPosY, maxPosY + 1);
+            stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
         }
     }
 
