@@ -94,7 +94,7 @@ public class BreadDirecter : MonoBehaviour
             stonePos.x = Random.Range(minPosX, maxPosX + 1);//stoneオブジェクトの配置をランダムに決定
             stonePos.y = Random.Range(minPosY, maxPosY + 1);//stoneオブジェクトの配置をランダムに決定
             _stonePos[n] = stonePos;
-            if (n == 0 && stonePos == playerPos && stonePos == enemyPos)//生成済みの各オブジェクトと被らないように
+            if (n == 0 && stonePos != playerPos && stonePos != enemyPos)//生成済みの各オブジェクトと被らないように
             {
                 stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
             }
