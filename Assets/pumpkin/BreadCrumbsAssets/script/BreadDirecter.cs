@@ -94,17 +94,9 @@ public class BreadDirecter : MonoBehaviour
             stonePos.x = Random.Range(minPosX, maxPosX + 1);//stoneオブジェクトの配置をランダムに決定
             stonePos.y = Random.Range(minPosY, maxPosY + 1);//stoneオブジェクトの配置をランダムに決定
             _stonePos[n] = stonePos;
-            if (n == 0 && stonePos != playerPos && stonePos != enemyPos)//生成済みの各オブジェクトと被らないように
+            for (int i = 0; i <= n; i++)
             {
-                stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
-            }
-            else
-            {
-                n--;//被ったら配列番号を戻してやり直し
-            }
-            for (int i = 0; i < n; i++)
-            {
-                if (stonePos == _stonePos[i] || stonePos == playerPos || stonePos == enemyPos)
+                if ((stonePos == _stonePos[i] || stonePos == playerPos || stonePos == enemyPos) && i != n)
                     //生成済みの各オブジェクトと被らないように
                 {
                     n--;//被ったら配列番号を戻してやり直し
@@ -112,7 +104,7 @@ public class BreadDirecter : MonoBehaviour
                 }
                 else
                 {
-                    if (i == n - 1)
+                    if (i == n)
                     {
                         stone[n] = Instantiate(stonePrefab, stonePos, Quaternion.identity);
                         //自分の1つ前の配列番号までpositionが被らなかったら生成
