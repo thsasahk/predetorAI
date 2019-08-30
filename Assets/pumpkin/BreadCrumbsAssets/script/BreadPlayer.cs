@@ -64,6 +64,14 @@ public class BreadPlayer : MonoBehaviour
     /// スタート時のマス
     /// </summary>
     public Vector2 startCell;
+    /// <summary>
+    /// delta.xの絶対値を格納
+    /// </summary>
+    private float absDelX;
+    /// <summary>
+    /// delta.yの絶対値を格納
+    /// </summary>
+    private float absDelY;
 
     void Start()
     {
@@ -112,13 +120,15 @@ public class BreadPlayer : MonoBehaviour
         {
             direction.y = -directer.cellSize.y;//d.yが負なら負方向にマス目の長さ分移動
         }
+        absDelX = Mathf.Abs(d.x);
+        absDelY = Mathf.Abs(d.y);
         path = current;//経路探索のスタート位置を記録
-        if (Mathf.Abs(d.x) >= Mathf.Abs(d.y))//x方向への移動距離が長い場合
+        if (absDelX >= absDelY)//x方向への移動距離が長い場合
         {
-            element = Mathf.CeilToInt(Mathf.Abs(d.x) / c.x);//移動するマス目の数を配列の要素数とする
+            element = Mathf.CeilToInt(absDelX / c.x);//移動するマス目の数を配列の要素数とする
             pathCol = new float[element];
             pathRow = new float[element];
-            fraction = Mathf.Abs(d.y) * 2 - Mathf.Abs(d.x);//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
+            fraction = absDelY * 2 - absDelX;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
             for (n = 0; n <= element - 1; n++)
             {
                 path.x += direction.x;//次のマスのx座標を計算
@@ -126,18 +136,18 @@ public class BreadPlayer : MonoBehaviour
                 if (fraction >= 0)
                 {
                     path.y += direction.y;//次のマスのy座標を計算
-                    fraction -= Mathf.Abs(d.x);
+                    fraction -= absDelX;
                 }
-                fraction += Mathf.Abs(d.y);
+                fraction += absDelY;
                 pathRow[n] = path.y;
             }
         }
         else//y方向への移動距離が長い場合
         {
-            element = Mathf.CeilToInt(Mathf.Abs(d.y) / c.y);//移動するマス目の数を配列の要素数とする
+            element = Mathf.CeilToInt(absDelY / c.y);//移動するマス目の数を配列の要素数とする
             pathCol = new float[element];
             pathRow = new float[element];
-            fraction = Mathf.Abs(d.x) * 2 - Mathf.Abs(d.y);//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
+            fraction = absDelX * 2 - absDelY;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
             for (n = 0; n <= element - 1; n++)
             {
                 path.y += direction.y;//次のマスのx座標を計算
@@ -145,9 +155,9 @@ public class BreadPlayer : MonoBehaviour
                 if (fraction >= 0)
                 {
                     path.x += direction.x;//次のマスのy座標を計算
-                    fraction -= Mathf.Abs(d.y);
+                    fraction -= absDelY;
                 }
-                fraction += Mathf.Abs(d.x);
+                fraction += absDelX;
                 pathCol[n] = path.x;
             }
         }
