@@ -56,3 +56,5 @@ MonoBehaviour:
   minPosY: -4
   maxPosX: 8
   maxPosY: 4
+  trail: []
+  maxTrail: 10
