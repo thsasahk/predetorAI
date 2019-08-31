@@ -79,6 +79,10 @@ public class BreadPlayer : MonoBehaviour
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
         touch = gameObject.transform.position;//初期化
+        for(int i = 0; i < directer.maxTrail; i++)//配列の初期値を設定
+        {
+            directer.trail[i] = startCell;
+        }
     }
 
     void Update()
@@ -89,6 +93,15 @@ public class BreadPlayer : MonoBehaviour
             target = touch;//移動目標を更新
             delta = target - current;
             SetPath(delta, directer.cellSize);
+        }
+        if (current == nextCell && current != directer.trail[directer.maxTrail - 1])
+            //移動が終了していて、最新の足跡と現在地が異なるとき
+        {
+            for(int i = 0; i < directer.maxTrail - 1; i++)//足跡を一つずらして最も古いものを削除
+            {
+                directer.trail[i] = directer.trail[i + 1];
+            }
+            directer.trail[directer.maxTrail - 1] = current;//最新の足跡を更新
         }
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
         {
