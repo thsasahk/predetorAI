@@ -76,6 +76,14 @@ public class BreadDirecter : MonoBehaviour
     /// stoneオブジェクトのpositionを格納する配列
     /// </summary>
     private Vector2[] _stonePos;
+    /// <summary>
+    /// playerオブジェクトの移動ログ
+    /// </summary>
+    public Vector2[] trail;
+    /// <summary>
+    /// trail配列の要素数
+    /// </summary>
+    public int maxTrail;
 
     void Start()
     {
@@ -89,6 +97,7 @@ public class BreadDirecter : MonoBehaviour
         enemyPos = enemyScript.startCell;
         stone = new GameObject[stoneNumber];
         _stonePos = new Vector2[stoneNumber];
+        trail = new Vector2[maxTrail];
         for(int n = 0; n < stoneNumber; n++)
         {
             stonePos.x = Random.Range(minPosX, maxPosX + 1);//stoneオブジェクトの配置をランダムに決定
