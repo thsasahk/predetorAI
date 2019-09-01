@@ -84,23 +84,6 @@ public class BreadEnemy : MonoBehaviour
     {
         current = gameObject.transform.position;//変数を更新
         playerPosition = directer.player.transform.position;//変数を更新
-        /*
-        if (target != playerPosition && current == nextCell)
-        {
-            target = playerPosition;//移動目標を更新
-            delta = target - current;
-            SetPath(delta, directer.cellSize);
-        }
-        if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
-        {
-            nextCell.x = pathCol[n];
-            nextCell.y = pathRow[n];
-            if (n < element - 1) //nを配列の要素数以上にしない
-            {
-                n++;
-            }
-        }
-        */
         if (current == nextCell)
         {
             nextCell.x += Random.Range(-1, 2);
