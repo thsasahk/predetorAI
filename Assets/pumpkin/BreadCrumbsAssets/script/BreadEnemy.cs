@@ -105,6 +105,16 @@ public class BreadEnemy : MonoBehaviour
         {
             nextCell.x += Random.Range(-1, 2);
             nextCell.y += Random.Range(-1, 2);
+            for (int n = directer.maxTrail - 1; n >= 0; n--)//directer.trailを走査
+            {
+                if (current.x - directer.trail[n].x <= 1 && current.x - directer.trail[n].x >= -1 &&
+                    current.y - directer.trail[n].y <= 1 && current.y - directer.trail[n].y >= -1)
+                    //自身に隣接するマスにplayerの足跡がある場合(新しい足跡から確認)
+                {
+                    nextCell = directer.trail[n];
+                    break;//見つけたらループから離脱
+                }
+            }
         }
         nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
         nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
