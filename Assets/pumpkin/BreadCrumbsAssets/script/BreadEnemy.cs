@@ -84,6 +84,7 @@ public class BreadEnemy : MonoBehaviour
     {
         current = gameObject.transform.position;//変数を更新
         playerPosition = directer.player.transform.position;//変数を更新
+        /*
         if (target != playerPosition && current == nextCell)
         {
             target = playerPosition;//移動目標を更新
@@ -99,6 +100,14 @@ public class BreadEnemy : MonoBehaviour
                 n++;
             }
         }
+        */
+        if (current == nextCell)
+        {
+            nextCell.x += Random.Range(-1, 2);
+            nextCell.y += Random.Range(-1, 2);
+        }
+        nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
+        nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
