@@ -72,9 +72,22 @@ public class BreadPlayer : MonoBehaviour
     /// delta.yの絶対値を格納
     /// </summary>
     private float absDelY;
+    /// <summary>
+    /// 自身の隣接マスのstoneオブジェクトの有無を記録
+    /// </summary>
+    private bool[] isStone;
+    /// <summary>
+    /// 隣接マスの分析が完了していることを確認
+    /// </summary>
+    private bool analysis;
+    /// <summary>
+    /// stoneオブジェクトの位置を受け取る配列
+    /// </summary>
+    public Vector2[] stonePos;
 
     void Start()
     {
+        isStone = new bool[8];//隣接マスは常に8つ
         transform.position = startCell * directer.cellSize;
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
@@ -93,6 +106,53 @@ public class BreadPlayer : MonoBehaviour
             target = touch;//移動目標を更新
             delta = target - current;
             SetPath(delta, directer.cellSize);
+        }
+        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
+        {
+            analysis = true;
+            for(int n = 0; n < directer.stoneNumber; n++)
+            {
+                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == -1)//左上
+                {
+                    isStone[0] = true;
+                }
+                if (current.x - stonePos[n].x == 0 && current.y - stonePos[n].y == -1)//真上
+                {
+                    isStone[1] = true;
+                }
+                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == -1)//右上
+                {
+                    isStone[2] = true;
+                }
+                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == 0)//左
+                {
+                    isStone[3] = true;
+                }
+                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == 0)//右
+                {
+                    isStone[4] = true;
+                }
+                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == 1)//左下
+                {
+                    isStone[5] = true;
+                }
+                if (current.x - stonePos[n].x == 0 && current.y - stonePos[n].y == 1)//真下
+                {
+                    isStone[6] = true;
+                }
+                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == 1)//右下
+                {
+                    isStone[7] = true;
+                }
+            }
+        }
+        else
+        {
+            analysis = false;
+            for(int n = 0; n < 8; n++)
+            {
+                isStone[n] = false;//初期化
+            }
         }
         if (current == nextCell && current != directer.trail[directer.maxTrail - 1])
             //移動が終了していて、最新の足跡と現在地が異なるとき
