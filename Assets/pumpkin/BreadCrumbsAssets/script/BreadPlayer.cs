@@ -177,9 +177,9 @@ public class BreadPlayer : MonoBehaviour
             {
                 n++;
             }
+            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
+            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
         }
-        nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
-        nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
