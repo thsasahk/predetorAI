@@ -47,7 +47,7 @@ public class BreadDirecter : MonoBehaviour
     /// <summary>
     /// stone配列の要素数
     /// </summary>
-    [SerializeField] private int stoneNumber;
+    public int stoneNumber;
     /// <summary>
     /// マス目の大きさを決定する
     /// </summary>
