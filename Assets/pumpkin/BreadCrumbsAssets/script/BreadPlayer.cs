@@ -85,9 +85,13 @@ public class BreadPlayer : MonoBehaviour
     /// </summary>
     public Vector2[] stonePos;
     /// <summary>
-    /// current - stonePosの計算結果を記録
+    /// 計算結果を一時的に記録
     /// </summary>
     private Vector2 v;
+    /// <summary>
+    /// 進行方向を-1～7の値で表す
+    /// </summary>
+    private int dirNumber; 
 
     void Start()
     {
@@ -179,6 +183,44 @@ public class BreadPlayer : MonoBehaviour
             }
             nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
             nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
+            v.x = current.x - nextCell.x;
+            v.y = current.y - nextCell.y;
+            if (v.x == 1 && v.y == -1)//左上
+            {
+                dirNumber = 0;
+            }
+            if (v.x == 0 && v.y == -1)//真上
+            {
+                dirNumber = 1;
+            }
+            if (v.x == -1 && v.y == -1)//右上
+            {
+                dirNumber = 2;
+            }
+            if (v.x == 1 && v.y == 0)//左
+            {
+                dirNumber = 3;
+            }
+            if (v.x == -1 && v.y == 0)//右
+            {
+                dirNumber = 4;
+            }
+            if (v.x == 1 && v.y == 1)//左下
+            {
+                dirNumber = 5;
+            }
+            if (v.x == 0 && v.y == 1)//真下
+            {
+                dirNumber = 6;
+            }
+            if (v.x == -1 && v.y == 1)//右下
+            {
+                dirNumber = 7;
+            }
+            if (v.x == 0 && v.y == 0)//移動しない
+            {
+                dirNumber = -1;
+            }
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
