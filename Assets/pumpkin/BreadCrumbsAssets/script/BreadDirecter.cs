@@ -121,6 +121,11 @@ public class BreadDirecter : MonoBehaviour
                 }
             }
         }
+        playerScript.stonePos = new Vector2[stoneNumber];
+        for (int n = 0; n < stoneNumber; n++)
+        {
+            playerScript.stonePos[n] = stone[n].transform.position;//stoneオブジェクトの位置を受け渡し
+        }
     }
 
     void Update()
