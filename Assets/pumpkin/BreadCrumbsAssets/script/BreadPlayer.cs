@@ -84,6 +84,10 @@ public class BreadPlayer : MonoBehaviour
     /// stoneオブジェクトの位置を受け取る配列
     /// </summary>
     public Vector2[] stonePos;
+    /// <summary>
+    /// current - stonePosの計算結果を記録
+    /// </summary>
+    private Vector2 v;
 
     void Start()
     {
@@ -112,35 +116,37 @@ public class BreadPlayer : MonoBehaviour
             analysis = true;
             for(int n = 0; n < directer.stoneNumber; n++)
             {
-                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == -1)//左上
+                v.x = current.x - stonePos[n].x;
+                v.y = current.y - stonePos[n].y;
+                if (v.x == 1 && v.y == -1)//左上
                 {
                     isStone[0] = true;
                 }
-                if (current.x - stonePos[n].x == 0 && current.y - stonePos[n].y == -1)//真上
+                if (v.x == 0 && v.y == -1)//真上
                 {
                     isStone[1] = true;
                 }
-                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == -1)//右上
+                if (v.x == -1 && v.y == -1)//右上
                 {
                     isStone[2] = true;
                 }
-                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == 0)//左
+                if (v.x == 1 && v.y == 0)//左
                 {
                     isStone[3] = true;
                 }
-                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == 0)//右
+                if (v.x == -1 && v.y == 0)//右
                 {
                     isStone[4] = true;
                 }
-                if (current.x - stonePos[n].x == 1 && current.y - stonePos[n].y == 1)//左下
+                if (v.x == 1 && v.y == 1)//左下
                 {
                     isStone[5] = true;
                 }
-                if (current.x - stonePos[n].x == 0 && current.y - stonePos[n].y == 1)//真下
+                if (v.x == 0 && v.y == 1)//真下
                 {
                     isStone[6] = true;
                 }
-                if (current.x - stonePos[n].x == -1 && current.y - stonePos[n].y == 1)//右下
+                if (v.x == -1 && v.y == 1)//右下
                 {
                     isStone[7] = true;
                 }
