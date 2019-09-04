@@ -105,8 +105,10 @@ public class BreadDirecter : MonoBehaviour
             _stonePos[n] = stonePos;
             for (int i = 0; i <= n; i++)
             {
-                if ((stonePos == _stonePos[i] || stonePos == playerPos || stonePos == enemyPos) && i != n)
-                    //生成済みの各オブジェクトと被らないように
+                if (((stonePos.x - _stonePos[i].x<=1 && stonePos.x - _stonePos[i].x >= -1
+                    && stonePos.y - _stonePos[i].y <= 1 && stonePos.y - _stonePos[i].y >= -1)
+                    || stonePos == playerPos || stonePos == enemyPos) && i != n)
+                    //生成済みの各オブジェクトと被らないように、stoneオブジェクト同士は隣り合わない
                 {
                     n--;//被ったら配列番号を戻してやり直し
                     break;
