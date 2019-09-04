@@ -92,10 +92,6 @@ public class BreadPlayer : MonoBehaviour
     /// 進行方向を-1～7の値で表す
     /// </summary>
     private int dirNumber;
-    /// <summary>
-    /// 移動方向の重み
-    /// </summary>
-    private int[] priority;
 
     void Start()
     {
