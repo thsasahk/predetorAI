@@ -119,55 +119,6 @@ public class BreadPlayer : MonoBehaviour
             delta = target - current;
             SetPath(delta, directer.cellSize);
         }
-        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
-        {
-            analysis = true;
-            for(int n = 0; n < directer.stoneNumber; n++)
-            {
-                v.x = current.x - stonePos[n].x;
-                v.y = current.y - stonePos[n].y;
-                if (v.x == 1 && v.y == -1)//左上
-                {
-                    isStone[0] = true;
-                }
-                if (v.x == 0 && v.y == -1)//真上
-                {
-                    isStone[1] = true;
-                }
-                if (v.x == -1 && v.y == -1)//右上
-                {
-                    isStone[2] = true;
-                }
-                if (v.x == 1 && v.y == 0)//左
-                {
-                    isStone[3] = true;
-                }
-                if (v.x == -1 && v.y == 0)//右
-                {
-                    isStone[4] = true;
-                }
-                if (v.x == 1 && v.y == 1)//左下
-                {
-                    isStone[5] = true;
-                }
-                if (v.x == 0 && v.y == 1)//真下
-                {
-                    isStone[6] = true;
-                }
-                if (v.x == -1 && v.y == 1)//右下
-                {
-                    isStone[7] = true;
-                }
-            }
-        }
-        else
-        {
-            analysis = false;
-            for(int n = 0; n < 8; n++)
-            {
-                isStone[n] = false;//初期化
-            }
-        }
         if (current == nextCell && current != directer.trail[directer.maxTrail - 1])
             //移動が終了していて、最新の足跡と現在地が異なるとき
         {
@@ -224,6 +175,55 @@ public class BreadPlayer : MonoBehaviour
             if (v.x == 0 && v.y == 0)//移動しない
             {
                 dirNumber = -1;
+            }
+        }
+        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
+        {
+            analysis = true;
+            for (int n = 0; n < directer.stoneNumber; n++)
+            {
+                v.x = current.x - stonePos[n].x;
+                v.y = current.y - stonePos[n].y;
+                if (v.x == 1 && v.y == -1)//左上
+                {
+                    isStone[0] = true;
+                }
+                if (v.x == 0 && v.y == -1)//真上
+                {
+                    isStone[1] = true;
+                }
+                if (v.x == -1 && v.y == -1)//右上
+                {
+                    isStone[2] = true;
+                }
+                if (v.x == 1 && v.y == 0)//左
+                {
+                    isStone[3] = true;
+                }
+                if (v.x == -1 && v.y == 0)//右
+                {
+                    isStone[4] = true;
+                }
+                if (v.x == 1 && v.y == 1)//左下
+                {
+                    isStone[5] = true;
+                }
+                if (v.x == 0 && v.y == 1)//真下
+                {
+                    isStone[6] = true;
+                }
+                if (v.x == -1 && v.y == 1)//右下
+                {
+                    isStone[7] = true;
+                }
+            }
+        }
+        else
+        {
+            analysis = false;
+            for (int n = 0; n < 8; n++)
+            {
+                isStone[n] = false;//初期化
             }
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
