@@ -91,7 +91,7 @@ public class BreadPlayer : MonoBehaviour
     /// <summary>
     /// 進行方向を-1～7の値で表す
     /// </summary>
-    private int dirNumber;
+    private int dirNumber = -1;
 
     void Start()
     {
@@ -220,6 +220,106 @@ public class BreadPlayer : MonoBehaviour
             if (v.x == 0 && v.y == 0)//移動しない
             {
                 dirNumber = -1;
+            }
+        }
+        if (dirNumber >= 0)//停止状態ではない
+        {
+            if (isStone[dirNumber])//自身の進行方向にstoneオブジェクトが存在する場合
+            {
+                switch (dirNumber)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
+                {
+                    case 0:
+                        if (absDelX >= absDelY)
+                        {
+                            nextCell.y--;
+                        }
+                        else
+                        {
+                            nextCell.x++;
+                        }
+                        break;
+
+                    case 1:
+                        if (delta.x >= 0)
+                        {
+                            nextCell.x++;
+                        }
+                        else
+                        {
+                            nextCell.x--;
+                        }
+                        break;
+
+                    case 2:
+                        if (absDelX >= absDelY)
+                        {
+                            nextCell.y--;
+                        }
+                        else
+                        {
+                            nextCell.x--;
+                        }
+                        break;
+
+                    case 3:
+                        if (delta.y >= 0)
+                        {
+                            nextCell.y++;
+                        }
+                        else
+                        {
+                            nextCell.y--;
+                        }
+                        break;
+
+                    case 4:
+                        if (delta.y >= 0)
+                        {
+                            nextCell.y++;
+                        }
+                        else
+                        {
+                            nextCell.y--;
+                        }
+                        break;
+
+                    case 5:
+                        if (absDelX >= absDelY)
+                        {
+                            nextCell.y++;
+                        }
+                        else
+                        {
+                            nextCell.x++;
+                        }
+                        break;
+
+                    case 6:
+                        if (delta.x >= 0)
+                        {
+                            nextCell.x++;
+                        }
+                        else
+                        {
+                            nextCell.x--;
+                        }
+                        break;
+
+                    case 7:
+                        if (absDelX >= absDelY)
+                        {
+                            nextCell.y++;
+                        }
+                        else
+                        {
+                            nextCell.x--;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                target = nextCell;//回避先から経路を探索をやり直す
             }
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
