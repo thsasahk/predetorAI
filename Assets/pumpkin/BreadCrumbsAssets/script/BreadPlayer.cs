@@ -124,55 +124,6 @@ public class BreadPlayer : MonoBehaviour
             }
             directer.trail[directer.maxTrail - 1] = current;//最新の足跡を更新
         }
-        if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
-        {
-            nextCell.x = pathCol[n];
-            nextCell.y = pathRow[n];
-            if (n < element - 1) //nを配列の要素数以上にしない
-            {
-                n++;
-            }
-            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
-            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
-            v.x = current.x - nextCell.x;
-            v.y = current.y - nextCell.y;
-            if (v.x == 1 && v.y == -1)//左上
-            {
-                dirNumber = 0;
-            }
-            if (v.x == 0 && v.y == -1)//真上
-            {
-                dirNumber = 1;
-            }
-            if (v.x == -1 && v.y == -1)//右上
-            {
-                dirNumber = 2;
-            }
-            if (v.x == 1 && v.y == 0)//左
-            {
-                dirNumber = 3;
-            }
-            if (v.x == -1 && v.y == 0)//右
-            {
-                dirNumber = 4;
-            }
-            if (v.x == 1 && v.y == 1)//左下
-            {
-                dirNumber = 5;
-            }
-            if (v.x == 0 && v.y == 1)//真下
-            {
-                dirNumber = 6;
-            }
-            if (v.x == -1 && v.y == 1)//右下
-            {
-                dirNumber = 7;
-            }
-            if (v.x == 0 && v.y == 0)//移動しない
-            {
-                dirNumber = -1;
-            }
-        }
         if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
         {
             analysis = true;
@@ -220,6 +171,55 @@ public class BreadPlayer : MonoBehaviour
             for (int n = 0; n < 8; n++)
             {
                 isStone[n] = false;//初期化
+            }
+        }
+        if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
+        {
+            nextCell.x = pathCol[n];
+            nextCell.y = pathRow[n];
+            if (n < element - 1) //nを配列の要素数以上にしない
+            {
+                n++;
+            }
+            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
+            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
+            v.x = current.x - nextCell.x;
+            v.y = current.y - nextCell.y;
+            if (v.x == 1 && v.y == -1)//左上
+            {
+                dirNumber = 0;
+            }
+            if (v.x == 0 && v.y == -1)//真上
+            {
+                dirNumber = 1;
+            }
+            if (v.x == -1 && v.y == -1)//右上
+            {
+                dirNumber = 2;
+            }
+            if (v.x == 1 && v.y == 0)//左
+            {
+                dirNumber = 3;
+            }
+            if (v.x == -1 && v.y == 0)//右
+            {
+                dirNumber = 4;
+            }
+            if (v.x == 1 && v.y == 1)//左下
+            {
+                dirNumber = 5;
+            }
+            if (v.x == 0 && v.y == 1)//真下
+            {
+                dirNumber = 6;
+            }
+            if (v.x == -1 && v.y == 1)//右下
+            {
+                dirNumber = 7;
+            }
+            if (v.x == 0 && v.y == 0)//移動しない
+            {
+                dirNumber = -1;
             }
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
