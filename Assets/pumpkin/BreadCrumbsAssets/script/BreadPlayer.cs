@@ -124,6 +124,14 @@ public class BreadPlayer : MonoBehaviour
             }
             directer.trail[directer.maxTrail - 1] = current;//最新の足跡を更新
         }
+        if (current != nextCell && analysis)//移動を開始したときに一度だけ行う処理
+        {
+            analysis = false;
+            for (int n = 0; n < 8; n++)
+            {
+                isStone[n] = false;//初期化
+            }
+        }
         if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
         {
             analysis = true;
@@ -163,14 +171,6 @@ public class BreadPlayer : MonoBehaviour
                 {
                     isStone[7] = true;
                 }
-            }
-        }
-        else
-        {
-            analysis = false;
-            for (int n = 0; n < 8; n++)
-            {
-                isStone[n] = false;//初期化
             }
         }
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
