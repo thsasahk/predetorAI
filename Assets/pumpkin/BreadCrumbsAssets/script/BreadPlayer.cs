@@ -79,7 +79,7 @@ public class BreadPlayer : MonoBehaviour
     /// <summary>
     /// 隣接マスの分析が完了していることを確認
     /// </summary>
-    private bool analysis;
+    private bool analysis = false;
     /// <summary>
     /// stoneオブジェクトの位置を受け取る配列
     /// </summary>
