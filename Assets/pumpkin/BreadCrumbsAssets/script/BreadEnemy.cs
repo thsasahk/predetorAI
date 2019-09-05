@@ -72,6 +72,10 @@ public class BreadEnemy : MonoBehaviour
     /// delta.yの絶対値を格納
     /// </summary>
     private float absDelY;
+    /// <summary>
+    /// 進行方向を-1～7の値で表す
+    /// </summary>
+    private int dirNumber = -1;
 
     void Start()
     {
