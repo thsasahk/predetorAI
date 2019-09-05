@@ -80,18 +80,80 @@ public class BreadEnemy : MonoBehaviour
     /// 計算の結果を記録
     /// </summary>
     private Vector2 v;
+    /// <summary>
+    /// 自身の隣接マスのstoneオブジェクトの有無を記録
+    /// </summary>
+    private bool[] isStone;
+    /// <summary>
+    /// 隣接マスの分析が完了していることを確認
+    /// </summary>
+    private bool analysis = false;
+    /// <summary>
+    /// stoneオブジェクトの位置を受け取る配列
+    /// </summary>
+    public Vector2[] stonePos;
 
     void Start()
     {
         transform.position = startCell * directer.cellSize;
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
+        isStone = new bool[8];//隣接マスは常に8つ
     }
 
     void Update()
     {
         current = gameObject.transform.position;//変数を更新
         playerPosition = directer.player.transform.position;//変数を更新
+        if (current != nextCell && analysis)//移動を開始したときに一度だけ行う処理
+        {
+            analysis = false;
+            for (int n = 0; n < 8; n++)
+            {
+                isStone[n] = false;//初期化
+            }
+        }
+        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
+        {
+            analysis = true;
+            for (int n = 0; n < directer.stoneNumber; n++)
+            {
+                v.x = current.x - stonePos[n].x;
+                v.y = current.y - stonePos[n].y;
+                if (v.x == 1 && v.y == -1)//左上
+                {
+                    isStone[0] = true;
+                }
+                if (v.x == 0 && v.y == -1)//真上
+                {
+                    isStone[1] = true;
+                }
+                if (v.x == -1 && v.y == -1)//右上
+                {
+                    isStone[2] = true;
+                }
+                if (v.x == 1 && v.y == 0)//左
+                {
+                    isStone[3] = true;
+                }
+                if (v.x == -1 && v.y == 0)//右
+                {
+                    isStone[4] = true;
+                }
+                if (v.x == 1 && v.y == 1)//左下
+                {
+                    isStone[5] = true;
+                }
+                if (v.x == 0 && v.y == 1)//真下
+                {
+                    isStone[6] = true;
+                }
+                if (v.x == -1 && v.y == 1)//右下
+                {
+                    isStone[7] = true;
+                }
+            }
+        }
         if (current == nextCell)
         {
             nextCell.x += Random.Range(-1, 2);
