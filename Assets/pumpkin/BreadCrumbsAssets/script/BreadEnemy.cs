@@ -106,6 +106,8 @@ public class BreadEnemy : MonoBehaviour
                     break;//見つけたらループから離脱
                 }
             }
+            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
+            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
             v.x = current.x - nextCell.x;
             v.y = current.y - nextCell.y;
             if (v.x == 1 && v.y == -1)//左上
@@ -145,8 +147,6 @@ public class BreadEnemy : MonoBehaviour
                 dirNumber = -1;
             }
         }
-        nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
-        nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
