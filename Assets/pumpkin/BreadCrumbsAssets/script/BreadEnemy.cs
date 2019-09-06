@@ -170,6 +170,10 @@ public class BreadEnemy : MonoBehaviour
                     //自身に隣接するマスにplayerの足跡がある場合(新しい足跡から確認)
                 {
                     nextCell = directer.trail[n];
+                    for(int m = 0; m < 8; m++)
+                    {
+                        priority[m] = 0;//初期化
+                    }
                     break;//見つけたらループから離脱
                 }
             }
