@@ -92,6 +92,10 @@ public class BreadEnemy : MonoBehaviour
     /// stoneオブジェクトの位置を受け取る配列
     /// </summary>
     public Vector2[] stonePos;
+    /// <summary>
+    /// 進行方向に重みづけする
+    /// </summary>
+    private int[] priority;
 
     void Start()
     {
