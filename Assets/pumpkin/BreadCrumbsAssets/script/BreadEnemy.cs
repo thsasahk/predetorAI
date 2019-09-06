@@ -103,6 +103,7 @@ public class BreadEnemy : MonoBehaviour
         nextCell = gameObject.transform.position;//初期化
         target = gameObject.transform.position;//初期化
         isStone = new bool[8];//隣接マスは常に8つ
+        priority = new int[8];
     }
 
     void Update()
@@ -179,34 +180,82 @@ public class BreadEnemy : MonoBehaviour
             if (v.x == 1 && v.y == -1)//左上
             {
                 dirNumber = 0;
+                priority[0] += 3;
+                priority[1] += 2;
+                priority[3] += 2;
+                priority[2] += 1;
+                priority[5] += 1;
+                priority[7] -= 1;
             }
             if (v.x == 0 && v.y == -1)//真上
             {
                 dirNumber = 1;
+                priority[1] += 3;
+                priority[0] += 2;
+                priority[2] += 2;
+                priority[3] += 1;
+                priority[4] += 1;
+                priority[6] -= 1;
             }
             if (v.x == -1 && v.y == -1)//右上
             {
                 dirNumber = 2;
+                priority[2] += 3;
+                priority[1] += 2;
+                priority[4] += 2;
+                priority[0] += 1;
+                priority[7] += 1;
+                priority[5] -= 1;
             }
             if (v.x == 1 && v.y == 0)//左
             {
                 dirNumber = 3;
+                priority[3] += 3;
+                priority[0] += 2;
+                priority[5] += 2;
+                priority[1] += 1;
+                priority[6] += 1;
+                priority[4] -= 1;
             }
             if (v.x == -1 && v.y == 0)//右
             {
                 dirNumber = 4;
+                priority[4] += 3;
+                priority[2] += 2;
+                priority[7] += 2;
+                priority[1] += 1;
+                priority[6] += 1;
+                priority[3] -= 1;
             }
             if (v.x == 1 && v.y == 1)//左下
             {
                 dirNumber = 5;
+                priority[5] += 3;
+                priority[3] += 2;
+                priority[6] += 2;
+                priority[0] += 1;
+                priority[7] += 1;
+                priority[2] -= 1;
             }
             if (v.x == 0 && v.y == 1)//真下
             {
                 dirNumber = 6;
+                priority[6] += 3;
+                priority[5] += 2;
+                priority[7] += 2;
+                priority[3] += 1;
+                priority[4] += 1;
+                priority[1] -= 1;
             }
             if (v.x == -1 && v.y == 1)//右下
             {
                 dirNumber = 7;
+                priority[7] += 3;
+                priority[6] += 2;
+                priority[4] += 2;
+                priority[2] += 1;
+                priority[5] += 1;
+                priority[0] -= 1;
             }
             if (v.x == 0 && v.y == 0)//移動しない
             {
