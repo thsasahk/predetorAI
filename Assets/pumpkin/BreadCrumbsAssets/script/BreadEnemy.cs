@@ -97,13 +97,12 @@ public class BreadEnemy : MonoBehaviour
     /// </summary>
     private int[] priority;
 
-    private int maxNumber = 0;
+    private int maxNumber = -1;
 
     void Start()
     {
         transform.position = startCell * directer.cellSize;
-        nextCell.x += Random.Range(-1, 2);
-        nextCell.y += Random.Range(-1, 2);
+        nextCell = gameObject.transform.position;
         target = gameObject.transform.position;//初期化
         isStone = new bool[8];//隣接マスは常に8つ
         priority = new int[8];
@@ -225,7 +224,7 @@ public class BreadEnemy : MonoBehaviour
                     {
                         priority[m] = 0;//初期化
                     }
-                    maxNumber = 0;//初期化
+                    maxNumber = -1;//初期化
                     break;//見つけたらループから離脱
                 }
             }
