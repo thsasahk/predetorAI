@@ -100,7 +100,8 @@ public class BreadEnemy : MonoBehaviour
     void Start()
     {
         transform.position = startCell * directer.cellSize;
-        nextCell = gameObject.transform.position;//初期化
+        nextCell.x += Random.Range(-1, 2);
+        nextCell.y += Random.Range(-1, 2);
         target = gameObject.transform.position;//初期化
         isStone = new bool[8];//隣接マスは常に8つ
         priority = new int[8];
