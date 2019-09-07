@@ -273,6 +273,7 @@ public class BreadEnemy : MonoBehaviour
                 switch (dirNumber)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
                 {
                     case 0:
+                        priority[0] = -1;
                         if (absDelX >= absDelY)
                         {
                             nextCell.y--;
@@ -284,6 +285,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 1:
+                        priority[1] = -1;
                         if (delta.x >= 0)
                         {
                             nextCell.x++;
@@ -295,6 +297,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 2:
+                        priority[2] = -1;
                         if (absDelX >= absDelY)
                         {
                             nextCell.y--;
@@ -306,6 +309,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 3:
+                        priority[3] = -1;
                         if (delta.y >= 0)
                         {
                             nextCell.y++;
@@ -317,6 +321,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 4:
+                        priority[4] = -1;
                         if (delta.y >= 0)
                         {
                             nextCell.y++;
@@ -328,6 +333,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 5:
+                        priority[5] = -1;
                         if (absDelX >= absDelY)
                         {
                             nextCell.y++;
@@ -339,6 +345,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 6:
+                        priority[6] = -1;
                         if (delta.x >= 0)
                         {
                             nextCell.x++;
@@ -350,6 +357,7 @@ public class BreadEnemy : MonoBehaviour
                         break;
 
                     case 7:
+                        priority[7] = -1;
                         if (absDelX >= absDelY)
                         {
                             nextCell.y++;
