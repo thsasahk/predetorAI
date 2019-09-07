@@ -97,6 +97,8 @@ public class BreadEnemy : MonoBehaviour
     /// </summary>
     private int[] priority;
 
+    private int maxNumber = 0;
+
     void Start()
     {
         transform.position = startCell * directer.cellSize;
@@ -164,6 +166,54 @@ public class BreadEnemy : MonoBehaviour
         {
             nextCell.x += Random.Range(-1, 2);
             nextCell.y += Random.Range(-1, 2);
+            for(int n = 0 ; n < 8 ; n++)
+            {
+                if (priority[n] > maxNumber)
+                {
+                    maxNumber = priority[n];
+                    switch (n)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
+                    {
+                        case 0:
+                            nextCell.x -= 1;
+                            nextCell.y += 1;
+                            break;
+
+                        case 1:
+                            nextCell.y += 1;
+                            break;
+
+                        case 2:
+                            nextCell.x += 1;
+                            nextCell.y += 1;
+                            break;
+
+                        case 3:
+                            nextCell.x -= 1;
+                            break;
+
+                        case 4:
+                            nextCell.x += 1;
+                            break;
+
+                        case 5:
+                            nextCell.x -= 1;
+                            nextCell.y -= 1;
+                            break;
+
+                        case 6:
+                            nextCell.y += 1;
+                            break;
+
+                        case 7:
+                            nextCell.x += 1;
+                            nextCell.y -= 1;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
             for (int n = directer.maxTrail - 1; n >= 0; n--)//directer.trailを走査
             {
                 if (current.x - directer.trail[n].x <= 1 && current.x - directer.trail[n].x >= -1 &&
@@ -175,6 +225,7 @@ public class BreadEnemy : MonoBehaviour
                     {
                         priority[m] = 0;//初期化
                     }
+                    maxNumber = 0;//初期化
                     break;//見つけたらループから離脱
                 }
             }
