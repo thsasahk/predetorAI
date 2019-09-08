@@ -15,7 +15,7 @@ public class BreadEnemy : MonoBehaviour
     /// <summary>
     /// 移動する位置
     /// </summary>
-    private Vector2 nextCell;
+    [SerializeField]private Vector2 nextCell;
     /// <summary>
     /// 移動速度
     /// </summary>
@@ -95,9 +95,9 @@ public class BreadEnemy : MonoBehaviour
     /// <summary>
     /// 進行方向に重みづけする
     /// </summary>
-    private int[] priority;
+    public int[] priority;
 
-    private int maxNumber = -1;
+    public int maxNumber = -1;
 
     void Start()
     {
@@ -163,14 +163,12 @@ public class BreadEnemy : MonoBehaviour
         }
         if (current == nextCell)
         {
-            nextCell.x += Random.Range(-1, 2);
-            nextCell.y += Random.Range(-1, 2);
             for(int n = 0 ; n < 8 ; n++)
             {
                 if (priority[n] > maxNumber)
                 {
                     maxNumber = priority[n];
-                    switch (n)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
+                    switch (n)//最も大きいpriorityを持つ方向へとnextCellを設定する
                     {
                         case 0:
                             nextCell.x -= 1;
@@ -224,7 +222,6 @@ public class BreadEnemy : MonoBehaviour
                     {
                         priority[m] = 0;//初期化
                     }
-                    maxNumber = -1;//初期化
                     break;//見つけたらループから離脱
                 }
             }
@@ -316,6 +313,31 @@ public class BreadEnemy : MonoBehaviour
             {
                 dirNumber = -1;
             }
+            if (current.x == -8)
+            {
+                priority[0] = -1;
+                priority[3] = -1;
+                priority[5] = -1;
+            }
+            if (current.x == 8)
+            {
+                priority[2] = -1;
+                priority[4] = -1;
+                priority[7] = -1;
+            }
+            if (current.y == -4)
+            {
+                priority[5] = -1;
+                priority[6] = -1;
+                priority[7] = -1;
+            }
+            if (current.y == 4)
+            {
+                priority[0] = -1;
+                priority[1] = -1;
+                priority[2] = -1;
+            }
+            maxNumber = -1;//初期化
         }
         if (dirNumber >= 0)//停止状態ではない
         {
