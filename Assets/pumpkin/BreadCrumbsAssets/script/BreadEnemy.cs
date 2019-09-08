@@ -15,7 +15,7 @@ public class BreadEnemy : MonoBehaviour
     /// <summary>
     /// 移動する位置
     /// </summary>
-    [SerializeField]private Vector2 nextCell;
+    private Vector2 nextCell;
     /// <summary>
     /// 移動速度
     /// </summary>
@@ -95,9 +95,9 @@ public class BreadEnemy : MonoBehaviour
     /// <summary>
     /// 進行方向に重みづけする
     /// </summary>
-    public int[] priority;
+    private int[] priority;
 
-    public int maxNumber = -1;
+    private int maxNumber = -1;
 
     void Start()
     {
@@ -198,7 +198,7 @@ public class BreadEnemy : MonoBehaviour
                             break;
 
                         case 6:
-                            nextCell.y += 1;
+                            nextCell.y -= 1;
                             break;
 
                         case 7:
