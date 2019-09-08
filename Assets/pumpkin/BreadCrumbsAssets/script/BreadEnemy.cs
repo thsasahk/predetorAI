@@ -96,7 +96,9 @@ public class BreadEnemy : MonoBehaviour
     /// 進行方向に重みづけする
     /// </summary>
     private int[] priority;
-
+    /// <summary>
+    /// 最も重い重みを記録
+    /// </summary>
     private int maxNumber = -1;
 
     void Start()
