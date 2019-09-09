@@ -345,6 +345,9 @@ public class BreadEnemy : MonoBehaviour
         {
             if (isStone[dirNumber])//自身の進行方向にstoneオブジェクトが存在する場合
             {
+                delta = nextCell - current;
+                absDelX = Mathf.Abs(delta.x);
+                absDelY = Mathf.Abs(delta.y);
                 switch (dirNumber)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
                 {
                     case 0:
