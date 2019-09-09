@@ -173,39 +173,39 @@ public class BreadEnemy : MonoBehaviour
                     switch (n)//最も大きいpriorityを持つ方向へとnextCellを設定する
                     {
                         case 0:
-                            nextCell.x -= 1;
-                            nextCell.y += 1;
+                            nextCell.x = current.x - 1;
+                            nextCell.y = current.y + 1;
                             break;
 
                         case 1:
-                            nextCell.y += 1;
+                            nextCell.y = current.y + 1;
                             break;
 
                         case 2:
-                            nextCell.x += 1;
-                            nextCell.y += 1;
+                            nextCell.x = current.x + 1;
+                            nextCell.y = current.y + 1;
                             break;
 
                         case 3:
-                            nextCell.x -= 1;
+                            nextCell.x = current.x - 1;
                             break;
 
                         case 4:
-                            nextCell.x += 1;
+                            nextCell.x = current.x + 1;
                             break;
 
                         case 5:
-                            nextCell.x -= 1;
-                            nextCell.y -= 1;
+                            nextCell.x = current.x - 1;
+                            nextCell.y = current.y - 1;
                             break;
 
                         case 6:
-                            nextCell.y -= 1;
+                            nextCell.y = current.y - 1;
                             break;
 
                         case 7:
-                            nextCell.x += 1;
-                            nextCell.y -= 1;
+                            nextCell.x = current.x + 1;
+                            nextCell.y = current.y - 1;
                             break;
 
                         default:
