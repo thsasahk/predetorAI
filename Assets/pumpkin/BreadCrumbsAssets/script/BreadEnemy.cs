@@ -104,6 +104,8 @@ public class BreadEnemy : MonoBehaviour
         target = gameObject.transform.position;//初期化
         isStone = new bool[8];//隣接マスは常に8つ
         priority = new int[8];
+        dirNumber = Random.Range(0, 8);//最初の進行方向をランダムに決定
+        priority[dirNumber] = 1;
     }
 
     void Update()
