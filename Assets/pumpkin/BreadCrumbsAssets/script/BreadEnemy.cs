@@ -77,10 +77,6 @@ public class BreadEnemy : MonoBehaviour
     /// </summary>
     private int dirNumber = -1;
     /// <summary>
-    /// 計算の結果を記録
-    /// </summary>
-    //private Vector2 v;
-    /// <summary>
     /// 自身の隣接マスのstoneオブジェクトの有無を記録
     /// </summary>
     private bool[] isStone;
@@ -128,68 +124,6 @@ public class BreadEnemy : MonoBehaviour
             Avoid(dirNumber);
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
-    }
-
-    private void SetPath(Vector2 d, Vector2 c)
-    {
-        if (d.x >= 0)
-        {
-            direction.x = directer.cellSize.x;//d.xが正なら正方向にマス目の長さ分移動
-        }
-        else
-        {
-            direction.x = -directer.cellSize.x;//d.xが負なら負方向にマス目の長さ分移動
-        }
-        if (d.y >= 0)
-        {
-            direction.y = directer.cellSize.y;//d.yが正なら正方向にマス目の長さ分移動
-        }
-        else
-        {
-            direction.y = -directer.cellSize.y;//d.yが負なら負方向にマス目の長さ分移動
-        }
-        absDelX = Mathf.Abs(d.x);
-        absDelY = Mathf.Abs(d.y);
-        path = current;//経路探索のスタート位置を記録
-        if (absDelX >= absDelY)//x方向への移動距離が長い場合
-        {
-            element = Mathf.CeilToInt(absDelX / c.x);//移動するマス目の数を配列の要素数とする
-            pathCol = new float[element];
-            pathRow = new float[element];
-            fraction = absDelY * 2 - absDelX;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
-            for (n = 0; n <= element - 1; n++)
-            {
-                path.x += direction.x;//次のマスのx座標を計算
-                pathCol[n] = path.x;//配列に記録
-                if (fraction >= 0)
-                {
-                    path.y += direction.y;//次のマスのy座標を計算
-                    fraction -= absDelX;
-                }
-                fraction += absDelY;
-                pathRow[n] = path.y;
-            }
-        }
-        else//y方向への移動距離が長い場合
-        {
-            element = Mathf.CeilToInt(absDelY / c.y);//移動するマス目の数を配列の要素数とする
-            pathCol = new float[element];
-            pathRow = new float[element];
-            fraction = absDelX * 2 - absDelY;//x方向への移動距離とy方向への移動距離の比率で移動タイミングを決定
-            for (n = 0; n <= element - 1; n++)
-            {
-                path.y += direction.y;//次のマスのx座標を計算
-                pathRow[n] = path.y;//配列に記録
-                if (fraction >= 0)
-                {
-                    path.x += direction.x;//次のマスのy座標を計算
-                    fraction -= absDelY;
-                }
-                fraction += absDelX;
-                pathCol[n] = path.x;
-            }
-        }
-        n = 0;//初期化
     }
 
     /// <summary>
