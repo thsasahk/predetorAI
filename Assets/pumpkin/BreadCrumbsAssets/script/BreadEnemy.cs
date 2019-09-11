@@ -112,7 +112,7 @@ public class BreadEnemy : MonoBehaviour
     {
         current = gameObject.transform.position;//変数を更新
         playerPosition = directer.player.transform.position;//変数を更新
-        Search(current - nextCell);
+        Search(Vector2.zero);
         if (current == nextCell)
         {
             SetNext();
@@ -363,13 +363,15 @@ public class BreadEnemy : MonoBehaviour
     /// <summary>
     /// 自身の周囲のマスの障害物の有無を調査し、記録する
     /// </summary>
-    /// <param name="v">current - nextCell</param>
-    private void Search(Vector2 v)
+    /// <param name="v">計算結果を納める変数</param>
+    /// <param name="n">繰り返しの処理に使う変数</param>
+    /// <param name="m">繰り返しの処理に使う変数</param>
+    private void Search(Vector2 v, int n = 0,int m = 0)
     {
         if (current != nextCell && analysis)//移動を開始したときに一度だけ行う処理
         {
             analysis = false;
-            for (int n = 0; n < 8; n++)
+            for (n = 0; n < 8; n++)
             {
                 isStone[n] = false;//初期化
             }
@@ -377,10 +379,10 @@ public class BreadEnemy : MonoBehaviour
         if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
         {
             analysis = true;
-            for (int n = 0; n < directer.stoneNumber; n++)
+            for (m = 0; m < directer.stoneNumber; m++)
             {
-                v.x = current.x - stonePos[n].x;
-                v.y = current.y - stonePos[n].y;
+                v.x = current.x - stonePos[m].x;
+                v.y = current.y - stonePos[m].y;
                 if (v.x == 1 && v.y == -1)//左上
                 {
                     isStone[0] = true;
