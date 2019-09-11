@@ -116,13 +116,6 @@ public class BreadPlayer : MonoBehaviour
             //移動が終了していて、最新の足跡と現在地が異なるとき
         {
             SetTrail(directer.maxTrail - 1);
-            /*
-            for(int i = 0; i < directer.maxTrail - 1; i++)//足跡を一つずらして最も古いものを削除
-            {
-                directer.trail[i] = directer.trail[i + 1];
-            }
-            directer.trail[directer.maxTrail - 1] = current;//最新の足跡を更新
-            */
         }
         Search(Vector2.zero);
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
@@ -144,6 +137,11 @@ public class BreadPlayer : MonoBehaviour
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
 
+    /// <summary>
+    /// 経路探索を行う
+    /// </summary>
+    /// <param name="d">delta</param>
+    /// <param name="c">directer.cellSize</param>
     private void SetPath(Vector2 d,Vector2 c)
     {
         if (d.x >= 0)
