@@ -85,10 +85,6 @@ public class BreadPlayer : MonoBehaviour
     /// </summary>
     public Vector2[] stonePos;
     /// <summary>
-    /// 計算結果を一時的に記録
-    /// </summary>
-    private Vector2 v;
-    /// <summary>
     /// 進行方向を-1～7の値で表す
     /// </summary>
     private int dirNumber = -1;
@@ -118,61 +114,16 @@ public class BreadPlayer : MonoBehaviour
         if (current == nextCell && current != directer.trail[directer.maxTrail - 1])
             //移動が終了していて、最新の足跡と現在地が異なるとき
         {
+            SetTrail(directer.maxTrail - 1);
+            /*
             for(int i = 0; i < directer.maxTrail - 1; i++)//足跡を一つずらして最も古いものを削除
             {
                 directer.trail[i] = directer.trail[i + 1];
             }
             directer.trail[directer.maxTrail - 1] = current;//最新の足跡を更新
+            */
         }
-        if (current != nextCell && analysis)//移動を開始したときに一度だけ行う処理
-        {
-            analysis = false;
-            for (int n = 0; n < 8; n++)
-            {
-                isStone[n] = false;//初期化
-            }
-        }
-        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
-        {
-            analysis = true;
-            for (int n = 0; n < directer.stoneNumber; n++)
-            {
-                v.x = current.x - stonePos[n].x;
-                v.y = current.y - stonePos[n].y;
-                if (v.x == 1 && v.y == -1)//左上
-                {
-                    isStone[0] = true;
-                }
-                if (v.x == 0 && v.y == -1)//真上
-                {
-                    isStone[1] = true;
-                }
-                if (v.x == -1 && v.y == -1)//右上
-                {
-                    isStone[2] = true;
-                }
-                if (v.x == 1 && v.y == 0)//左
-                {
-                    isStone[3] = true;
-                }
-                if (v.x == -1 && v.y == 0)//右
-                {
-                    isStone[4] = true;
-                }
-                if (v.x == 1 && v.y == 1)//左下
-                {
-                    isStone[5] = true;
-                }
-                if (v.x == 0 && v.y == 1)//真下
-                {
-                    isStone[6] = true;
-                }
-                if (v.x == -1 && v.y == 1)//右下
-                {
-                    isStone[7] = true;
-                }
-            }
-        }
+        Search(Vector2.zero);
         if (current == nextCell && element > 0)//自身の移動が終了しており、移動経路配列の要素数が0でないタイミング
         {
             nextCell.x = pathCol[n];
@@ -183,144 +134,11 @@ public class BreadPlayer : MonoBehaviour
             }
             nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
             nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
-            v.x = current.x - nextCell.x;
-            v.y = current.y - nextCell.y;
-            if (v.x == 1 && v.y == -1)//左上
-            {
-                dirNumber = 0;
-            }
-            if (v.x == 0 && v.y == -1)//真上
-            {
-                dirNumber = 1;
-            }
-            if (v.x == -1 && v.y == -1)//右上
-            {
-                dirNumber = 2;
-            }
-            if (v.x == 1 && v.y == 0)//左
-            {
-                dirNumber = 3;
-            }
-            if (v.x == -1 && v.y == 0)//右
-            {
-                dirNumber = 4;
-            }
-            if (v.x == 1 && v.y == 1)//左下
-            {
-                dirNumber = 5;
-            }
-            if (v.x == 0 && v.y == 1)//真下
-            {
-                dirNumber = 6;
-            }
-            if (v.x == -1 && v.y == 1)//右下
-            {
-                dirNumber = 7;
-            }
-            if (v.x == 0 && v.y == 0)//移動しない
-            {
-                dirNumber = -1;
-            }
+            SetDir(current - nextCell);
         }
         if (dirNumber >= 0)//停止状態ではない
         {
-            if (isStone[dirNumber])//自身の進行方向にstoneオブジェクトが存在する場合
-            {
-                switch (dirNumber)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
-                {
-                    case 0:
-                        if (absDelX >= absDelY)
-                        {
-                            nextCell.y--;
-                        }
-                        else
-                        {
-                            nextCell.x++;
-                        }
-                        break;
-
-                    case 1:
-                        if (delta.x >= 0)
-                        {
-                            nextCell.x++;
-                        }
-                        else
-                        {
-                            nextCell.x--;
-                        }
-                        break;
-
-                    case 2:
-                        if (absDelX >= absDelY)
-                        {
-                            nextCell.y--;
-                        }
-                        else
-                        {
-                            nextCell.x--;
-                        }
-                        break;
-
-                    case 3:
-                        if (delta.y >= 0)
-                        {
-                            nextCell.y++;
-                        }
-                        else
-                        {
-                            nextCell.y--;
-                        }
-                        break;
-
-                    case 4:
-                        if (delta.y >= 0)
-                        {
-                            nextCell.y++;
-                        }
-                        else
-                        {
-                            nextCell.y--;
-                        }
-                        break;
-
-                    case 5:
-                        if (absDelX >= absDelY)
-                        {
-                            nextCell.y++;
-                        }
-                        else
-                        {
-                            nextCell.x++;
-                        }
-                        break;
-
-                    case 6:
-                        if (delta.x >= 0)
-                        {
-                            nextCell.x++;
-                        }
-                        else
-                        {
-                            nextCell.x--;
-                        }
-                        break;
-
-                    case 7:
-                        if (absDelX >= absDelY)
-                        {
-                            nextCell.y++;
-                        }
-                        else
-                        {
-                            nextCell.x--;
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-                target = nextCell;//回避先から経路を探索をやり直す
-            }
+            Avoid(dirNumber);
         }
         transform.position = Vector3.MoveTowards(current, nextCell, step * Time.deltaTime);//目標地点へ移動
     }
@@ -385,5 +203,227 @@ public class BreadPlayer : MonoBehaviour
             }
         }
         n = 0;//初期化
+    }
+
+    /// <summary>
+    /// 自身の進行方向の障害物の有無を確認し、あるならnextCellの値を変更する
+    /// </summary>
+    /// <param name="n">dirNumber</param>
+    private void Avoid(int n)
+    {
+        if (isStone[n])//自身の進行方向にstoneオブジェクトが存在する場合
+        {
+            switch (n)//進行方向と目的地へのベクトルを考慮してstoneオブジェクトを回避する
+            {
+                case 0:
+                    if (absDelX >= absDelY)
+                    {
+                        nextCell.y--;
+                    }
+                    else
+                    {
+                        nextCell.x++;
+                    }
+                    break;
+
+                case 1:
+                    if (delta.x >= 0)
+                    {
+                        nextCell.x++;
+                    }
+                    else
+                    {
+                        nextCell.x--;
+                    }
+                    break;
+
+                case 2:
+                    if (absDelX >= absDelY)
+                    {
+                        nextCell.y--;
+                    }
+                    else
+                    {
+                        nextCell.x--;
+                    }
+                    break;
+
+                case 3:
+                    if (delta.y >= 0)
+                    {
+                        nextCell.y++;
+                    }
+                    else
+                    {
+                        nextCell.y--;
+                    }
+                    break;
+
+                case 4:
+                    if (delta.y >= 0)
+                    {
+                        nextCell.y++;
+                    }
+                    else
+                    {
+                        nextCell.y--;
+                    }
+                    break;
+
+                case 5:
+                    if (absDelX >= absDelY)
+                    {
+                        nextCell.y++;
+                    }
+                    else
+                    {
+                        nextCell.x++;
+                    }
+                    break;
+
+                case 6:
+                    if (delta.x >= 0)
+                    {
+                        nextCell.x++;
+                    }
+                    else
+                    {
+                        nextCell.x--;
+                    }
+                    break;
+
+                case 7:
+                    if (absDelX >= absDelY)
+                    {
+                        nextCell.y++;
+                    }
+                    else
+                    {
+                        nextCell.x--;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            target = nextCell;//回避先から経路を探索をやり直す
+        }
+    }
+
+    /// <summary>
+    /// 自身の周囲のマスの障害物の有無を調査し、記録する
+    /// </summary>
+    /// <param name="v">計算結果を納める変数</param>
+    /// <param name="n">繰り返しの処理に使う変数</param>
+    /// <param name="m">繰り返しの処理に使う変数</param>
+    private void Search(Vector2 v,int n = 0,int m = 0)
+    {
+        if (current != nextCell && analysis)//移動を開始したときに一度だけ行う処理
+        {
+            analysis = false;
+            for (n = 0; n < 8; n++)
+            {
+                isStone[n] = false;//初期化
+            }
+        }
+        if (current == nextCell && analysis == false)//移動が完了しており、周辺を未探索の状態
+        {
+            analysis = true;
+            for (m = 0; m < directer.stoneNumber; m++)
+            {
+                v.x = current.x - stonePos[m].x;
+                v.y = current.y - stonePos[m].y;
+                if (v.x == 1 && v.y == -1)//左上
+                {
+                    isStone[0] = true;
+                }
+                if (v.x == 0 && v.y == -1)//真上
+                {
+                    isStone[1] = true;
+                }
+                if (v.x == -1 && v.y == -1)//右上
+                {
+                    isStone[2] = true;
+                }
+                if (v.x == 1 && v.y == 0)//左
+                {
+                    isStone[3] = true;
+                }
+                if (v.x == -1 && v.y == 0)//右
+                {
+                    isStone[4] = true;
+                }
+                if (v.x == 1 && v.y == 1)//左下
+                {
+                    isStone[5] = true;
+                }
+                if (v.x == 0 && v.y == 1)//真下
+                {
+                    isStone[6] = true;
+                }
+                if (v.x == -1 && v.y == 1)//右下
+                {
+                    isStone[7] = true;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 自身の進行方向を記録
+    /// </summary>
+    /// <param name="v">current - nextCell</param>
+    private void SetDir(Vector2 v)
+    {
+        if (v.x == 1 && v.y == -1)//左上
+        {
+            dirNumber = 0;
+        }
+        if (v.x == 0 && v.y == -1)//真上
+        {
+            dirNumber = 1;
+        }
+        if (v.x == -1 && v.y == -1)//右上
+        {
+            dirNumber = 2;
+        }
+        if (v.x == 1 && v.y == 0)//左
+        {
+            dirNumber = 3;
+        }
+        if (v.x == -1 && v.y == 0)//右
+        {
+            dirNumber = 4;
+        }
+        if (v.x == 1 && v.y == 1)//左下
+        {
+            dirNumber = 5;
+        }
+        if (v.x == 0 && v.y == 1)//真下
+        {
+            dirNumber = 6;
+        }
+        if (v.x == -1 && v.y == 1)//右下
+        {
+            dirNumber = 7;
+        }
+        if (v.x == 0 && v.y == 0)//移動しない
+        {
+            dirNumber = -1;
+        }
+    }
+
+    /// <summary>
+    /// directer.trailに自身の足跡を記録
+    /// </summary>
+    /// <param name="t">directer.maxTrail - 1</param>
+    /// <param name="n">繰り返しの処理に使う変数</param>
+    private void SetTrail(int t,int i = 0)
+    {
+        for (n = 0; n < t; n++)//足跡を一つずらして最も古いものを削除
+        {
+            directer.trail[n] = directer.trail[n + 1];
+        }
+        directer.trail[t] = current;//最新の足跡を更新
     }
 }
