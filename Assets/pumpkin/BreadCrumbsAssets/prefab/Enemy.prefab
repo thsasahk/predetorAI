@@ -57,6 +57,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -95,3 +96,6 @@ MonoBehaviour:
   step: 1
   directer: {fileID: 0}
   startCell: {x: -4, y: 0}
+  stonePos: []
+  maxPos: {x: 8, y: 4}
+  minPos: {x: -8, y: -4}
