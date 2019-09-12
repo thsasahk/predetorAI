@@ -89,6 +89,14 @@ public class BreadPlayer : MonoBehaviour
     /// 進行方向を-1～7の値で表す
     /// </summary>
     private int dirNumber = -1;
+    /// <summary>
+    /// xy座標の最大値
+    /// </summary>
+    [SerializeField] private Vector2 maxPos;
+    /// <summary>
+    /// xy座標の最小値
+    /// </summary>
+    [SerializeField] private Vector2 minPos;
 
     void Start()
     {
@@ -126,8 +134,8 @@ public class BreadPlayer : MonoBehaviour
             {
                 pathNumber++;
             }
-            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
-            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
+            nextCell.x = Mathf.Clamp(nextCell.x, minPos.x, maxPos.x);
+            nextCell.y = Mathf.Clamp(nextCell.y, minPos.y, maxPos.y);
             SetDir(current - nextCell);
         }
         if (dirNumber >= 0)//停止状態ではない

@@ -96,6 +96,14 @@ public class BreadEnemy : MonoBehaviour
     /// 最も重い重みを記録
     /// </summary>
     private int maxNumber = -1;
+    /// <summary>
+    /// xy座標の最大値
+    /// </summary>
+    [SerializeField] private Vector2 maxPos;
+    /// <summary>
+    /// xy座標の最小値
+    /// </summary>
+    [SerializeField] private Vector2 minPos;
 
     void Start()
     {
@@ -117,8 +125,8 @@ public class BreadEnemy : MonoBehaviour
         {
             SetNext();
             Chase();
-            nextCell.x = Mathf.Clamp(nextCell.x, -8, 8);
-            nextCell.y = Mathf.Clamp(nextCell.y, -4, 4);
+            nextCell.x = Mathf.Clamp(nextCell.x, minPos.x, maxPos.x);
+            nextCell.y = Mathf.Clamp(nextCell.y, minPos.y, maxPos.y);
             SetDir(current - nextCell);
         }
         if (dirNumber >= 0)//停止状態ではない
