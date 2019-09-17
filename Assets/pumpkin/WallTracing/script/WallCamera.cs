@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class WallCamera : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// GameDirecter
+    /// </summary>
+    [SerializeField] private GameObject directer;
+
     void Start()
     {
-        
+        Instantiate(directer);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
