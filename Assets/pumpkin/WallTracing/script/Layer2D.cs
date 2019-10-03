@@ -6,36 +6,21 @@ using UnityEngine;
 /// 参照元:https://qiita.com/2dgames_jp/items/00ee2ad52914753bfbb7
 public class Layer2D
 {
-    /// <summary>
+
+    int _width; // 幅
+    int _height; // 高さ
+    int _outOfRange = -1; // 領域外を指定した時の値
+    int[] _values = null; // マップデータ
     /// 幅
-    /// </summary>
-    private int _width;
-    /// <summary>
-    /// _width変数の値を参照する際に使用、書き換え不可
-    /// </summary>
     public int Width
     {
         get { return _width; }
     }
-    /// <summary>
     /// 高さ
-    /// </summary>
-    private int _height;
-    /// <summary>
-    /// _height変数の値を参照する際に使用、書き換え不可
-    /// </summary>
     public int Height
     {
         get { return _height; }
     }
-    /// <summary>
-    /// 領域外を指定した時の値
-    /// </summary>
-    int _outOfRange = -1;
-    /// <summary>
-    /// マップデータ
-    /// </summary>
-    int[] _values = null;
 
     /// <summary>
     /// コンストラクタ

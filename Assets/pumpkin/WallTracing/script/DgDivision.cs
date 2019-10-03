@@ -11,22 +11,11 @@ public class DgDivision
     /// </summary>
     public class DgRect
     {
-        /// <summary>
-        /// 左
-        /// </summary>
-        public int Left = 0;
-        /// <summary>
-        /// 上
-        /// </summary>
-        public int Top = 0;
-        /// <summary>
-        /// 右
-        /// </summary>
-        public int Right = 0;
-        /// <summary>
-        /// 下
-        /// </summary>
-        public int Bottom = 0;
+        public int Left = 0; // 左
+        public int Top = 0; // 上
+        public int Right = 0; // 右
+        public int Bottom = 0; // 下
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -34,28 +23,6 @@ public class DgDivision
         {
             // 特に何もしない
         }
-        /// <summary>
-        /// 高さ
-        /// </summary>
-        public int Height
-        {
-            get { return Bottom - Top; }
-        }
-        /// <summary>
-        /// 幅
-        /// </summary>
-        public int Width
-        {
-            get { return Right - Left; }
-        }
-        /// <summary>
-        /// 面積 (幅 x 高さ)
-        /// </summary>
-        public int Measure
-        {
-            get { return Width * Height; }
-        }
-
         /// <summary>
         /// 値をまとめて設定する
         /// </summary>
@@ -69,6 +36,27 @@ public class DgDivision
             Top = top;
             Right = right;
             Bottom = bottom;
+        }
+        /// <summary>
+        /// 幅
+        /// </summary>
+        public int Width
+        {
+            get { return Right - Left; }
+        }
+        /// <summary>
+        /// 高さ
+        /// </summary>
+        public int Height
+        {
+            get { return Bottom - Top; }
+        }
+        /// <summary>
+        /// 面積 (幅 x 高さ)
+        /// </summary>
+        public int Measure
+        {
+            get { return Width * Height; }
         }
 
         /// <summary>
