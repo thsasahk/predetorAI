@@ -9,6 +9,10 @@ using UnityEngine;
 public class DgGenerator : MonoBehaviour
 {
     /// <summary>
+    /// 画面のサイズ
+    /// </summary>
+    [SerializeField] private Vector2 size;
+    /// <summary>
     /// マップ全体の幅
     /// </summary>
     const int WIDTH = 30;
@@ -42,6 +46,10 @@ public class DgGenerator : MonoBehaviour
     /// 壁
     /// </summary>
     const int CHIP_WALL = 1;
+    /// <summary>
+    /// 壁オブジェクト
+    /// </summary>
+    [SerializeField] private GameObject wall;
 
     /// <summary>
     /// 2次元配列情報
@@ -106,6 +114,7 @@ public class DgGenerator : MonoBehaviour
         //}
         //_layer.Dump();
 
+        Vector2 n = new Vector2(size.x / WIDTH, size.y / HEIGHT);//タイルのサイズを計算
         // タイルを配置
         for (int j = 0; j < _layer.Height; j++)
         {
@@ -119,6 +128,8 @@ public class DgGenerator : MonoBehaviour
                     float y = GetChipY(j);
                     //Util.CreateToken(x, y, "wall1", "", "Wall");
                     */
+                    Vector2 m = new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2);//壁を設置する座標
+                    Instantiate(wall, m, Quaternion.identity);//壁を生成
                 }
             }
         }
