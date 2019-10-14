@@ -13,13 +13,13 @@ public class DgGenerator : MonoBehaviour
     /// </summary>
     [SerializeField] private Vector2 size;
     /// <summary>
-    /// マップ全体の幅
+    /// マップ全体の幅(30)
     /// </summary>
-    const int WIDTH = 30;
+    [SerializeField] private int WIDTH;
     /// <summary>
-    /// マップ全体の高さ
+    /// マップ全体の高さ(30)
     /// </summary>
-    const int HEIGHT = 30;
+    [SerializeField] private int HEIGHT;
 
     /// <summary>
     /// 区画と部屋の余白サイズ
@@ -30,13 +30,13 @@ public class DgGenerator : MonoBehaviour
     /// </summary>
     const int POS_MERGIN = 2;
     /// <summary>
-    /// 最小の部屋サイズ
+    /// 最小の部屋サイズ(3)
     /// </summary>
-    const int MIN_ROOM = 3;
+    [SerializeField] private int MIN_ROOM;
     /// <summary>
-    /// 最大の部屋サイズ
+    /// 最大の部屋サイズ(5)
     /// </summary>
-    const int MAX_ROOM = 5;
+    [SerializeField] private int MAX_ROOM;
 
     /// <summary>
     /// 通路
