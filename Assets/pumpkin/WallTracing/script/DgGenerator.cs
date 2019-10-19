@@ -20,6 +20,10 @@ public class DgGenerator : MonoBehaviour
     /// マップ全体の高さ(30)
     /// </summary>
     [SerializeField] private int HEIGHT;
+    /// <summary>
+    /// 壁
+    /// </summary>
+    private GameObject w;
 
     /// <summary>
     /// 区画と部屋の余白サイズ
@@ -129,7 +133,7 @@ public class DgGenerator : MonoBehaviour
                     //Util.CreateToken(x, y, "wall1", "", "Wall");
                     */
                     Vector2 m = new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2);//壁を設置する座標
-                    Instantiate(wall, m, Quaternion.identity);//壁を生成
+                    w = Instantiate(wall, m, Quaternion.identity);//壁を生成
                 }
             }
         }
