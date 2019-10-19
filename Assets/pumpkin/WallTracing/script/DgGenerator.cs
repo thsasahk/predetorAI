@@ -139,7 +139,7 @@ public class DgGenerator : MonoBehaviour
                     Vector2 m = new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2);//壁を設置する座標
                     w = Instantiate(wall, m, Quaternion.identity);//壁を生成
                     wallScript = w.GetComponent<wall>();//wオブジェクトのスクリプトを格納
-                    wallScript.ratio = size;
+                    wallScript.ratio = size;//マス目の大きさを受け渡し
                 }
             }
         }
