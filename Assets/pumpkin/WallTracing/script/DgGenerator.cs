@@ -24,6 +24,10 @@ public class DgGenerator : MonoBehaviour
     /// 壁
     /// </summary>
     private GameObject w;
+    /// <summary>
+    /// wオブジェクトのスクリプト
+    /// </summary>
+    private wall wallScript;
 
     /// <summary>
     /// 区画と部屋の余白サイズ
@@ -134,6 +138,7 @@ public class DgGenerator : MonoBehaviour
                     */
                     Vector2 m = new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2);//壁を設置する座標
                     w = Instantiate(wall, m, Quaternion.identity);//壁を生成
+                    wallScript = w.GetComponent<wall>();//wオブジェクトのスクリプトを格納
                 }
             }
         }
