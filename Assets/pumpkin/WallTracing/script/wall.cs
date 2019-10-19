@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class wall : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Vector2 ratio;
     void Start()
     {
-        
+        gameObject.GetComponent<RectTransform>().sizeDelta =
+            new Vector2(gameObject.GetComponent<RectTransform>().sizeDelta.x * ratio.x,
+            gameObject.GetComponent<RectTransform>().sizeDelta.y * ratio.y);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
