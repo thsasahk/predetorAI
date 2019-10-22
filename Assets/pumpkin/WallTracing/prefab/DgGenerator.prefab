@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8acd4a97ffe664999c1b9cf80a67d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 0, y: 0}
+  size: {x: 16, y: 8}
   WIDTH: 0
   HEIGHT: 0
   MIN_ROOM: 0
