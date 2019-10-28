@@ -446,7 +446,7 @@ public class DgGenerator : MonoBehaviour
     {
         if (GUI.Button(new Rect(160, 160, 128, 32), "もう１回"))
         {
-            Application.LoadLevel("Main");
+            Application.LoadLevel("WallTracing");
         }
     }
 }
