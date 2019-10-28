@@ -49,3 +49,5 @@ MonoBehaviour:
   MIN_ROOM: 3
   MAX_ROOM: 5
   wall: {fileID: 8880680182731800682, guid: eef4316503ed633498f6669845e62f9b, type: 3}
+  playerPrefab: {fileID: 2655379986044374884, guid: 02d9c0777cb1a6c4cbe3eba2eb0cd13b,
+    type: 3}
