@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 16, y: 8}
-  WIDTH: 24
-  HEIGHT: 12
+  WIDTH: 28
+  HEIGHT: 14
   MIN_ROOM: 3
-  MAX_ROOM: 4
+  MAX_ROOM: 5
   wall: {fileID: 8880680182731800682, guid: eef4316503ed633498f6669845e62f9b, type: 3}
