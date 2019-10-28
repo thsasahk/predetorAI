@@ -62,6 +62,10 @@ public class DgGenerator : MonoBehaviour
     /// playerプレファブ
     /// </summary>
     [SerializeField] private GameObject playerPrefab;
+    /// <summary>
+    /// playerPrefabを生成したオブジェクト
+    /// </summary>
+    private GameObject player;
 
     /// <summary>
     /// 2次元配列情報
