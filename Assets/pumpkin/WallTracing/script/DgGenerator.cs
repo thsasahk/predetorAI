@@ -65,7 +65,7 @@ public class DgGenerator : MonoBehaviour
     /// <summary>
     /// playerPrefabを生成したオブジェクト
     /// </summary>
-    private GameObject player;
+    private GameObject player = null;
 
     /// <summary>
     /// 2次元配列情報
@@ -151,7 +151,22 @@ public class DgGenerator : MonoBehaviour
                 }
             }
         }
-
+        //Playerを配置
+        for (int j = 0; j < _layer.Height; j++)
+        {
+            for (int i = 0; i < _layer.Width; i++)
+            {
+                if (_layer.Get(i, j) == CHIP_NONE)
+                {
+                    player = Instantiate(playerPrefab, new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2), Quaternion.identity);
+                    break;
+                }
+            }
+            if (player != null)
+            {
+                break;
+            }
+        }
     }
 
     /// <summary>
