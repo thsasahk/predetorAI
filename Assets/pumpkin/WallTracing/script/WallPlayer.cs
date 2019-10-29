@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class WallPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// マス目のサイズ
+    /// </summary>
+    public Vector2 ratio;
+
     void Start()
     {
-        
+        gameObject.GetComponent<RectTransform>().sizeDelta =
+            new Vector2(gameObject.GetComponent<RectTransform>().sizeDelta.x * ratio.x,
+            gameObject.GetComponent<RectTransform>().sizeDelta.y * ratio.y);//マス目のサイズに合わせて自身のサイズを変更する
     }
 
-    // Update is called once per frame
     void Update()
     {
         
