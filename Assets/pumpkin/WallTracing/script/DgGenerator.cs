@@ -66,6 +66,10 @@ public class DgGenerator : MonoBehaviour
     /// playerPrefabを生成したオブジェクト
     /// </summary>
     private GameObject player = null;
+    /// <summary>
+    /// playerオブジェクトのスクリプト
+    /// </summary>
+    private WallPlayer playerScript;
 
     /// <summary>
     /// 2次元配列情報
@@ -159,6 +163,8 @@ public class DgGenerator : MonoBehaviour
                 if (_layer.Get(i, j) == CHIP_NONE)
                 {
                     player = Instantiate(playerPrefab, new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2), Quaternion.identity);
+                    playerScript = player.GetComponent<WallPlayer>();
+                    playerScript.ratio = size;
                     break;
                 }
             }
