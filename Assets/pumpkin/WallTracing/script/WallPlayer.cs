@@ -8,6 +8,10 @@ public class WallPlayer : MonoBehaviour
     /// マス目のサイズ
     /// </summary>
     public Vector2 ratio;
+    /// <summary>
+    /// 自身の座標
+    /// </summary>
+    private Vector2 playerPos;
 
     void Start()
     {
@@ -18,6 +22,6 @@ public class WallPlayer : MonoBehaviour
 
     void Update()
     {
-        
+        playerPos = transform.position;//自身の座標を記録
     }
 }
