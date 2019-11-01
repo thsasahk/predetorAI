@@ -165,6 +165,7 @@ public class DgGenerator : MonoBehaviour
                     player = Instantiate(playerPrefab, new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2), Quaternion.identity);
                     playerScript = player.GetComponent<WallPlayer>();
                     playerScript.ratio = size;
+                    playerScript.layer = _layer;
                     break;
                 }
             }
