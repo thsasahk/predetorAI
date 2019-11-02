@@ -46,6 +46,7 @@ public class WallPlayer : MonoBehaviour
             //目標地点へ移動、テスト用ビルド時コメントアウト
             transform.position = Vector3.MoveTowards(playerPos, 
                 SetNext(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical")), speed * Time.deltaTime);
+            Debug.Log("move");
         }
     }
 
@@ -65,13 +66,14 @@ public class WallPlayer : MonoBehaviour
         {
             nextCell.y = playerPos.y + Mathf.Sign(v) * ratio.y;
         }
-        if (layer.Get(Mathf.RoundToInt(nextCell.x / ratio.x - nextCell.x / 2), 
-            Mathf.RoundToInt(nextCell.y / ratio.y - nextCell.y / 2)) == chipNone)
+        if (layer.Get(Mathf.RoundToInt((nextCell.x - ratio.x / 2) / ratio.x), 
+            Mathf.RoundToInt((nextCell.y - ratio.y / 2) / ratio.y)) == chipNone)
         {
             return nextCell;
         }
         else
         {
+            nextCell = playerPos;
             return playerPos;
         }
     }
