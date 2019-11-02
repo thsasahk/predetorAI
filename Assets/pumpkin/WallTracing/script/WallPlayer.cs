@@ -43,11 +43,11 @@ public class WallPlayer : MonoBehaviour
         playerPos = transform.position;//自身の座標を記録
         if (playerPos == nextCell)
         {
-            //目標地点へ移動、テスト用ビルド時コメントアウト
-            transform.position = Vector3.MoveTowards(playerPos, 
-                SetNext(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical")), speed * Time.deltaTime);
-            Debug.Log("move");
+            //目標地点を設定、テスト用ビルド時コメントアウト
+            SetNext(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
+        //目標地点へ移動
+        transform.position = Vector3.MoveTowards(playerPos, nextCell, speed * Time.deltaTime);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class WallPlayer : MonoBehaviour
     /// <param name="h">左右の入力情報</param>
     /// <param name="v">上下の入力情報</param>
     /// <returns></returns>
-    private Vector2 SetNext(float h, float v)
+    private void SetNext(float h, float v)
     {
         if (h != 0)
         {
@@ -67,14 +67,9 @@ public class WallPlayer : MonoBehaviour
             nextCell.y = playerPos.y + Mathf.Sign(v) * ratio.y;
         }
         if (layer.Get(Mathf.RoundToInt((nextCell.x - ratio.x / 2) / ratio.x), 
-            Mathf.RoundToInt((nextCell.y - ratio.y / 2) / ratio.y)) == chipNone)
-        {
-            return nextCell;
-        }
-        else
+            Mathf.RoundToInt((nextCell.y - ratio.y / 2) / ratio.y)) != chipNone)
         {
             nextCell = playerPos;
-            return playerPos;
         }
     }
 }
