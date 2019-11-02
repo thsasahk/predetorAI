@@ -151,7 +151,7 @@ public class DgGenerator : MonoBehaviour
                     Vector2 m = new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2);//壁を設置する座標
                     w = Instantiate(wall, m, Quaternion.identity);//壁を生成
                     wallScript = w.GetComponent<wall>();//wオブジェクトのスクリプトを格納
-                    wallScript.ratio = size;//マス目の大きさを受け渡し
+                    wallScript.ratio = n;//マス目の大きさを受け渡し
                 }
             }
         }
@@ -164,7 +164,7 @@ public class DgGenerator : MonoBehaviour
                 {
                     player = Instantiate(playerPrefab, new Vector2(n.x * i + n.x / 2, n.y * j + n.y / 2), Quaternion.identity);
                     playerScript = player.GetComponent<WallPlayer>();
-                    playerScript.ratio = size;
+                    playerScript.ratio = n;
                     playerScript.layer = _layer;
                     break;
                 }
