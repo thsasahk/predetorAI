@@ -31,9 +31,8 @@ public class WallPlayer : MonoBehaviour
 
     void Start()
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta =
-            new Vector2(gameObject.GetComponent<RectTransform>().sizeDelta.x * ratio.x,
-            gameObject.GetComponent<RectTransform>().sizeDelta.y * ratio.y);//マス目のサイズに合わせて自身のサイズを変更する
+        gameObject.GetComponent<RectTransform>().localScale =
+            gameObject.GetComponent<RectTransform>().localScale * ratio;//マス目のサイズに合わせて自身のサイズを変更する
         playerPos = transform.position;
         nextCell = transform.position;
     }
